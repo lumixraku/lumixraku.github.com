@@ -1,0 +1,420 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>blog on github | lumixraku&#39;s</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="lumix raku">
+    
+    <meta name="description" content="用Github写博文参考http://ibruce.info/2013/11/22/hexo-your-blog/非常详细哟！你可以先看看他的文章
+主要步骤
+首先你得拥有github账号 然后创建一个仓库 仓库里面才能发页面文件什么的然后往这个仓库中添加html文件 这个html文件就是你的博客 你">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="lumixraku&#39;s" title="lumixraku&#39;s"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="lumixraku&#39;s">lumixraku&#39;s</a></h1>
+				<h2 class="blog-motto">newbie</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:github.com/lumixraku/lumixraku.github.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/03/24/blog-on-github/" title="blog on github" itemprop="url">blog on github</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://github.com/lumixraku/lumixraku.github.com" title="lumix raku">lumix raku</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-03-24T12:29:47.000Z" itemprop="datePublished">Mar 24 2014</time>
+    Updated:<time datetime="2014-03-24T13:19:39.000Z" itemprop="dateModified">Mar 24 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#主要步骤"><span class="toc-number">1.</span> <span class="toc-text">主要步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么选择Github?"><span class="toc-number">2.</span> <span class="toc-text">为什么选择Github?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建仓库Repository"><span class="toc-number">3.</span> <span class="toc-text">创建仓库Repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git客户端"><span class="toc-number">4.</span> <span class="toc-text">Git客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git命令"><span class="toc-number">5.</span> <span class="toc-text">Git命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令行基本操作"><span class="toc-number">6.</span> <span class="toc-text">命令行基本操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git客户端连接配置"><span class="toc-number">7.</span> <span class="toc-text">Git客户端连接配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Git_命令上传(与本地同步)/下载(与服务器同步)文件"><span class="toc-number">8.</span> <span class="toc-text">使用Git 命令上传(与本地同步)/下载(与服务器同步)文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除仓库"><span class="toc-number">9.</span> <span class="toc-text">删除仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Hexo"><span class="toc-number">10.</span> <span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置Hexo"><span class="toc-number">11.</span> <span class="toc-text">配置Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写博文"><span class="toc-number">12.</span> <span class="toc-text">写博文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更换主题"><span class="toc-number">13.</span> <span class="toc-text">更换主题</span></a></li></ol>
+		</div>
+		
+		<p><strong>用Github写博文</strong><br>参考<a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank">http://ibruce.info/2013/11/22/hexo-your-blog/</a><br>非常详细哟！你可以先看看他的文章</p>
+<h2 id="主要步骤">主要步骤</h2>
+<p>首先你得拥有github账号 然后创建一个仓库 仓库里面才能发页面文件什么的<br>然后往这个仓库中添加html文件 这个html文件就是你的博客 你可以尽情的使用你喜欢的样式 不受限制<br>基本上是这么个意思 听起来很简单啊 那我们要hexo做什么 有了这个Git客户端有什么用？<br>毕竟你想想嘛 我要是有很多博文 每个html都要写目录啊 其他博文的链接啊 真麻烦<br>所以我需要一个系统 他能帮你做目录啊 统计博文数量啊 设置主题啊 生成HTML等等 Hexo就是来做这个的<br>Git呢？ 有了Git客户端 可以更方便的同步本地和线上仓库</p>
+<h2 id="为什么选择Github?">为什么选择Github?</h2>
+<p>首先 拥有一个个人独立博客首要就是租一个空间 买一个域名什么的<br>哎呀 木有钱啊 免费的服务好像都不可靠 付费的真心超过预算… 突然发现github上可以<br>我想github的初衷是用来展示作品的 因此它为每个用户分配了一个可以设定域名的空间 当然就可以写博客啦！<br>当然了 你也可以选择BAE 更稳定不是嘛(有时间再来研究下)</p>
+<h2 id="创建仓库Repository">创建仓库Repository</h2>
+<p>如何设置你的域名？得到域名首先要创建repository<br>创建新仓库记住要勾选Initialize this repository with a README 否则空仓库不会有填入域名的框<br>要是已经生成了一个空仓库呢？(使用那个绿色 Set up in a desktop 表示使用Git客户端来操作)<br>使用Git客户端对你新建的仓库init一下并上传一个文件后 就又可以在页面上看到填入域名的地方啦<br>域名格式(二级域名) <a href="http://??????????.github.com" target="_blank">http://??????????.github.com</a></p>
+<h2 id="Git客户端">Git客户端</h2>
+<p>对于win 我一开始是按照ibruce的教程来的 使用的是msysgit 它是github<br>对于mac 就用的Github上官方的那个 <a href="http://mac.github.com/" target="_blank">http://mac.github.com/</a><br>新手的话还是使用官方的这个客户端好了 傻瓜操作…</p>
+<h2 id="Git命令">Git命令</h2>
+<p>和SVN一个逻辑 本地得有一个仓库 测试好了后再通过Git客户端传到线上<br>你可以随便选一个文件夹作为仓库<br>对于win 进入到仓库文件夹中右键选择Git init 但是这种方式如果换了一个客户端可能就不通用了<br>所以我还是说说通用的方式 使用Git命令<br>打开Git Bash (Github for mac在安装的时候就有提示是否安装command tools 选择上就好)<br>PS: 这个command tools会在/usr/local/bin中 其中会有个git文件 点击它会编译一下<br>初次编译会向你请求安装Xcode 根据提示操作 很快就装好了 (应该是一个Xcode的shell编译器吧 不是整个Xcode)<br>然后就可以在terminal中使用git命令了<br>cd到相应的目录</p>
+<pre><code>git init
+</code></pre><p>该命令可以将当前文件夹作为仓库文件夹 之后会生成一个.git的隐藏文件夹</p>
+<h2 id="命令行基本操作">命令行基本操作</h2>
+<p>好久不用 又忘了？<br>进入C盘 <code>cd C</code><br>然后进入某个目录 <code>cd xxx\</code><br>进入多级目录必须一层一层的进入<br>像这样一次进入多层是不行的</p>
+<pre><code>rakus<span class="variable">@RAKUS</span>-<span class="constant">PC</span> /<span class="constant">C</span>
+<span class="variable">$ </span>cd <span class="constant">Users</span>\rakus 
+sh.exe<span class="string">": cd: Usersrakus: No such file or directory</span>
+</code></pre><p>必须这样</p>
+<pre><code>rakus<span class="variable">@RAKUS</span>-<span class="constant">PC</span> /<span class="constant">C</span>
+<span class="variable">$ </span>cd <span class="constant">Users</span>
+
+rakus<span class="variable">@RAKUS</span>-<span class="constant">PC</span> /<span class="constant">C</span>/<span class="constant">Users</span>
+<span class="variable">$ </span>cd rakus
+</code></pre><p>退回到上一层 (<code>cd ..</code>) (注意cd后面有个空格)</p>
+<h2 id="Git客户端连接配置">Git客户端连接配置</h2>
+<p>Git的客户端和Git账号连接 哇 这还要说？不仅仅是填写用户名和密码这么简单哟！<br>为了保证安全性 本地仓库和线上仓库是通过SSH连接的<br>如果你是使用的Github官方上得客户端的话 填好用户名和密码就会自动帮你创建好SSH key并且将key添加到你的账户中<br>至少我使用Github for mac是这样 所以我猜Github for windows也应该如此<br>这里还是说最通用的办法 比如你是linux用户呢 呵呵<br>打开Bash</p>
+<p>首先设置账户</p>
+<pre><code><span class="variable">$ </span>git config --global user.email <span class="string">"lumixraku@gmail.com"</span> 
+<span class="variable">$ </span>git config --global user.name <span class="string">"lumixraku"</span>
+</code></pre><p>生成SSH key</p>
+<pre><code>$ ssh<span class="attribute">-keygen</span> <span class="attribute">-t</span> rsa <span class="attribute">-C</span> <span class="string">"lumixraku@gmail.com"</span>
+</code></pre><p>接下来会看到提示</p>
+<pre><code>Generating <span class="keyword">public</span>/<span class="keyword">private</span> rsa <span class="keyword">key</span> pair.
+Enter file <span class="keyword">in</span> which <span class="keyword">to</span> save the <span class="keyword">key</span> (/c/Users/rakus/.ssh/id_rsa): 
+</code></pre><p>这里面要求输入一个路径 是你保存SSH key的路径包括文件名 同时也会在()中得那个路径中生成id_rsa的<br>注意保存的保存的文件名也得是id_rsa 否则.ssh中不会自动生成id_rsa的 实际上Git客户端用的是.ssh中的文件中得SSH密钥<br>我保存在G盘</p>
+<pre><code>Enter <span class="built_in">file</span> <span class="operator">in</span> which <span class="built_in">to</span> save <span class="operator">the</span> key (/c/Users/rakus/.ssh/id_rsa): G:\Git\git\id_rsa
+</code></pre><p>回车后看到Ok的信息</p>
+<pre><code>Enter passphrase (<span class="keyword">empty</span> <span class="keyword">for</span> no passphrase): 
+Enter same passphrase again:
+Your identification <span class="keyword">has</span> been saved <span class="keyword">in</span> G:\Git\git\id_rsa.
+Your <span class="keyword">public</span> key <span class="keyword">has</span> been saved <span class="keyword">in</span> G:\Git\git\id_rsa.pub.
+The key fingerprint <span class="keyword">is</span>:
+<span class="number">69</span>:<span class="number">14</span>:??:??:??:??:??:??:ed:<span class="number">63</span>:??:da:??:??:??:?? lumixraku@gmail.com
+</code></pre><p>我把我的密钥隐藏了 当然实际上这里不会是问号啦<br>这个密钥和PC是对应的 一个PC是唯一的一个密钥<br>至此已经生成了SSH 将会在刚才的指定路径G:\Git\git\中生成一个id_rsa文件和id_rsa.pub文件<br>所需要的SSH key就是id_rsa.pub文件的内容<br>PS:Github for mac会自动连上Github且自动生成好SSH key 安装上Github for mac后会默认在你的用户名的文件夹中生成.ssh文件夹 不过点开后里面并没有id_rsa…可能自动连上后删去了..可能<br>然后去Github中+号旁边的螺丝刀和扳手图标Account Settings中添加 SSH key<br>Key名字是随意填写的 最好填计算机名 这样有多个key的时候好区分 Key的内容就是pub文件中的内容 复制出来粘贴就好<br>接下来做一个测试 看看Git客户端能否连上Github</p>
+<pre><code>ssh -<span class="constant">T</span> git<span class="variable">@github</span>.com
+</code></pre><p>或者使用ssh -vT git@github.com 可以看到更详细的信息<br>会提示</p>
+<pre><code>Warning: Permanently added <span class="keyword">the</span> RSA host key <span class="keyword">for</span> IP address '<span class="number">1</span>??.??.???<span class="number">.129</span>' <span class="keyword">to</span> <span class="keyword">the</span> <span class="type">list</span> <span class="keyword">of</span> known hosts.
+Hi lumixraku! You've successfully authenticated, <span class="keyword">but</span> GitHub <span class="keyword">does</span> <span class="keyword">not</span> provide shell access.
+</code></pre><h2 id="使用Git_命令上传(与本地同步)/下载(与服务器同步)文件">使用Git 命令上传(与本地同步)/下载(与服务器同步)文件</h2>
+<p>刚才已经提到了创建并init仓库 现在就cd到这个文件夹<br>上传就是把本地仓库中的文件上传到线上仓库 一个账户一般都不会只有一个仓库 所以上传前首先要指定好仓库</p>
+<pre><code>git remote <span class="keyword">add</span> repo git@github<span class="preprocessor">.com</span>:lumixraku/repo<span class="preprocessor">.git</span>
+</code></pre><p>后面git@github.com:lumixraku/repo.git这么一串就是仓库的地址 在每个仓库的右边栏下方可以看到<br>这里的repo是自己为仓库取得一个别名 不会影响到线上的仓库 只是本地用户指定仓库时方便 这个信息保存在.git中<br>当你删除.git后再想使用这个别名是无效的 同样 当你已经使用本别名指定一个仓库 再次输入这个命令也是不可以的<br>提示remote rakusCode already exists 假如我忘了别名？git remote -v 显示所有repository和别名<br>选择好了仓库就选择文件</p>
+<pre><code>git <span class="keyword">add</span> README<span class="preprocessor">.md</span>
+</code></pre><p>填写备注 ‘first commit’是备注 注意！备注似乎是必填项 否则提示未填备注</p>
+<pre><code>git <span class="operator"><span class="keyword">commit</span> -m <span class="string">'first commit'</span></span>
+</code></pre><p>上传(与本地同步)</p>
+<pre><code>git <span class="keyword">push</span> repo master
+</code></pre><p>repo是仓库别名 master则是分支 分支是一定要指定的 默认分支就是master 也就是主干<br>所以可以把仓库看做是一棵树 有master和其它很多branch<br>PS 虽然这里说的是上传 但是比如我后来又改动了aa文件夹下的bb文件 还是使用同样的命令 所以 这里的上传意义更接近于同步  所以不论你是更改的某个文件夹的中的文件还是创建了新的文件夹<br>最终线上仓库在push后变得和本地一样</p>
+<p>下载(与线上同步)</p>
+<pre><code>git pull rakuscode master 
+</code></pre><p>这样会一口气把全部的文件下载下来</p>
+<h2 id="删除仓库">删除仓库</h2>
+<p>进入你要delete的repository 在右边的侧边栏中有个settings选项 进入后 底部有个danger zone 其中有Delete this repository 接下来就很容易了..</p>
+<h2 id="安装Hexo">安装Hexo</h2>
+<p>Hexo就是一个小型的博客系统(使用NodeJS实现) 并且可以将你的博客生成静态的页面 所有的链接什么都帮你设置好了<br>相比于WordPress不用mysql 更方便轻巧呢！<br>不论是win还是mac 首先安装Node (mac我用的pkg的那种 傻瓜安装) 地址<a href="http://nodejs.org/download/" target="_blank">http://nodejs.org/download/</a><br>安装了Node 就可以使用npm命令了 可以看到安装后在/usr/local/bin中多了一个npm<br>安装Hexo</p>
+<pre><code>npm <span class="keyword">install</span> -g hexo
+</code></pre><p>对于mac和linux 应该使用 sudo npm install -g hexo 安装过程略长 且总是要重复几次 根据你的网络情况来定吧…<br>然后来到仓库文件夹作为你的hexo文件夹<br>初始化hexo</p>
+<pre><code>hexo init
+</code></pre><p>之后生成一大串文件和目录 这是hexo运行必须的东西<br>生成html页面</p>
+<pre><code>hexo <span class="keyword">generate</span>
+</code></pre><p>启动服务</p>
+<pre><code>hexo <span class="keyword">server</span>
+</code></pre><p>之后通过localhost:4000查看 运行期间 Bash不能进行其他操作 通过Ctrl+C停止服务 mac也是Ctrl<br>这样博客就生成了 在本地看看样式吧 生成的文件都在public文件夹中</p>
+<h2 id="配置Hexo">配置Hexo</h2>
+<p>Hexo提供了一个deploy操作 通过这个操作将生成那个好的文件提交到线上仓库去 这里不再用git的提交方式提交<br>打开仓库目录下的_config.yml (推荐使用sublime打开 win的默认记事本打开格式一团糟)<br>主要是配置仓库位置(使用了hexo后 可以用hexo deploy进行提交…不过只是提交页面 css没有被提交 这个需要手动提交一下)<br>大约15行位置</p>
+<pre><code><span class="attribute">url</span>: <span class="string">https://github.com/lumixraku/repo </span>
+</code></pre><p>这个url是仓库的浏览器地址<br>还有一个是在配置文件的最后</p>
+<pre><code><span class="label">deploy:</span>
+<span class="label">type:</span> github
+<span class="label">repository:</span> git@github<span class="preprocessor">.com</span>:yourUsername/repo<span class="preprocessor">.git</span> 
+<span class="label">branch:</span> master
+</code></pre><p>deploy还有一个选项是指定branch的值 master或是其他branch名字<br>默认是gh-pages这个branch</p>
+<p>何时使用master何时用gh-pages呢？<br>当仓库是主仓库(指的是分配了域名的仓库)时候就用master<br>然后你又创建了一个新的仓库repo2 也有一些页面文件希望被访问 此时就应该deploy到gh-pages这个分支中<br>repository中得git地址当然也应该是repo2的git地址<br>访问的时候 则是 xxxx.github.io/repo2/新仓库的页面 配置好后就能用hexo deploy提交</p>
+<h2 id="写博文">写博文</h2>
+<p>新建一个博文命令</p>
+<pre><code>hexo <span class="keyword">new</span> <span class="string">"your Article Title"</span>
+</code></pre><p>执行上面的命令后将会在 仓库文件夹\source_posts\中创建一个文件<code>your-Article-Title.md</code><br>打开此文件使用markdown的格式写博文<br>什么是markdown格式？参考<a href="http://ibruce.info/2013/11/26/markdown/" target="_blank">http://ibruce.info/2013/11/26/markdown/</a><br>这种格式是一个标记语言 可以将文本转化为HTML kindle的书就是这个格式</p>
+<p>生成页面</p>
+<pre><code>hexo <span class="keyword">generate</span>
+</code></pre><h2 id="更换主题">更换主题</h2>
+<p>Pacman和Modernist这两款不错！<br>Pacman主题 <a href="https://github.com/A-limon/pacman" target="_blank">https://github.com/A-limon/pacman</a><br>(其中有介绍安装方式)<br>Modernist主题 <a href="https://github.com/heroicyang/hexo-theme-modernist" target="_blank">https://github.com/heroicyang/hexo-theme-modernist</a></p>
+<p>主题使用Git命令下载<br>比如对于Modernist主题</p>
+<pre><code>git clone <span class="symbol">https:</span>/<span class="regexp">/github.com/heroicyang</span><span class="regexp">/hexo-theme-modernist.git themes/modernist</span>
+</code></pre><p>下载了还没完 还需要配置一下<br>打开仓库目录下的_config.yml<br>这里有你很多设置 比如你的博客名字 作者 等 刚才只是改了deploy的地址<br>主题设置大约在83行 PS注意一下本文档的格式 在一个配置项的冒号后面有一个空格</p>
+<pre><code>theme：pacman
+</code></pre><p>对主题本身还可以配置一下 比如首先显示什么菜单之类<br>打开仓库中themes\pacman_config.yml 配置 详情可以去ibruce查看<br>更新主题</p>
+<pre><code><span class="built_in">cd</span> themes/pacman
+git pull
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/blog/">blog</a><a href="/tags/github/">github</a><a href="/tags/hexo/">hexo</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="https://github.com/lumixraku/lumixraku.github.com/2014/03/24/blog-on-github/" data-title="blog on github | lumixraku&#39;s" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/03/24/demos/" title="demos">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  demos</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/03/24/hello-world/"  title="Hello World">
+ <strong>NEXT:</strong><br/> 
+ <span>Hello World
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#主要步骤"><span class="toc-number">1.</span> <span class="toc-text">主要步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么选择Github?"><span class="toc-number">2.</span> <span class="toc-text">为什么选择Github?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建仓库Repository"><span class="toc-number">3.</span> <span class="toc-text">创建仓库Repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git客户端"><span class="toc-number">4.</span> <span class="toc-text">Git客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git命令"><span class="toc-number">5.</span> <span class="toc-text">Git命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令行基本操作"><span class="toc-number">6.</span> <span class="toc-text">命令行基本操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git客户端连接配置"><span class="toc-number">7.</span> <span class="toc-text">Git客户端连接配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Git_命令上传(与本地同步)/下载(与服务器同步)文件"><span class="toc-number">8.</span> <span class="toc-text">使用Git 命令上传(与本地同步)/下载(与服务器同步)文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除仓库"><span class="toc-number">9.</span> <span class="toc-text">删除仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Hexo"><span class="toc-number">10.</span> <span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置Hexo"><span class="toc-number">11.</span> <span class="toc-text">配置Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写博文"><span class="toc-number">12.</span> <span class="toc-text">写博文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更换主题"><span class="toc-number">13.</span> <span class="toc-text">更换主题</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/blog/" title="blog">blog<sup>1</sup></a></li>
+		
+			<li><a href="/tags/github/" title="github">github<sup>1</sup></a></li>
+		
+			<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="https://github.com/lumixraku/lumixraku.github.com" target="_blank" title="lumix raku">lumix raku</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lumixraku.duoshuo.com"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>
