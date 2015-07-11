@@ -1,0 +1,84 @@
+.border{
+  position:relative;
+  width: 300px;
+  height: 300px;
+  border: 7px solid grey;
+  border-radius: 50%;
+  background-color: #EEE8AA;
+
+}
+.center{
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: black;
+  transform: translate(-50%, -50%);
+}
+.big-degree,
+.small-degree{
+  position: absolute;
+  /*transform无效  即使JS中的ele.css({})里面加上这个还是不行  因为transform属性被JS中的rotate改写了*/
+  /* transform: translateX(-50%);  */
+  left: 50%;
+  margin-left: -3px;/*这个是为了水平居中*/
+  /*margin: 0 auto; 无效是因为刻度都是absolute*/
+  /*left  margin-left 是为了使12点刻度水平居中  在不加rotate的时候所有刻度都在12点*/
+  transform-origin: center 150px;
+}
+/*transform-origin:表示坐标原点*/
+/*坐标原点 相对于当前元素来说*/
+/*在不设置这个origin值得时候所有的刻度都在12点的位置  y轴偏移了150px 也就是圆心的位置  所以刻度都围绕圆心转*/
+
+.big-degree{
+/*   width: 6px;
+  height: 15px; */
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 20px 4px 0 4px;
+  border-color: #000000 transparent transparent transparent;
+}
+.small-degree{
+  width: 2px;
+  height: 7px;
+  border-radius: 1px;
+  background-color: black;
+}
+
+
+.hour, .min, .sec{
+  position: absolute;
+  left: 50%;
+
+}
+.hour{
+  top: 80px;
+  margin-left: -3px;
+  width:6px;
+  height: 70px;
+  background-color: black;
+  transform-origin: center 70px;
+    border-radius: 3px;
+}
+
+.min{
+  top: 50px;
+  margin-left: -2px;
+  width: 4px;
+  height: 100px;
+  background-color:black;
+  transform-origin: center 100px;
+  border-radius: 2px;
+}
+
+.sec{
+  top:40px;
+  height:110px;
+  width:2px;
+  margin-left: -1px;
+  background-color:red;
+  transform-origin: center 110px;
+}

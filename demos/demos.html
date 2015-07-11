@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Demos</title>
+    <style>
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        display: flex;
+    }
+
+    #ifr {
+        margin: 0;
+        /*margin-left: 200px;*/
+
+        margin-bottom: -10px;
+        border-left: 1px solid black;
+    }
+
+    </style>
+    <!-- vnav -->
+    <style>
+    .nav {
+        overflow-x: hidden;
+        width: 200px;
+    }
+
+    .menu {
+        cursor: pointer;
+        color: white;
+        width: 400px;
+        height: 50px;
+        font-size: 0;
+        transition: all 232ms;
+    }
+
+    .menu .item {
+        display: inline-block;
+        width: 50%;
+        font-size: 14px;
+        box-sizing: border-box;
+        padding-left: 1.52em;
+        height: 100%;
+        line-height: 50px;
+    }
+
+    .menu .first {
+        background: black;
+    }
+
+    .menu .second {
+        background: rgb(255, 68, 34);
+    }
+
+    .menu:hover {
+        transition: all 232ms;
+        margin-left: -200px;
+    }
+
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <div class="menu" data-url="gradient.html">
+            <div class="item first">gradient</div>
+            <div class="item second">gradient</div>
+        </div>
+        <div class="menu" data-url="clock/clock.html">
+            <div class="item first">Clock1</div>
+            <div class="item second">Clock1</div>
+        </div>
+        <div class="menu" data-url="clock/clock_Update.html">
+            <div class="item first">Clock2</div>
+            <div class="item second">Clock2</div>
+        </div>
+    </div>
+    <iframe id="ifr" src="" frameborder="0"></iframe>
+    <script type="text/javascript">
+    window.onload = function(){
+        autoHeight();
+    }
+    var iframe = document.getElementById("ifr");
+    function autoHeight() {
+        if (iframe.Document) { //ie自有属性
+            iframe.style.height = iframe.Document.documentElement.scrollHeight;
+        } else if (iframe.contentDocument) { //ie,firefox,chrome,opera,safari
+            iframe.height = document.body.offsetHeight;
+            iframe.width = document.body.offsetWidth - 200;
+        }
+    }
+    var menus = document.querySelectorAll('.menu');
+    [].forEach.call(menus, function(el) {
+        el.addEventListener('click', function(e) {
+            var target = e.target.parentNode;
+            var url = target.getAttribute('data-url');
+            iframe.src = url;
+            autoHeight();
+        }, false);
+    });
+
+    </script>
+</body>
+
+</html>
+

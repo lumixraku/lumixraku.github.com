@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="[CSS Gradient]">
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+    <style>
+    .item {
+        float: left;
+        padding: calc(100%/3/2);
+    }
+    /*top和 -90deg*/
+
+    .test1 {
+        background: -webkit-linear-gradient(90deg, rgba(255, 0, 0, 0.1) 0%, rgba(255, 0, 0, 1) 100%);
+        /*下面两种效果一样*/
+
+        background: -webkit-linear-gradient(top, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 0.5) 50%, rgba(255, 0, 0, 0.2) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 0.5) 50%, rgba(255, 0, 0, 0.2) 100%);
+        background: -webkit-linear-gradient(0deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 0.5) 50%, rgba(255, 0, 0, 0.2) 100%);
+    }
+    /*百分比*/
+
+    .test2 {
+        /*这里没有100% 表示渐变到50%高度这个地方停止  从50%-100%(此阶段无渐变)都是第二个stop的颜色*/
+
+        background: -webkit-linear-gradient(-90deg, rgba(255, 0, 0, 0.1) 0%, rgba(255, 0, 0, 1) 50%);
+        /*相当于*/
+
+        background: -webkit-linear-gradient(-90deg, rgba(255, 0, 0, 0.1) 0%, rgba(255, 0, 0, 1) 50%, rgba(255, 0, 0, 1) 100%);
+    }
+
+    .test3 {
+        /*这里省去了0%起始位置  表示就是 0%- 50%(此阶段无渐变)都是使用第一个stop的颜色*/
+
+        background: -webkit-linear-gradient(rgba(255, 0, 0, 0.1) 50%, rgba(255, 0, 0, 2) 50%);
+        /*下面两种相同*/
+
+        background: -o-linear-gradient(rgba(255, 0, 0, 0.1) 50%, rgba(255, 0, 0, 2) 50%);
+        background: linear-gradient(rgba(255, 0, 0, 0.1) 0%, rgba(255, 0, 0, 0.1) 50%, rgba(255, 0, 0, 2) 50%, rgba(255, 0, 0, 2) 100%);
+    }
+
+    .test4 {
+        /*当然可以使用像素单位*/
+
+        background: linear-gradient(rgba(255, 0, 0, 0.1)25px, rgba(255, 0, 0, 0.9) 26px, rgba(255, 0, 0, 0.9) 50px, rgba(255, 0, 0, 0.1) 51px, rgba(255, 0, 0, 0.1) 75px, rgba(255, 0, 0, 0.9) 76px, rgba(255, 0, 0, 0.9) 100px);
+    }
+    /*一个background 可以使用多个gradient  用逗号隔开*/
+
+    .item--1 {
+        background-color: #fff;
+        /* background-image: -webkit-linear-gradient(90deg, transparent 50%, rgba(224, 65, 88, .6) 50%), -webkit-linear-gradient(0deg, transparent 50%, rgba(224, 65, 88, .6) 50%);  */
+
+        background: linear-gradient(90deg, transparent 50%, rgba(224, 65, 88, .6) 50%), linear-gradient(0deg, transparent 50%, rgba(224, 65, 88, .6) 50%);
+        background-size: 30px 30px;
+    }
+
+    .item--2 {
+        /*bottom 就是 90deg   top就是-90deg  他们表示开始渐变的位置   45deg是从左下角开始*/
+
+        background-image: -webkit-repeating-linear-gradient(45deg, white 10px, white 19px, #386ad8 20px, #386ad8 29px, wheat 30px, wheat 39px, #e3506a 40px, #e3506a 49px);
+        /* background-image: repeating-linear-gradient(45deg, transparent 10px, transparent 19px, #386ad8 20px, #386ad8 29px, transparent 30px, transparent 39px, #e3506a 40px, #e3506a 49px); */
+    }
+
+    .item--3 {
+        /*3要是难以理解的话 可以先看下面这行简单的*/
+
+        background-image: -webkit-radial-gradient(50% 50%, circle, #72a9eb 10%, rgba(0, 0, 0, 0) 70%);
+        /*上面那一行其实是简写(完整的写法总是有 0%  100%)*/
+
+        background-image: -webkit-radial-gradient(50% 50%, circle, #72a9eb 0%, #72a9eb 10%, rgba(0, 0, 0, 0) 70%, white 100%);
+        /*放射状的是 radial-gradient   25% 25% 表示开始位置(与左上角的距离)*/
+
+        background-image: radial-gradient(circle at 25% 25%, #72a9eb 10%, rgba(0, 0, 0, 0) 15%), radial-gradient(circle at 75% 75%, #72a9eb 10%, rgba(0, 0, 0, 0) 15%);
+        background-size: 30px 30px;
+    }
+
+    .item--4 {
+        /*看了这个再看下面的就很好理解了*/
+        /* background-image: -webkit-linear-gradient(45deg, red 25%, transparent 26%, transparent 74%, red 75%), -webkit-linear-gradient(135deg, #222 25%, transparent 26%, transparent 74%, #222 75%);
+    background-size: cover; */
+
+        background-image: linear-gradient(45deg, #222 25%, transparent 26%, transparent 74%, #222 75%), linear-gradient(-45deg, #222 25%, transparent 26%, transparent 74%, #222 75%);
+        background-size: 30px 30px;
+    }
+
+    .item--5 {
+        background-image: -webkit-linear-gradient(45deg, transparent 19%, #c57b30 20%, #c57b30 30%, transparent 31%), -webkit-linear-gradient(135deg, transparent 19%, #c57b30 20%, #c57b30 30%, transparent 31%), -webkit-linear-gradient(225deg, transparent 19%, #c57b30 20%, #c57b30 30%, transparent 31%);
+        background-image: linear-gradient(45deg, transparent 19%, #c57b30 20%, #c57b30 30%, transparent 31%), linear-gradient(-45deg, transparent 19%, #c57b30 20%, #c57b30 30%, transparent 31%), linear-gradient(-135deg, transparent 19%, #c57b30 20%, #c57b30 30%, transparent 31%);
+        background-size: 30px 30px;
+    }
+
+    .item--6 {
+        background-image: -webkit-repeating-radial-gradient(25% 25%, circle, transparent 19%, #a4d931 20%, #a4d931 34%, transparent 35%);
+        background-image: repeating-radial-gradient(circle at 25% 25%, transparent 19%, #a4d931 20%, #a4d931 34%, transparent 35%);
+        background-size: 90px 90px;
+    }
+
+    .item--7 {
+        background-color: #d33;
+        background-image: -webkit-linear-gradient(45deg, transparent 0%, rgba(0, 0, 0, .1) 100%);
+        background-image: linear-gradient(45deg, transparent 0%, rgba(0, 0, 0, .1) 100%);
+        background-size: 30px 30px;
+    }
+
+    .item--8 {
+        background-color: #b34be0;
+        background-image: -webkit-radial-gradient(15% 85%, circle, rgba(0, 0, 0, 0) 25%, #fff 26%, #fff 39%, rgba(0, 0, 0, 0) 40%), -webkit-radial-gradient(85% 15%, circle, rgba(0, 0, 0, 0) 25%, #fff 26%, #fff 39%, rgba(0, 0, 0, 0) 40%);
+        background-image: radial-gradient(circle at 15% 85%, rgba(0, 0, 0, 0) 25%, #fff 26%, #fff 39%, rgba(0, 0, 0, 0) 40%), radial-gradient(circle at 85% 15%, rgba(0, 0, 0, 0) 25%, #fff 26%, #fff 39%, rgba(0, 0, 0, 0) 40%);
+        background-size: 30px 30px;
+    }
+
+    .item--9 {
+        background-color: #6a45cd;
+        background-image: -webkit-radial-gradient(25% 25%, circle, #fff 25%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(75% 25%, circle, #fff 25%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(25% 75%, circle, #fff 25%, rgba(0, 0, 0, 0) 21%), -webkit-radial-gradient(75% 75%, circle, #fff 25%, rgba(0, 0, 0, 0) 21%);
+        background-image: radial-gradient(circle at 25% 25%, #fff 25%, rgba(0, 0, 0, 0) 21%), radial-gradient(circle at 75% 25%, #fff 25%, rgba(0, 0, 0, 0) 21%), radial-gradient(circle at 25% 75%, #fff 25%, rgba(0, 0, 0, 0) 21%), radial-gradient(circle at 75% 75%, #fff 25%, rgba(0, 0, 0, 0) 21%);
+        background-size: 50px 50px;
+    }
+
+    .item--10 {
+        background-image: -webkit-repeating-radial-gradient(50% 50%, circle, #5aca38 50%, transparent 55%);
+        background-image: repeating-radial-gradient(circle at 50% 50%, #5aca38 50%, transparent 55%);
+        background-size: 30px 30px;
+    }
+
+    .item--11 {
+        background-image: -webkit-repeating-radial-gradient(50% 50%, circle, transparent 25%, #e56b22 26%, #e56b22 33%, transparent 34%);
+        background-image: repeating-radial-gradient(circle at 50% 50%, transparent 25%, #e56b22 26%, #e56b22 33%, transparent 34%);
+        background-size: 30px 30px;
+    }
+
+    .item--12 {
+        background-color: #222;
+        background-image: -webkit-linear-gradient(45deg, transparent 19%, #fc237d 20%, #fc237d 30%, transparent 31%), -webkit-linear-gradient(135deg, transparent 19%, #fc237d 20%, #fc237d 30%, transparent 31%), -webkit-linear-gradient(45deg, transparent 29%, #fd88b8 30%, #fd88b8 40%, transparent 41%), -webkit-linear-gradient(135deg, transparent 29%, #fd88b8 30%, #fd88b8 40%, transparent 41%);
+        background-image: linear-gradient(45deg, transparent 19%, #fc237d 20%, #fc237d 30%, transparent 31%), linear-gradient(-45deg, transparent 19%, #fc237d 20%, #fc237d 30%, transparent 31%), linear-gradient(45deg, transparent 29%, #fd88b8 30%, #fd88b8 40%, transparent 41%), linear-gradient(-45deg, transparent 29%, #fd88b8 30%, #fd88b8 40%, transparent 41%);
+        background-size: 35px 35px;
+    }
+
+    </style>
+</head>
+
+<body>
+    <!-- FROM  http://codepen.io/tari/pen/MwOXWb -->
+    <div class="item test1">
+    </div>
+    <div class="item test2">
+    </div>
+    <div class="item test3">
+    </div>
+    <div class="item test4">
+    </div>
+    <div class="item item--1"></div>
+    <div class="item item--2"></div>
+    <div class="item item--3"></div>
+    <div class="item item--4"></div>
+    <div class="item item--5"></div>
+    <div class="item item--6"></div>
+    <div class="item item--7"></div>
+    <div class="item item--8"></div>
+    <div class="item item--9"></div>
+    <div class="item item--10"></div>
+    <div class="item item--11"></div>
+    <div class="item item--12"></div>
+</body>
+
+</html>
+

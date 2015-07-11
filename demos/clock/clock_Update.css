@@ -1,0 +1,97 @@
+.border {
+    position: relative;
+
+    width: 300px;
+    height: 300px;
+
+    border: 7px solid grey;
+    border-radius: 50%;
+    background-color: #eee8aa;
+}
+
+/*相比之前  全部使用 top left right bottom 0 这种居中   不用计算  更方便准确*/
+.center {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: black;
+}
+.big-degree,
+.small-degree {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+/*transform-origin:表示坐标原点*/
+/*坐标原点 相对于当前元素来说*/
+/*在不设置这个origin值得时候所有的刻度都在12点的位置  y轴偏移了150px 也就是圆心的位置  所以刻度都围绕圆心转*/
+
+.big-degree {
+    width: 0;
+    height: 0;
+    box-sizing: border-box;
+    border-width: 20px 4px 0 4px;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+}
+.small-degree {
+    width: 2px;
+    height: 7px;
+
+    border-radius: 1px;
+    background-color: black;
+}
+
+
+.hour,
+.min,
+.sec {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    margin: auto;
+}
+.hour {
+    width: 6px;
+    height: 70px;
+
+    transform: rotate(0deg) translateY(-35px);
+
+    background-color: black;
+}
+
+.min {
+    width: 4px;
+    height: 100px;
+
+    transform: rotate(0deg) translateY(-50px);
+
+    border-radius: 2px;
+    background-color: black;
+}
+
+.sec {
+    width: 2px;
+    height: 110px;
+    /*默认不translate移动的时候  是围绕DIV的中心转的(DIV对角线的中间点)*/
+    /*所以为了使sec绕着圆心转 先使sec的中心点和圆心重合*/
+    /*虽然translate了  但是旋转的中心点的位置还是没有translate时的位置*/
+    /*注意translate移动后并不影响排版  仍然是原有位置占据空间*/
+    /*只是元素相对与 原有位置浮了起来  */
+
+    transform: rotate(0deg) translateY(-55px);
+
+    background-color: red;
+}
