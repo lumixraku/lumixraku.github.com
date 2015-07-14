@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+
+    #img {
+        max-width: 100%;
+        max-height: 100%;
+        vertical-align: middle;
+        visibility: hidden;
+    }
+
+    .default-show {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        background-image: url('bar.jpg');
+        background-size: cover;
+        filter: blur(10px);
+        -webkit-filter: blur(10px);
+        opacity: 0.5;
+    }
+
+    #CanvasDoodle {
+        position: absolute;
+    }
+
+    </style>
+</head>
+
+<body>
+    <!-- 首先显示的图片在底层 -->
+    <div class="default-show">
+        <img id="img" src="bar.jpg" alt="">
+    </div>
+    <!-- 擦除后的图片在上层  默认是透明 -->
+    <canvas id="CanvasDoodle"></canvas>
+    <script>
+    function CanvasDoodle(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext("2d");
+        // this.imgSrc = canvas.getAttribute("imgsrc");
+        this.width = canvas.width;
+        this.height = canvas.height;
+        this.left = parseInt(canvas.style.left);
+        this.top = parseInt(canvas.style.top);
+        this.touchX = 0;
+        this.touchY = 0;
+        this.needDraw = false;
+        this.init();
+    }
+    CanvasDoodle.prototype = {
+        init: function() {
+            var _self = this;
+            var img = document.querySelector('#img');
+            var tempCanvas = document.createElement("canvas");
+            var tCtx = tempCanvas.getContext("2d");
+
+            //使用tempCanvas的原因
+            // http://stackoverflow.com/questions/13960564/resize-an-imagewith-javascript-for-use-inside-a-canvas-createpattern
+            //这样就可以修改 源img的大小了
+            _self.tempCanvas = tempCanvas;
+            tempCanvas.width = img.width;
+            tempCanvas.height = img.height;
+            tCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, img.width, img.height);
+
+            _self.canvas.setAttribute('width', img.width);
+            _self.canvas.setAttribute('height', img.height);
+
+            var pat = _self.ctx.createPattern(tempCanvas, "no-repeat");
+            //strokeStyle最常见的是设置绘制的颜色  strokeStyle="green";
+            //可以设置渐变色gradient=ctx.createLinearGradient(0,0,170,0);
+            //ctx.strokeStyle=gradient;
+            _self.ctx.strokeStyle = pat; //笔刷颜色
+            _self.ctx.lineCap = "round"; //笔刷形状
+            _self.ctx.lineJoin = "round"; //两条线交汇时 圆形边角
+            _self.ctx.lineWidth = "65";
+
+            this.canvas.addEventListener('mousedown', startDraw, false);
+            this.canvas.addEventListener('mousemove', draw, false);
+            this.canvas.addEventListener('mouseup', drawEnd, false);
+            this.canvas.addEventListener('touchstart', startDraw, false);
+            this.canvas.addEventListener('touchmove', draw, false);
+            this.canvas.addEventListener('touchend', drawEnd, false);
+
+            function startDraw(e) {
+                e.preventDefault();
+                _self.needDraw = true;
+                _self.ctx.beginPath();
+                var x = e.clientX || e.touches[0].clientX;
+                var y = e.clientY || e.touches[0].clientY;
+                _self.ctx.moveTo(x, y);
+            }
+
+            function draw(e) {
+                e.preventDefault();
+                if (_self.needDraw) {
+                    //第一种方案效果最好
+                    var x = e.clientX || e.touches[0].clientX;
+                    var y = e.clientY || e.touches[0].clientY;
+                    _self.ctx.lineTo(x, y);
+                    _self.ctx.stroke();
+                    //矩形剪切
+                    // _self.ctx.drawImage(_self.tempCanvas, x - 40 , y - 40 , 80, 80, x -40 , y - 40, 80, 80);
+                    //圆形剪切
+                    // _self.ctx.save();
+                    // _self.ctx.beginPath();
+                    // _self.ctx.arc(x, y, 25, 0, Math.PI * 2, true);
+                    // _self.ctx.closePath();
+                    // _self.ctx.clip();
+                    // _self.ctx.drawImage(_self.tempCanvas, x - 25, y - 25, 50, 50, x - 25, y - 25, 50, 50);
+                    // _self.ctx.restore();
+                }
+            }
+
+            function drawEnd(e) {
+                e.preventDefault();
+                _self.needDraw = false;
+            }
+
+        }
+    };
+    window.onload = function() {
+
+        var canvas = document.querySelector('#CanvasDoodle');
+        new CanvasDoodle(canvas);
+    }
+
+    </script>
+</body>
+
+</html>
+
