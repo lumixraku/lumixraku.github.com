@@ -113,7 +113,7 @@
             var img = createImg(url);
             prelist.appendChild(img);
             var formData = new FormData();
-            formData.append('files[]', f);
+            formData.append('file', f);
             uploading(img, formData);
         }
         function createImg(url){
@@ -130,15 +130,17 @@
         }
         function uploading(img, formData){
             var xhr = new XMLHttpRequest();
-            xhr.open("post", "upload.php");
-            xhr.onload = function(e){
-                console.log(e);
-            }
-            xhr.onprogress = function(e){
+            // 为确保正常执行，必须在调用open()方法之前添加onprogress事件处理程序
+            xhr.upload.onprogress = function(e){
                 if (e.lengthComputable) {
                     var percent = (e.loaded / e.total * 100 | 0) + "%";
+                    console.log(percent);
                     img.querySelector('.percent').innerText = percent;
                 }
+            }
+            xhr.open("post", "upload.php");
+            xhr.onload = function(e){
+                console.log('completed' + JSON.stringify(e));
             }
             xhr.send(formData);
         }
