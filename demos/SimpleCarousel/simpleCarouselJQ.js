@@ -29,7 +29,7 @@
                 "</a>",
                 "</div>"
             ].join(""));
-            if(!('ontouchstart' in window)){
+            if(!('ontouchstart' in self)){
                 self.append(btnWrapper);
             }
 
