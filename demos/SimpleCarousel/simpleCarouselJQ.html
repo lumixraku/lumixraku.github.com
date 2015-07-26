@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>Carousel</title>
+    <style>
+    html,body{
+        margin: 0;
+    }
+    .carousel {
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
+    .item {
+        float: left;
+        width: 100%;
+        height: 280px;
+        background: pink;
+    }
+
+    .item.item1 {
+        background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/1.jpg');
+        background-size: cover;
+    }
+
+    .item.item2 {
+        background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/2.jpg');
+        background-size: cover;
+    }
+
+    .item.item3 {
+        background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/3.jpg');
+        background-size: cover;
+    }
+
+    .item.item4 {
+        background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/4.jpg');
+        background-size: cover;
+    }
+
+    .slides {
+        /*padding: 0 30px;*/
+        position: relative;
+        overflow: hidden;
+    }
+
+    .slides ul {
+        position: relative;
+        left: 0;
+        top: 0;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        height: 200px;
+        /*此宽度需要计算 是li的个数*li宽度*/
+    }
+
+    .slides ul:after {
+        content: '.';
+        clear: both;
+        visibility: hidden;
+        display: block;
+    }
+    .carousel .indicator{
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        bottom: 10px;
+        width: 80px;
+        height: 20px;
+        font-size:  0;
+        z-index:3;
+        background-color: rgba(255,255,255,0.5);
+    }
+    .carousel .indicator .indi{
+        margin: 5px;
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        background-color: rgba(127,127,127,0.5);
+    }
+    .carousel .indicator .indi.active{
+        background-color: rgb(255,255,255);
+    }
+    .carousel .btn{
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        height: 60px;
+        width: 60px;
+        margin: auto;
+        border-radius: 50%;
+        background-color: rgba(255,255,255,0.5);
+        box-shadow: 0px 0px 5px 5px rgba(222,78,42,0.75);
+    }
+    .carousel .btn.prev{
+        left: -30px;
+    }
+    .carousel .btn.next{
+        right: -30px;
+    }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="simpleCarouselJQ.js"></script>
+</head>
+
+<body>
+    <div class="carousel">
+        <div class="indicator">
+            <div class="indi active"></div>
+            <div class="indi"></div>
+            <div class="indi"></div>
+            <div class="indi"></div>
+        </div>
+        <div class="slides">
+            <ul class="items">
+                <li class="item item1">
+                    slide1
+                </li>
+                <li class="item item2">
+                    slide2
+                </li>
+                <li class="item item3">
+                    slide3
+                </li>
+                <li class="item item4">
+                    slide4
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <script>
+        var rs = $('.carousel').Carousel();
+    </script>
+</body>
+
+</html>
+

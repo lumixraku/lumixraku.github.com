@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Carousel</title>
+    <style>
+    #carousel {
+        width: 255px;
+        height: 290px;
+        margin: 0 auto;
+    }
+
+    .item {
+        float: left;
+        width: 200px;
+        height: 200px;
+        background: pink;
+    }
+    .item.item1 {
+        background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/1.jpg');
+        background-size: cover;
+    }
+    .item.item2 {
+        background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/2.jpg');
+        background-size: cover;
+    }
+    .item.item3 {
+        background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/3.jpg');
+        background-size: cover;
+    }
+    .item.item4 {
+        background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/4.jpg');
+        background-size: cover;
+    }
+    #slides {
+        padding: 30px;
+        border: 1px solid black;
+        position: relative;
+        /*width:160px;*/
+        /*height:160px;*/
+        overflow: hidden;
+
+        border: 1px solid black;
+    }
+
+    #slides ul {
+        position: relative;
+        left: 0;
+        top: 0;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 800px;
+        /*此宽度需要计算 是li的个数*li宽度*/
+    }
+
+    #slides ul:after {
+        content: '.';
+        clear: both;
+        visibility: hidden;
+        display: block;
+    }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="simpleCarousel.js"></script>
+</head>
+
+<body>
+    <div id="carousel">
+        <div id="buttons"> <a href="#" id="prev">prev</a>
+            <a href="#" id="next">next</a>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div id="slides">
+            <ul>
+                <li class="item item1">
+                    slide1
+                </li>
+                <li class="item item2">
+                    slide2
+                </li>
+                <li class="item item3">
+                    slide3
+                </li>
+                <li class="item item4">
+                    slide4
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>left value and left indent
+    <div class="msg"></div>
+</body>
+
+
+</html>
+
