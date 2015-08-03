@@ -1,0 +1,179 @@
+body
+{
+    background-color:rgb(238,58,76);
+}
+
+.part1
+{
+    padding:10px;
+}
+
+.eyes
+{
+    width:370px;
+    margin:0 auto;
+}
+
+.eyes:after
+{
+    clear:both;
+    content:'.';
+    visibility:hidden;
+    height:0;
+    display:block;
+}
+
+.eye
+{
+    width:140px;
+    height:140px;
+    border:5px solid #FFF;
+    border-radius:150px;
+    overflow:hidden;
+/* Internet Explorer 10 */
+    display:-ms-flexbox;;
+    -ms-flex-pack:center;
+    -ms-flex-align:center;
+/* Firefox */
+    display:-moz-box;
+    -moz-box-pack:center;
+    -moz-box-align:center;
+/* Safari,Opera,and Chrome */
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+/* W3C */
+    display:box;
+    box-pack:center;
+    box-align:center;
+}
+
+.eye.left
+{
+    float:left;
+}
+
+.eye.right
+{
+    float:right;
+}
+.eye.center{
+    float:left;
+    border: none;
+    width: 70px;
+    position: relative;
+}
+
+.center_point{
+    width: 1px;
+    height: 1px;
+    background-color: black;
+}
+
+.eye .eye_center{
+    position: relative;
+}
+.eye_center .pupil{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.part2
+{
+    height:250px;
+    padding:10px;
+}
+
+.mouse_wrapper{
+    width:350px;
+    height:175px;
+    margin:0 auto;
+}
+
+.mouse
+{
+    background-color:#58151a;
+    width:350px;
+    height:175px;
+    margin:0 auto;
+    -webkit-border-bottom-right-radius:175px;
+    -webkit-border-bottom-left-radius:175px;
+    -moz-border-radius-bottomright:175px;
+    -moz-border-radius-bottomleft:175px;
+    border-bottom-right-radius:175px;
+    border-bottom-left-radius:175px;
+    overflow: hidden;
+    transition:all 0.5s;
+}
+
+.mouse_wrapper:hover .mouse{
+    transition:all 0.5s;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+
+}
+
+.teeth
+{
+    margin:0 auto;
+    width:150px;
+    background-color:#58151a;
+    transition: all 0.5s; /*当鼠标移开的时候 还原也需要动画*/
+}
+.mouse_wrapper:hover .teeth{
+    transition: all 0.5s;
+    margin-top: -200px;
+}
+
+.teeth:after
+{
+    clear:both;
+    content:'.';
+    visibility:hidden;
+    height:0;
+    display:block;
+}
+
+.tooth
+{
+    background-color:#FFF;
+    height:75px;
+    width:50px;
+}
+
+.tooth.left
+{
+    float:left;
+}
+.tooth.center{
+    background-color: transparent;
+    float: left;
+/* Internet Explorer 10 */
+    display:-ms-flexbox;;
+    -ms-flex-pack:center;
+    -ms-flex-align:center;
+/* Firefox */
+    display:-moz-box;
+    -moz-box-pack:center;
+    -moz-box-align:center;
+/* Safari,Opera,and Chrome */
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+/* W3C */
+    display:box;
+    box-pack:center;
+    box-align:center;    
+}
+.tooth.right
+{
+    float:right;
+}
+
