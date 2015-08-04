@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="Obj sort ==> table sort">
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            border:1px solid #cad9ea;
+            color:#666;
+        }
+        table thead {
+            border:1px solid #cad9ea;
+            padding:0 1em 0;
+            background-color: #cad9ea;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="tableSortJQ.js"></script>
+</head>
+
+<body>
+    <table id="tableTest" width="400" border="none">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>col1</td>
+                <td>COL2</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2</td>
+                <td>nnn</td>
+                <td>MANU</td>
+                <td>Z</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>eee</td>
+                <td>COLS</td>
+                <td>S</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>fff</td>
+                <td>KK</td>
+                <td>B</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>ddd</td>
+                <td>D</td>
+                <td>n</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>aaa</td>
+                <td>P</td>
+                <td>M</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+    $(function() {
+        var rs = $('#tableTest').tableSort();
+    });
+
+    </script>
+</body>
+
+</html>
+
