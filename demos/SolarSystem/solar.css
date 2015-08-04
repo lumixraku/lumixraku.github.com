@@ -1,0 +1,150 @@
+@charset "UTF-8";
+/*两种环绕方式 */
+/*推荐第一种  这一种是确定圆心 再确定半径  */
+@keyframes planet {
+  0% {
+    transform: rotate(0deg) translateY(150px); }
+  100% {
+    transform: rotate(360deg) translateY(150px); } }
+@keyframes satellite {
+  0% {
+    transform: rotate(0deg) translateY(50px); }
+  100% {
+    transform: rotate(360deg) translateY(50px); } }
+.solar-sys {
+  display: flex;
+  height: 600px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  background-color: #0b1c22;
+  justify-content: center;
+  align-items: center; }
+
+.sun {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 100px;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  background: red;
+  box-shadow: 0 0 0 99px #0b1c22, 0 0 0 100px rgba(255, 255, 255, 0.12); }
+  .sun:before {
+    content: ' ';
+    display: block;
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background-color: #0b1c22;
+    box-shadow: 40px 0 0 0 #0b1c22; }
+  .sun:after {
+    position: relative;
+    content: ' ';
+    display: block;
+    top: 18px;
+    left: -46px;
+    height: 20px;
+    width: 30px;
+    border-radius: 50%;
+    background: linear-gradient(to bottom, red 0%, red 50%, #0b1c22 51%, #0b1c22 100%); }
+
+.planet {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  animation: planet 15.8s infinite linear;
+  border-radius: 100%;
+  background: #3993c8;
+  transform: rotate(0deg) translateY(150px);
+  box-shadow: inset -6px -6px 0 0 #2774a1; }
+  .planet:before {
+    content: ' ';
+    display: block;
+    position: relative;
+    top: -10px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #2774a1;
+    box-shadow: -10px 15px 0 0 #2774a1; }
+
+.satellite {
+  width: 10px;
+  height: 10px;
+  animation: satellite 5.8s infinite linear;
+  border-radius: 100%;
+  background: grey;
+  transform: rotate(0deg) translateY(50px); }
+
+@keyframes planet2 {
+  0% {
+    transform: rotate(0deg); }
+  25% {
+    transform: rotate(90deg); }
+  50% {
+    transform: rotate(180deg); }
+  75% {
+    transform: rotate(270deg); }
+  100% {
+    transform: rotate(360deg); } }
+@keyframes sate2 {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+  padding: 100px 0 0 0;
+  border: 1px solid black;
+  background-color: #0b1c22; }
+
+.sun2 {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  background: red;
+  animation: circle1 5.8s infinite linear; }
+
+.planet2 {
+  position: relative;
+  top: 150px;
+  left: 25px;
+  width: 50px;
+  height: 50px;
+  /*再确定圆心*/
+  transform-origin: center -100px;
+  animation: planet2 11.8s infinite linear;
+  /*先确定好行星位置(也就是环上某一个点得位置)*/
+  border-radius: 100%;
+  background: pink; }
+
+.sate2 {
+  position: relative;
+  top: 60px;
+  left: 20px;
+  width: 10px;
+  height: 10px;
+  /*确定圆心*/
+  transform-origin: center -35px;
+  animation: sate2 1.8s infinite linear;
+  border-radius: 100%;
+  background: grey; }
+
+/*
+transform-origin: center 1px 相当于在B这个元素的x方向的50% 和 y方向的1px 处打了一个钉子
+然后就绕这个钉子转
+
+我们希望是绕着太阳 转 因此需要计算太阳 的中心点相对于行星左上角的偏移位置  也就是 50 50
+*/
+
+/*# sourceMappingURL=solar.css.map */
