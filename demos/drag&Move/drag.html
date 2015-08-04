@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="[drag ele myself]">
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+    <style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    #ele {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        position: absolute;
+        top: 200px;
+        left: 200px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="ele"></div>
+    <script>
+    var mouseX, mouseY;
+    var ele = document.getElementById('ele');
+
+    function addEvent(ele, type, handler) {
+        if (window.addEventListener) {
+            ele.addEventListener(type, handler, false);
+        } else if (window.attachEvent) {
+            ele.attachEvent(type, handler, false);
+        }
+    }
+
+    function removeEvent(ele, type, handler) {
+        if (window.removeEventListener) {
+            ele.removeEventListener(type, handler, false);
+        } else if (window.attachEvent) {
+            ele.detachEvent(type, handler, false);
+        }
+    }
+
+    addEvent(ele, 'mousedown', mouseDownHandler);
+
+    function mouseDownHandler(e) {
+        var padY = e.clientY - ele.offsetTop;
+        var padX = e.clientX - ele.offsetLeft;
+        addEvent(document.body, 'mousemove', mouseMoveHandler);
+        addEvent(document.body, 'mouseup', mouseUpHandler);
+
+        function mouseMoveHandler(e) {
+            console.log(e.clientY + '--' + padX);
+            ele.style.top = e.clientY - padY + 'px';
+            ele.style.left = e.clientX - padX + 'px';
+        }
+
+        function mouseUpHandler(e) {
+            removeEvent(document.body, 'mousemove', mouseMoveHandler);
+        }
+    }
+    </script>
+</body>
+
+</html>
