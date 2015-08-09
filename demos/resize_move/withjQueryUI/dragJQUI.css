@@ -1,0 +1,31 @@
+body {
+  background:url(http://pic.52mxp.com/site/tool/grid.png)
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: rgba(66,194,217,0.2);
+}
+
+.ui-resizable-helper { border: 1px dotted #00F;
+}
+
+.ui-resizable-handle {
+  background-color: rgba(0,0,0,.75);
+  width: 8px;
+  height: 8px;
+}
+
+.ui-resizable-se {
+  bottom: -5px;
+  right: -5px;
+}
+
+.button, .rectangle {
+  background: url(http://pic.52mxp.com/site/tool/line-h.png) top repeat-x,url(http://pic.52mxp.com/site/tool/line-h.png) bottom repeat-x,url(http://pic.52mxp.com/site/tool/line-v.png) left repeat-y,url(http://pic.52mxp.com/site/tool/line-v.png) right repeat-y;
+}
+
+.button {
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.5)!important;
+}

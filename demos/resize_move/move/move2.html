@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="description" content="[drag ele myself]">
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+    <style>
+        html, body{
+          /*height: 100%;*/
+        }
+        body{
+          margin:20px 20px 0 20px;
+        }
+        .ele{
+          width: 200px;
+          height: 200px;
+          background-color: pink;
+          position: absolute;
+          top:100px;
+          left: 100px;
+        }
+        .container{
+            height: 450px;
+            position: relative;
+            background-color: wheat;
+        }
+    </style>
+    <script src="jquery.js"></script>
+</head>
+
+<body>
+    <h1><a href="/demos/resize_move/move/move2.html">Mobile</a></h1>
+    <div class="container">
+        <div id="ele" class="ele"></div>
+        <div class="dragjQ"></div>
+    </div>
+</body>
+<script>
+;(function($){
+$.fn.drags = function(){
+    return this.each(function(){
+        var $el = $(this);
+        $el.on('mousedown touchstart', handleStart);
+        function handleStart(e){
+            $el.eventStartX = e.clientX || e.originalEvent.touches[0].clientX;
+            $el.eventStartY = e.clientY || e.originalEvent.touches[0].clientY;
+            //元素移动前的 top left值
+            $el.originX = $el[0].offsetLeft;
+            $el.originY = $el[0].offsetTop;
+            //鼠标可以移动范围
+            // jQ 中 offset() 得到的是相对于根元素的偏移
+            var $p = $el.parent();
+            $el.leftRange = $el.offset().left - $p.offset().left;
+            $el.topRange = $el.offset().top - $p.offset().top;
+            $el.bottomRange = $p.offset().top + $p.height() - $el.offset().top - $el.height();
+            $el.rightRange = $p.offset().left + $p.width() - $el.offset().left - $el.width();
+
+            $el.on('mousemove touchmove', handleMove);
+            $el.on('mouseup touchEnd releasecapture', handleUp);
+            function handleMove(e){
+                //nowX  nowY 是移动后的鼠标坐标 数值型
+                var nowX = e.clientX || e.originalEvent.touches[0].clientX;
+                var nowY = e.clientY || e.originalEvent.touches[0].clientY;
+                if(nowX - $el.eventStartX > $el.rightRange || $el.eventStartX - nowX > $el.leftRange){
+                    //超出范围什么都不做
+                    console.log('Xout');
+                }else {
+                    // jQ 的position 相当于 ele.offsetX  offsetY
+                    $el.css('left', $el.originX + (nowX - $el.eventStartX));
+                }
+                if(nowY - $el.eventStartY > $el.bottomRange || $el.eventStartY - nowY > $el.topRange){
+                    console.log('Yout');
+                }else{
+                    $el.css('top',$el.originY + (nowY - $el.eventStartY));
+                }
+            }
+            function handleUp(){
+                $el.off('mousemove touchmove', handleMove);
+            }
+        }
+    });
+}
+
+$.fn.resize = function(){
+    // return this.each()
+}
+})(jQuery);
+
+$('.ele').drags();
+</script>
+
+</html>
