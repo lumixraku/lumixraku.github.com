@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="[drag ele myself]">
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+    <style>
+        html, body{
+          height: 100%;
+        }
+        .ele{
+          width: 200px;
+          height: 200px;
+          background-color: pink;
+          position: absolute;
+          top:200px;
+          left: 200px;
+        }
+
+        .dragjQ {
+          width: 100px;
+          height: 100px;
+          line-height: 50px;
+          text-align: center;
+          background: red;
+          color: white;
+          position: absolute;
+          left: 20px;
+          top: 20px;
+        }
+    </style>
+    <script src="jquery.js"></script>
+</head>
+
+<body>
+    <div id="ele" class="ele"></div>
+    <div class="dragjQ">Dragme jQuery</div>
+</body>
+<script>
+var mouseX, mouseY;
+var ele = document.getElementById('ele');
+
+function addEvent(ele, type, handler) {
+    if (window.addEventListener) {
+        ele.addEventListener(type, handler, false);
+    } else if (window.attachEvent) {
+        ele.attachEvent(type, handler, false);
+    }
+}
+
+function removeEvent(ele, type, handler) {
+    if (window.removeEventListener) {
+        ele.removeEventListener(type, handler, false);
+    } else if (window.attachEvent) {
+        ele.detachEvent(type, handler, false);
+    }
+}
+
+addEvent(ele, 'mousedown', mouseDownHandler);
+
+function mouseDownHandler(e) {
+    var padY = e.clientY - ele.offsetTop;
+    var padX = e.clientX - ele.offsetLeft;
+    addEvent(document.body, 'mousemove', mouseMoveHandler);
+    addEvent(document.body, 'mouseup', mouseUpHandler);
+
+    function mouseMoveHandler(e) {
+        console.log(e.clientY + '--' + padX);
+        ele.style.top = e.clientY - padY + 'px';
+        ele.style.left = e.clientX - padX + 'px';
+    }
+
+    function mouseUpHandler(e) {
+        removeEvent(document.body, 'mousemove', mouseMoveHandler);
+    }
+}
+
+
+//==========================================
+//=====下面的代码来自 http://codepen.io/chriscoyier/pen/zdsty================================
+//这段代码显然有很多问题
+//一个是变量定义放在了 if else 中
+//再一个就是 在mousemove的过程中是使用 $('.draggable')去获取 待移动的元素
+// 如果之前有元素含有 draggable 这个属性就有问题
+// 不过原理差不多的  都是在父元素上绑定 mousemove 和 mouseup
+(function($) {
+    $.fn.drags = function(opt) {
+
+        opt = $.extend({
+            handle: "",
+            cursor: "move"
+        }, opt);
+
+        if (opt.handle === "") {
+            var $el = this;
+        } else {
+            var $el = this.find(opt.handle);
+        }
+
+        return $el.css('cursor', opt.cursor).on("mousedown", function(e) {
+            if (opt.handle === "") {
+                var $drag = $(this).addClass('draggable');
+            } else {
+                var $drag = $(this).addClass('active-handle').parent().addClass('draggable');
+            }
+            var z_idx = $drag.css('z-index'),
+                drg_h = $drag.outerHeight(),
+                drg_w = $drag.outerWidth(),
+                pos_y = $drag.offset().top + drg_h - e.pageY,
+                pos_x = $drag.offset().left + drg_w - e.pageX;
+            $drag.css('z-index', 1000).parents().on("mousemove", function(e) {
+                $('.draggable').offset({
+                    top: e.pageY + pos_y - drg_h,
+                    left: e.pageX + pos_x - drg_w
+                }).on("mouseup", function() {
+                    $(this).removeClass('draggable').css('z-index', z_idx);
+                });
+            });
+            e.preventDefault(); // disable selection
+        }).on("mouseup", function() {
+            if (opt.handle === "") {
+                $(this).removeClass('draggable');
+            } else {
+                $(this).removeClass('active-handle').parent().removeClass('draggable');
+            }
+        });
+
+    }
+})(jQuery);
+
+$('div').drags();
+</script>
+
+</html>
