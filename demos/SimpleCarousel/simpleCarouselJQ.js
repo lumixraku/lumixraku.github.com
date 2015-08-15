@@ -138,11 +138,11 @@
                     }else{
                         active.next().addClass('active');
                     }
-                }else if( type === 'prev'){
+                }else if( type == 'prev'){
                     if(active.index() == first){
                         self.find('.indi:last').addClass('active');
                     }else{
-                        self.find('.indi:last').prev().addClass('active');
+                        active.prev().addClass('active');
                     }
                 }
 
