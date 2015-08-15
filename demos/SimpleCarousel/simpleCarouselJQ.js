@@ -10,7 +10,7 @@
         return this.each(function(){
             var self = $(this);
             var speed = cfg && cfg.speed || 500;
-            var interval = cfg && cfg.interval || 6000;
+            var interval = cfg && cfg.interval || 3000;
             var itemName = cfg && cfg.itemName || 'item';
             var itemWidth = self.outerWidth();
             var originLeft = itemWidth * (-1);
@@ -28,7 +28,7 @@
                 "",
                 "</a>",
                 "</div>"
-            ].join(""));
+            ].join(''));
             if(!('ontouchstart' in self)){
                 self.append(btnWrapper);
             }
@@ -58,6 +58,7 @@
             var touchstartX;
             var touchNowX;
             self.on('touchstart', function(e){
+                clearInterval(run);
                 e.preventDefault();
                 touchstartX = e.originalEvent.touches[0].clientX;
             })
@@ -72,11 +73,12 @@
                     if(touchNowX - touchstartX < 0){
                         moveNext();
                     }else{
-                        movePrev()
+                        movePrev();
                     }
                 }else {
                     putBack();
                 }
+                run = setInterval(rotate, interval);
             })
 
             function putBack(){
