@@ -105,7 +105,21 @@
     .carousel .btn.next{
         right: -30px;
     }
-
+    .goto{
+        margin: 0 auto;
+        width: 70px;
+        padding: 20px;
+        text-align: center;
+        margin-top: 50px;
+        text-shadow: 0 -1px 1px rgba(0,0,0,.25);
+        box-shadow: 0 1px 3px rgba(0,0,0,.5);
+        -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.5);
+        background-color: #5bc0de;
+        color: #fff;
+        font-size: 9pt;
+        font-weight: bold;
+        cursor: pointer;
+    }
     </style>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="simpleCarouselJQ.js"></script>
@@ -137,8 +151,14 @@
             <div class="clear"></div>
         </div>
     </div>
+    <div>
+        <div class="goto">去移动版</div>
+    </div>
     <script>
         var rs = $('.carousel').Carousel();
+        $('.goto').on('click', function(){
+            window.parent.location = '/demos/SimpleCarousel/SimpleCarouselJQ.html';
+        })
     </script>
 </body>
 
