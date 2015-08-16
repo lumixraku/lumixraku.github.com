@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="John Doe">
+  
+  
+    <meta name="description" content="title:提高页面访问速度
+参考https://developer.yahoo.com/performance/rules.htmlhttp://www.ghugo.com/performance-rules-web-site/(中文)
+
+减少请求
+图片合并
+HTTP1.1 Keep-Alive
+
+GET缓存GET 一个相同的URL 只有一个结果[相同是指 整个URL字符串完全匹配]所以 第二次">
+  
+  <meta name="description" content="title:提高页面访问速度
+参考https://developer.yahoo.com/performance/rules.htmlhttp://www.ghugo.com/performance-rules-web-site/(中文)
+
+减少请求
+图片合并
+HTTP1.1 Keep-Alive
+
+GET缓存GET 一个相同的URL 只有一个结果[相同是指 整个URL字符串完全匹配]所以 第二次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2015/08/16/page_load/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:提高页面访问速度
+参考https://developer.yahoo.com/performance/rules.htmlhttp://www.ghugo.com/performance-rules-web-site/(中文)
+
+减少请求
+图片合并
+HTTP1.1 Keep-Alive
+
+GET缓存GET 一个相同的URL 只有一个结果[相同是指 整个URL字符串完全匹配]所以 第二次">
+<meta property="og:image" content="http://pic3.zhimg.com/ad46b512903694303423954df74aafd6_r.jpg">
+<meta property="og:updated_time" content="2015-08-16T06:33:17.179Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:提高页面访问速度
+参考https://developer.yahoo.com/performance/rules.htmlhttp://www.ghugo.com/performance-rules-web-site/(中文)
+
+减少请求
+图片合并
+HTTP1.1 Keep-Alive
+
+GET缓存GET 一个相同的URL 只有一个结果[相同是指 整个URL字符串完全匹配]所以 第二次">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Hexo</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+        <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/page_load/">
+  <time datetime="2015-08-16T06:33:17.179Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h2 id="title:提高页面访问速度">title:提高页面访问速度</h2><blockquote>
+<p>参考<br><a href="https://developer.yahoo.com/performance/rules.html" target="_blank" rel="external">https://developer.yahoo.com/performance/rules.html</a><br><a href="http://www.ghugo.com/performance-rules-web-site/(中文" target="_blank" rel="external">http://www.ghugo.com/performance-rules-web-site/(中文</a>)</p>
+</blockquote>
+<h3 id="减少请求">减少请求</h3><ul>
+<li>图片合并</li>
+<li>HTTP1.1 Keep-Alive</li>
+</ul>
+<h3 id="GET缓存">GET缓存</h3><p>GET 一个相同的URL 只有一个结果[相同是指 整个URL字符串完全匹配]<br>所以 第二次访问的时候 如果 URL字符串没变化 浏览器是 直接拿出了第一次访问的结果</p>
+<blockquote>
+<p>若我希望GET每次都是新的结果  则需加上 ？+new Date();，[总之就是使每次访问的URL字符串不一样的]</p>
+</blockquote>
+<p>对于AJAX的GET请求还可以这样</p>
+<blockquote>
+<ul>
+<li>setRequestHeader(“If-Modified-Since”,”0”);</li>
+<li>setRequestHeader(“Cache-Control”,”no-cache”);</li>
+</ul>
+</blockquote>
+<h3 id="GET_POST究竟有什么区别">GET POST究竟有什么区别</h3><blockquote>
+<p>参考<a href="http://www.zhihu.com/question/31640769" target="_blank" rel="external">http://www.zhihu.com/question/31640769</a></p>
+</blockquote>
+<p>一般来说 GET 传送数据量有限(某些ie版本的限制)，安全性低，会被缓存，而POST反之。<br><img src="http://pic3.zhimg.com/ad46b512903694303423954df74aafd6_r.jpg" alt="enter image description here"></p>
+<ul>
+<li>请求中的URL可以被手动输入</li>
+<li>请求中的URL可以被存在书签里，或者历史里，或者快速拨号里面，或者分享给别人。(搜索引擎，可以用get分享搜索结果)</li>
+<li>请求中的URL是可以被搜索引擎收录的。</li>
+<li>带云压缩的浏览器，比如Opera mini/Turbo 2, 只有GET才能在服务器端被预取的。</li>
+<li>请求中的URL可以被缓存。</li>
+</ul>
+<p>get表达的是一种幂等的[也就是请求1次和n次是一样的]，只读的，纯粹的操作，即它除了返回结果不应该会产生其它副作用（如写数据库），因此绝大部分get请求（通常超过90%）都直接被CDN缓存了，这能大大减少web服务器的负担。</p>
+<p>既然GET是幂等 所以用来添加删除之类的操作是不合适的</p>
+<h4 id="为什么GET不安全">为什么GET不安全</h4><p>显然Chrome Fiddler等都是可以看到POST请求中的数据的  所以说GET的请求在地址栏中会被看到所以不安全这个说法并不成立<br>当然了POST也只比GET安全那么一点点而已 所以HTTPS还是很有必要的</p>
+<ul>
+<li>GET请求会被历史记录</li>
+<li>服务器会在日志中记录所有的GET请求  linux中是 access_log  windows中是access.log这个文件, 而日志并没有记录POST</li>
+</ul>
+<blockquote>
+<p>MORE<br><a href="http://www.w3schools.com/tags/ref_httpmethods.asp" target="_blank" rel="external">http://www.w3schools.com/tags/ref_httpmethods.asp</a><br><a href="http://stackoverflow.com/questions/198462/is-either-get-or-post-more-secure-than-the-other" target="_blank" rel="external">http://stackoverflow.com/questions/198462/is-either-get-or-post-more-secure-than-the-other</a></p>
+</blockquote>
+<h3 id="预加载">预加载</h3><h3 id="后加载">后加载</h3><h3 id="使用GET来完成AJAX请求">使用GET来完成AJAX请求</h3><h3 id="服务端">服务端</h3><ul>
+<li>使用内容分发网络CDN<br>是由一系列分散到各个不同地理位<br>置上的Web服务器组成的，它提高了网站内容的传输速度.拥有最少网络跳数（network hops）和响应速度最快的服务器会被选定</li>
+<li>为文件头指定Expires或Cache-Control</li>
+<li>Gzip压缩文件内容</li>
+<li>配置ETag</li>
+</ul>
+<h3 id="css">css</h3><ul>
+<li><p>样式表置顶<br>如果将样式表放在底部，浏览器会拒绝渲染已经下载的网页，因为大多数浏览器在实现时都努力避免重绘</p>
+</li>
+<li><p>避免使用CSS表达式（Expression）</p>
+</li>
+<li>使用外部文件JavaScript和CSS<br>外部文件可以提高页面速度，因为JavaScript和CSS文件都能在浏览,器中产生缓存。内置在HTML文档中的JavaScript和CSS则会在每次请求中随HTML文档重新下载</li>
+<li>压缩JavaScript和CSS</li>
+<li>用link代替@import<br>前面的最佳实现中提到 CSS 应该放置在顶端以利于有序加载呈现 因为@import规则有可能胡导致白屏现象，即使把@import规则放在文档的head标签中也是如此。import中的css将会后加载</li>
+<li>避免使用滤镜</li>
+</ul>
+<h3 id="JS">JS</h3><ul>
+<li>把脚本置于页面底部<br>脚本带来的问题就是它阻止页面平行下载 HTTP1.1建议 每个主机名的并行下载内容不超过两个。如果你的图片放在多个主机名上，你可以在每个并行下载中同时下载 2个以上的文件。但是当下载脚本时，浏览器就不会同时下载其它文件了，即便是主机名不相同。</li>
+<li>削减JavaScript和CSS</li>
+<li>减少DOM访问</li>
+<li>开发智能事件处理程序<br>如果你在一个div中有 10 个按钮，你只需要在div上附加一次事件句柄就可<br>以了，而不用去为每一个按钮增加一个句柄。事件冒泡时你可以捕捉到事件并判断出是<br>哪个事件发出的。</li>
+</ul>
+<h3 id="其它">其它</h3><ul>
+<li>减小Cookie的体积<br>注意在适应级别的域名上设置 coockie 以便使子域名不受影响</li>
+<li>对静态内容的请求是无coockie的请求。创建一个子域名并用他来存放所有静态内容。</li>
+<li>favicon.ico 要小而且可缓存</li>
+</ul>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="/">John Doe</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

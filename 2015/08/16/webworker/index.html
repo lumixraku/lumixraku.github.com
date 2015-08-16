@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>WebWorker | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="John Doe">
+  
+  
+    <meta name="description" content="WebWorker 是什么?
+为 JavaScript 引入线程技术  不必再用  setTimeout()、setInterval()、XMLHttpRequest 来模拟并行
+Worker 利用类似线程的消息传递实现并行。这非常适合您确保对 UI 的刷新、性能以及对用户的响应。
+Web Worker 的三大主要特征：能够长时间运行（响应），理想的启动性能以及理想的内存消耗。
+
+它允许在 Web">
+  
+  <meta name="description" content="WebWorker 是什么?
+为 JavaScript 引入线程技术  不必再用  setTimeout()、setInterval()、XMLHttpRequest 来模拟并行
+Worker 利用类似线程的消息传递实现并行。这非常适合您确保对 UI 的刷新、性能以及对用户的响应。
+Web Worker 的三大主要特征：能够长时间运行（响应），理想的启动性能以及理想的内存消耗。
+
+它允许在 Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebWorker">
+<meta property="og:url" content="http://yoursite.com/2015/08/16/webworker/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="WebWorker 是什么?
+为 JavaScript 引入线程技术  不必再用  setTimeout()、setInterval()、XMLHttpRequest 来模拟并行
+Worker 利用类似线程的消息传递实现并行。这非常适合您确保对 UI 的刷新、性能以及对用户的响应。
+Web Worker 的三大主要特征：能够长时间运行（响应），理想的启动性能以及理想的内存消耗。
+
+它允许在 Web">
+<meta property="og:updated_time" content="2015-08-16T06:37:04.930Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebWorker">
+<meta name="twitter:description" content="WebWorker 是什么?
+为 JavaScript 引入线程技术  不必再用  setTimeout()、setInterval()、XMLHttpRequest 来模拟并行
+Worker 利用类似线程的消息传递实现并行。这非常适合您确保对 UI 的刷新、性能以及对用户的响应。
+Web Worker 的三大主要特征：能够长时间运行（响应），理想的启动性能以及理想的内存消耗。
+
+它允许在 Web">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Hexo</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+        <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/webworker/">
+  <time datetime="2015-08-16T06:37:04.930Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">WebWorker</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h3 id="WebWorker_是什么?">WebWorker 是什么?</h3><ul>
+<li>为 JavaScript 引入线程技术  不必再用  setTimeout()、setInterval()、XMLHttpRequest 来模拟并行</li>
+<li>Worker 利用类似线程的消息传递实现并行。这非常适合您确保对 UI 的刷新、性能以及对用户的响应。</li>
+<li>Web Worker 的三大主要特征：能够长时间运行（响应），理想的启动性能以及理想的内存消耗。</li>
+</ul>
+<p>它允许在 Web 程序中并发执行多个 JavaScript 脚本，每个脚本执行流都称为一个线程，彼此间互相独立，并且有浏览器中的 JavaScript 引擎负责管理。这将使得线程级别的消息通信成为现实。使得在 Web 页面中进行多线程编程成为可能。</p>
+<p>专用 Web Worker (Dedicated Web Worker) 提供了一个简单的方法使得 web 内容能够在后台运行脚本。一旦 worker 创建后，它可以向由它的创建者指定的事件监听函数传递消息，这样该 worker 生成的所有任务就都会接收到这些消息。</p>
+<h3 id="WebWorker_的类型">WebWorker 的类型</h3><p>一个是专用线程 Dedicated Worker(普通的Worker)，一个是共享 Shared Worker。<br>后来又有了Service Worker</p>
+<h3 id="Webworker的支持情况">Webworker的支持情况</h3><p><a href="http://caniuse.com/#search=shared" target="_blank" rel="external">http://caniuse.com/#search=shared</a><br>Service Worker 支持情况不佳 Chrome 40+ 才支持</p>
+<h3 id="使用入门">使用入门</h3><p>和windows线程通信一个机制  发消息 接收消息</p>
+<blockquote>
+<p>参考<br><a href="http://www.html5rocks.com/zh/tutorials/workers/basics/" target="_blank" rel="external">http://www.html5rocks.com/zh/tutorials/workers/basics/</a><br><a href="http://www.ibm.com/developerworks/cn/web/1112_sunch_webworker/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/web/1112_sunch_webworker/</a><br><a href="http://tutorials.jenkov.com/html5/web-workers.html" target="_blank" rel="external">http://tutorials.jenkov.com/html5/web-workers.html</a></p>
+</blockquote>
+<h2 id="Debug">Debug</h2><p>chrome://inspect/#workers   Worker Debug页<br>通过这个页面可以确定</p>
+<h3 id="专用Worker_Dedicated_Worker">专用Worker  Dedicated Worker</h3><p>创建一个新的 worker 十分简单。你所要做的就是调用 Worker() 构造函数，指定一个要在 worker 线程内运行的脚本的 URI，如果你希望能够收到 worker 的通知，可以将 worker 的 onmessage 属性设置成一个特定的事件处理函数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myWorker = <span class="keyword">new</span> Worker(<span class="string">"my_task.js"</span>);</span><br><span class="line">myWorker.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">oEvent</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Called back by the worker!\n"</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>或者，你也可以使用 addEventListener()：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myWorker = <span class="keyword">new</span> Worker(<span class="string">"my_task.js"</span>);</span><br><span class="line">myWorker.addEventListener(<span class="string">"message"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">oEvent</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Called back by the worker!\n"</span>);</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br><span class="line">    myWorker.postMessage(<span class="string">""</span>); <span class="comment">// start the worker.</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>停止 Worker 的方法有两种：在主网页中调用 worker terminate()，或在 Worker 本身内部调用 self.close()。</p>
+</blockquote>
+<h3 id="Worker的作用域">Worker的作用域</h3><p>self 和 this 指的都是 Worker 的全局作用域<br>因此下面两种方式是相同的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">self.addEventListener(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">      self.postMessage(<span class="string">'Unknown command: '</span> + data.msg);</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br><span class="line">addEventListener(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">      postMessage(<span class="string">'WORKER STARTED: '</span> + data.msg);</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>一些Demo参考 <a href="https://github.com/greenido/Web-Workers-Examples-" target="_blank" rel="external">https://github.com/greenido/Web-Workers-Examples-</a>   (SharedWorker也包含在内)</p>
+</blockquote>
+<h3 id="import_和_子worker(Chrome并不支持)">import 和 子worker(Chrome并不支持)</h3><p>import可以引入其他的JS</p>
+<h3 id="WebWorker限制">WebWorker限制</h3><ul>
+<li>DOM（非线程安全）</li>
+<li>window 对象</li>
+<li>document 对象</li>
+<li>parent 对象</li>
+</ul>
+<h3 id="SharedWorker">SharedWorker</h3><blockquote>
+<p>参考<br><a href="https://github.com/mdn/simple-shared-worker" target="_blank" rel="external">https://github.com/mdn/simple-shared-worker</a><br><a href="http://tutorials.jenkov.com/html5/web-workers.html" target="_blank" rel="external">http://tutorials.jenkov.com/html5/web-workers.html</a><br>An ordinary web worker is only accessible by the page that created it. If you want to share a web worker between multiple pages, you can use a SharedWorker. A SharedWorker is accessible by all pages that are loaded from the same origin (domain).</p>
+</blockquote>
+<p>The SharedWorker interface represents a specific kind of worker that can be accessed from several browsing contexts, such as several windows, iframes or even workers. They implement an interface different than dedicated workers and have a different global scope,</p>
+<blockquote>
+<p>If SharedWorker can be accessed from several browsing contexts, all those browsing contexts must share the exact same origin (same protocol, host and port).</p>
+</blockquote>
+<h3 id="创建一个SharedWorker">创建一个SharedWorker</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> worker = <span class="keyword">new</span> SharedWorker(<span class="string">"/html5/web-worker-shared.js"</span>);</span><br><span class="line">worker.port.addEventListener(<span class="string">"message"</span>,</span><br><span class="line">        <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">            alert(event.data);</span><br><span class="line">        &#125;</span><br><span class="line">        , <span class="literal">false</span></span><br><span class="line">);</span><br><span class="line">worker.port.start();</span><br></pre></td></tr></table></figure>
+<p>或者使用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">worker.port.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    log.textContent = e.data;</span><br><span class="line">    <span class="built_in">console</span>.log(e.data);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>此种方式不需要worker.port.start();  但是存在事件被覆盖的问题</p>
+<h3 id="实现SharedWorker">实现SharedWorker</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">onconnect = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> port = e.ports[<span class="number">0</span>];</span><br><span class="line">    port.postMessage(<span class="string">'A new connection! The current connection number is '</span> + connect_number);</span><br><span class="line">    port.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> instruction = e.data.instruction || e.data;</span><br><span class="line">        <span class="keyword">var</span> results = execute_instruction(instruction);</span><br><span class="line">        port.postMessage(<span class="string">'...'</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    port.start();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Demo参考<a href="https://github.com/mdn/simple-shared-worker" target="_blank" rel="external">https://github.com/mdn/simple-shared-worker</a></p>
+</blockquote>
+<h3 id="SharedWorker_可以做什么">SharedWorker 可以做什么</h3><ul>
+<li>load further scripts with importScripts()</li>
+<li>attach error handlers, and</li>
+<li>run the port.close() method to prevent further communication on a specific port.</li>
+</ul>
+<p>Shared web workers probably won’t be a viable technology for a couple of years, but they raise exciting opportunities for the future of JavaScript development. Let’s hope browser vendors can supply a few decent tracing and debugging tools!</p>
+<h3 id="WebWorker和SharedWorker区别">WebWorker和SharedWorker区别</h3><p>Very basic distinction: a Worker can only be accessed from the script that created it, a SharedWorker can be accessed by any script that comes from the same domain.</p>
+<p>SharedWorker’s seem to have more functionality then Worker.<br>Among that functionality is :</p>
+<ul>
+<li>A shared global scope. All SharedWorker instances share a single global scope.</li>
+<li>A shared worker can work with multiple connections. It posts messages to ports to allow communication between various scripts.</li>
+<li>A dedicated worker on the other hand is simply tied to its main connection and cannot post messages to other scripts (workers).</li>
+</ul>
+<h3 id="ServiceWorker">ServiceWorker</h3><p>A Service Worker inherits all the limitations and behaviors available to HTML5 Shared Workers. It can create XMLHttpRequests, use WebSockets, receive messages from windows and the browser, use IndexedDB, and post messages to other windows.</p>
+<p>Service workers are expected to provide a function at global scope, named onconnect. The browser will invoke onconnect at startup time, passing in an event. The worker should access the ports property of this event to extract a stable communication port back to the browser, and persist it for the life of the worker</p>
+<blockquote>
+<p>参考<br><a href="http://www.w3ctech.com/topic/866" target="_blank" rel="external">http://www.w3ctech.com/topic/866</a><br><a href="http://www.html5rocks.com/en/tutorials/service-worker/introduction/" target="_blank" rel="external">http://www.html5rocks.com/en/tutorials/service-worker/introduction/</a><br><a href="http://www.html5online.com.cn/articles/2015051201.html" target="_blank" rel="external">http://www.html5online.com.cn/articles/2015051201.html</a><br><a href="https://github.com/csbun/blog/blob/master/_posts/2015-06-02-service-worker.markdown" target="_blank" rel="external">https://github.com/csbun/blog/blob/master/_posts/2015-06-02-service-worker.markdown</a></p>
+</blockquote>
+<h4 id="我的Demo">我的Demo</h4><p><a href="https://github.com/lumixraku/repo/tree/master/WebWorker/ServiceWorker" target="_blank" rel="external">https://github.com/lumixraku/repo/tree/master/WebWorker/ServiceWorker</a></p>
+<h3 id="ServiceWorker_和_SharedWorker">ServiceWorker 和 SharedWorker</h3><p>The ServiceWorker is like a SharedWorker in that it:</p>
+<ul>
+<li>Runs in its own global script context (usually in its own thread)</li>
+<li>Isn’t tied to a particular page</li>
+<li>Has no DOM access</li>
+</ul>
+<p>Unlike a SharedWorker, it:</p>
+<ul>
+<li>Can run without any page at all</li>
+<li>Can terminate when it isn’t in use, and run again when needed (e.g., it’s event-driven)</li>
+<li>Has a defined upgrade model</li>
+<li>Is HTTPS only (more on that in a bit)<blockquote>
+<p>关于第一点  如果所有引用SharedWorker的页面都关了话  SharedWorker就不存在了  ServiceWorker不是</p>
+</blockquote>
+</li>
+</ul>
+<p><a href="http://stackoverflow.com/questions/28882289/service-worker-vs-shared-worker" target="_blank" rel="external">http://stackoverflow.com/questions/28882289/service-worker-vs-shared-worker</a></p>
+<p>A service worker has additional functionality beyond what’s available in shared workers, and it has a longer lifespan<br>serviceworker要比SharedWorker多一些功能 且有更长的生命周期<br>service和shared一样可以对 message 作响应<br>service还可以处理fetch事件(可以拦截网络请求)  以及从cache中做出响应<br>还有个区别就是生命周期<br>一个service注册到一个域名后  就是永久注册 (如果相关文件改变了 service就会更新)</p>
+<h3 id="We_can_use_ServiceWorker:">We can use ServiceWorker:</h3><ul>
+<li>To make sites work faster and/or offline using network intercepting</li>
+<li>As a basis for other ‘background’ features such as push messaging and background synchronization</li>
+</ul>
+<p>现在service worker的最佳使用场景是提供离线能力。开发人员可以注册一个service worker作为网络代理提供网络拦截。即使没有可用的网络时，这个代理也能够对缓存的数据和资源或者是已经生成的内容作出响应</p>
+<p>和现有的HTML5数据缓存功能有很大的不同，service worker的离线能力是可编程的。Russell称它是一个：“让你做出选择去做哪些事的、可编程的、浏览器内置的代理”。由于service worker运行于后台，它和当前的Web页面完全独立</p>
+<blockquote>
+<p>由于安全问题，ServiceWorker 只能在 HTTPS 环境下运行, 另外localhost 也OK。</p>
+</blockquote>
+<h3 id="更新service_worker">更新service worker</h3><p>如果sw有更新  下次访问的时候就会重新下载sw 且重新触发install<br>但是此时旧的worker仍然在管理着cache  新sw处于waiting状态<br>现有页面关闭后旧的sw就会被清掉  新sw接管 触发activate事件</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="/">John Doe</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

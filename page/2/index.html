@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="John Doe">
+  
+  
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Hexo</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+        <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content">
+
+
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/regexp1/">
+  <time datetime="2015-08-16T06:22:08.254Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/08/16/regexp1/">正则表达式必知必会</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>推荐先读  正则表达式必知必会 这本书</p>
+<h3 id="?">?</h3><p>放在不定量词后面(放在 * + 这样的量词后面)的? 是表示非贪婪匹配<br>贪婪匹配<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span> = <span class="string">"AB1111BA111BA"</span>;</span><br><span class="line">reg = /AB[\s\S]+BA/;</span><br><span class="line">console.<span class="built_in">log</span><span class="params">(str.match<span class="params">(reg)</span>)</span>;</span><br></pre></td></tr></table></figure></p>
+<p>非贪婪匹配<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span> = <span class="string">"AB1111BA111BA"</span>;</span><br><span class="line">reg = /AB[\s\S]+?BA/;</span><br><span class="line">console.<span class="built_in">log</span><span class="params">(str.match<span class="params">(reg)</span>)</span>;</span><br></pre></td></tr></table></figure></p>
+<p>放在字符后面的?表示出现0~1次<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">https</span>?/.exec(<span class="string">'http://xxxx'</span>) 得到<span class="keyword">http</span></span><br><span class="line">/<span class="keyword">https</span>?/.exec(<span class="string">'https://xxxx'</span>) 得到<span class="keyword">https</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="[]">[]</h3><p>[]是把多个字符定义为一个集合  表示只能出现下面字符之一<br>[abc] 表示这里要么a要么b要么c<br>同理 [img|bmp] 表示出现的字符只能是 |  i m g b p 这几个字母中的一个<br>但是我想匹配 img 或者 bmp  则是用 |<br>(img|bmp)  因为|会把所在()内的所有的左边和右边都当做一个整体</p>
+<p>当[]和? 一起用的时候 应该 []?</p>
+<h3 id="边界">边界</h3><p>B针对非单词的边界 /\B-\B/.exec(‘xcxc wd - cdsd —‘)<br>b针对单词的边界(单词: 字母 数字 下划线) /\b<em>\b/.exec(‘xcxc </em> wd - cdsd —‘)<br>PS /\b-\b/.exec(‘xcxc _ wd - cdsd —‘)这样得不到结果</p>
+<h3 id="^_开始和非">^ 开始和非</h3><p>^ 只有在 [^reg] 这样的情况下才表示非<br>其他的时候表示开头<br>例如我想匹配非b开头的房间<br>/\b^b\d+\b/.exec(‘b123 d234 s234 b4553’)<br>[“b123”]<br>结果不加[]反而只匹配上了b开头的房间<br>/\b[^b]\d+\b/.exec(‘b123 d234 s234 b4553’)<br>[“d234”]</p>
+<p>一般来说 ^ 匹配开头 $匹配结尾<br>(?m)多行模式下 ^ $将匹配每行的开头和结尾</p>
+<h3 id="|">|</h3><p>19|20\d{2} 这样并不能匹配19xx 20xx 这样的 因为|左右是一个整体<br>它只能匹配上 19 20xx 这样的数字<br>/(19|20)\d{2}/</p>
+<h3 id="()子表达式_捕获">()子表达式  捕获</h3><p>()除了分组 还有个很重要的功能 它可以将子表达式的内容提取出来</p>
+<blockquote>
+<p>()中的内容叫做子表达式<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str3 = <span class="string">'The s is AC/0923/d456'</span>;</span><br><span class="line">str3.match(/[A-Z]<span class="list">&#123;2&#125;</span>\/\d<span class="list">&#123;4&#125;</span>\/[a-z]\d<span class="list">&#123;3&#125;</span>/)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>得到 [“AC/0923/d456”]</p>
+<p>假如现在的要求是 将所有 AC/0923/d456 全部转换为 AC-0923-d456 的形式<br>这里就需要使用子表达式将 AC 0923 d456 分别取出来<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str<span class="number">3.</span>match<span class="comment">(/([A-Z]&#123;2&#125;)</span>\/<span class="comment">(\d&#123;4&#125;)</span>\/<span class="comment">([a-z]\d&#123;3&#125;)</span>/)</span><br><span class="line">[<span class="string">"AC/0923/d456"</span>, <span class="string">"AC"</span>, <span class="string">"0923"</span>, <span class="string">"d456"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>这样之后就可以使用 $1 $2 $3这样的变量表达式<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str3.<span class="keyword">replace</span>(/([A-Z]&#123;2&#125;)\/(\<span class="keyword">d</span>&#123;4&#125;)\/([a-z]\<span class="keyword">d</span>&#123;3&#125;)/, '<span class="label">$1</span>-<span class="label">$2</span>-<span class="label">$3</span>')</span><br><span class="line"><span class="string">"The s is AC-0923-d456"</span></span><br></pre></td></tr></table></figure></p>
+<p>PS $1 $2 这样的变量引用必须要有子表达式</p>
+<h3 id="子表达式_非捕获">子表达式  非捕获</h3><p>(?:reg)  VS (reg)   后一种就是上面说的捕获 第一种仅仅是分组但是不捕获<br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">r1= /<span class="params">(\d\d\d)</span><span class="params">(.+)</span><span class="params">(\d+)</span>/;</span><br><span class="line">r2 =/<span class="params">(?:\d\d\d)</span><span class="params">(.+)</span><span class="params">(?:\d+)</span>/;</span><br><span class="line"><span class="built_in">str</span> = 'm234sdvgs56'</span><br><span class="line"><span class="built_in">str</span>.match<span class="params">(r1)</span></span><br><span class="line">[<span class="string">"234sdvgs56"</span>, <span class="string">"234"</span>, <span class="string">"sdvgs5"</span>, <span class="string">"6"</span>]</span><br><span class="line"><span class="built_in">str</span>.match<span class="params">(r2)</span></span><br><span class="line">[<span class="string">"234sdvgs56"</span>, <span class="string">"sdvgs5"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>在regexper.com看下面的分组来加深印象<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/&lt;(img|IMG).*?src=<span class="special">[</span><span class="command">\'</span><span class="command">\"</span><span class="special">]</span>(.*?(?:<span class="command">\.</span>gif|<span class="command">\.</span>jpg|<span class="command">\.</span>png))<span class="special">[</span><span class="command">\'</span><span class="command">\"</span><span class="special">]</span>.*?<span class="special">[</span><span class="command">\/</span><span class="special">]</span>?&gt;/gi</span><br><span class="line"></span><br><span class="line">/&lt;(img|IMG).*?src=<span class="special">[</span><span class="command">\'</span><span class="command">\"</span><span class="special">]</span>(.*?(<span class="command">\.</span>gif|<span class="command">\.</span>jpg|<span class="command">\.</span>png))<span class="special">[</span><span class="command">\'</span><span class="command">\"</span><span class="special">]</span>.*?<span class="special">[</span><span class="command">\/</span><span class="special">]</span>?&gt;/gi</span><br></pre></td></tr></table></figure></p>
+<h3 id="()分组功能">()分组功能</h3><p>/[\d]{3}-[\d]{3}-[\d]{3}-[\d]{3}/.test(‘333-333-222-233’)<br>相同的部分写了好几次 实际上用()可以简写<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/([\d]<span class="list">&#123;3&#125;</span>-)<span class="list">&#123;3&#125;</span>[\d]<span class="list">&#123;3&#125;</span>/.test(<span class="string">'333-333-222-233'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>加了gi  (){}  就是分组  不获取了</p>
+<h3 id="match">match</h3><p>str.match 返回一个数组<br>如果非全局匹配(正则中没有g)  则数组中第一个元素是第一个匹配值  之后是自表达式(捕获值)<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str<span class="number">3</span> = <span class="string">'The s is AC/0923/d456 BV/4641/f565'</span>;</span><br><span class="line">str<span class="number">3.</span>match<span class="comment">(/([A-Z]&#123;2&#125;)</span>\/<span class="comment">(\d&#123;4&#125;)</span>\/<span class="comment">([a-z]\d&#123;3&#125;)</span>/)</span><br><span class="line">[<span class="string">"AC/0923/d456"</span>, <span class="string">"AC"</span>, <span class="string">"0923"</span>, <span class="string">"d456"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>全局匹配(/xxx/g)  则返回所有匹配值  木有捕获值<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str<span class="number">3.</span>match<span class="comment">(/([A-Z]&#123;2&#125;)</span>\/<span class="comment">(\d&#123;4&#125;)</span>\/<span class="comment">([a-z]\d&#123;3&#125;)</span>/g)</span><br><span class="line">[<span class="string">"AC/0923/d456"</span>, <span class="string">"BV/4641/f565"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>假如又是全局匹配 又想得到捕获值  使用replace<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">str </span>= <span class="keyword">str.replace(/.../g, </span><span class="preprocessor">function</span>(match, <span class="literal">p1</span>, <span class="literal">p2</span>)&#123;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>p1 p2 …  每一次匹配中的捕获值</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/07/10/hello-world/">
+  <time datetime="2015-07-10T12:21:23.585Z">
+    2015-07-10
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/07/10/hello-world/">Hello World</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/" class="prev">上一页</a>
+  
+  
+  <div class="clearfix"></div>
+</nav>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="/">John Doe</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>
