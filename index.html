@@ -62,30 +62,711 @@
   <header>
     
       <div class="icon"></div>
-      <a href="/2015/07/10/hello-world/">
-  <time datetime="2015-07-10T12:21:23.585Z">
-    2015-07-10
+      <a href="/2015/08/16/simpleTemplate/">
+  <time datetime="2015-08-16T06:38:45.653Z">
+    2015-08-16
   </time>
 </a>
     
     
   
-    <h1 class="title"><a href="/2015/07/10/hello-world/">Hello World</a></h1>
+    <h1 class="title"><a href="/2015/08/16/simpleTemplate/">自制一个简单的模板引擎</a></h1>
   
 
   </header>
   
   <div class="entry">
     
-      <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+      <h3 id="原理">原理</h3><p>我这个模板引擎的原理就是简单的字符串替换</p>
+<h3 id="第一版">第一版</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;% raw -%&#125;</span><br><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    username: <span class="string">'Muhha'</span></span><br><span class="line">&#125;</span><br><span class="line">str = <span class="string">'&lt;%=username%&gt;'</span>;</span><br><span class="line"><span class="keyword">var</span> compile = <span class="function"><span class="keyword">function</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> tpl = str.replace(<span class="regexp">/&lt;%=([\s\S]+?)%&gt;/</span>,<span class="function"><span class="keyword">function</span>(<span class="params">match, p1</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'obj.'</span> + p1;</span><br><span class="line">    &#125;); <span class="comment">// 得到 obj.username</span></span><br><span class="line"></span><br><span class="line">    tpl = <span class="string">'return '</span> + tpl; <span class="comment">// return obj.username</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'obj'</span>,tpl); <span class="comment">//function(obj)&#123;return obj.username&#125;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> compiled = compile(str);</span><br><span class="line"><span class="keyword">var</span> rs = compiled(data); <span class="comment">// Muhha</span></span><br><span class="line">&#123;%- endraw %&#125;</span><br></pre></td></tr></table></figure>
+<p>缺点很明显  只能对<figure class="highlight"><figcaption><span>若模板变成```<p><%=username%></%=username%></p>``` 这样就不能通过</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;###&#31532;&#20108;&#29256;&#10;&#19978;&#38754;&#26377;&#32570;&#38519;&#30340;&#21407;&#22240;&#23601;&#22312;&#20110;&#26367;&#25442;&#30340;&#20043;&#21518;&#21482;&#32771;&#34385;&#20102;&#21591;&#26367;&#25442;&#30340;&#37096;&#20998;, &#37027;&#20123;&#27809;&#26377;&#34987;&#26367;&#25442;&#30340;&#37096;&#20998; &#27604;&#22914;   ```&#60;p&#62;``` &#27809;&#26377;&#32771;&#34385;&#10;&#10;``` javascript&#10;&#123;% raw -%&#125;&#10;var data = &#123;&#10;    username: &#39;Muhha&#39;&#10;&#125;&#10;str = &#39;&#60;p&#62;&#60;%=username%&#62;&#60;/p&#62;&#39;;&#10;var compile = function(str)&#123;&#10;    var tpl = str.replace(/&#60;%=([\s\S]+?)%&#62;/gi,function(match, p1)&#123;&#10;        return  &#39;\&#39;+&#39; + &#39;obj.&#39; + p1 + &#39;+\&#39;&#39;;&#10;    &#125;); // &#24471;&#21040; &#60;p&#62;&#39; + obj.username + &#39;&#60;/p&#62;&#10;&#10;    tpl = &#39;return &#39; + &#39;\&#39;&#39; +tpl + &#39;\&#39;&#39;; //return &#39;&#60;p&#62;&#39; + obj.username + &#39;&#60;/p&#62;&#39;&#10;    return new Function(&#39;obj&#39;,tpl); //function(obj)&#123;return &#39;&#60;p&#62;&#39; + obj.username + &#39;&#60;/p&#62;&#39;&#125;&#10;&#125;&#10;var compiled = compile(str);&#10;var rs = compiled(data); // &#60;p&#62;Muhha&#60;/p&#62;&#10;&#123;%- endraw %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>多加一个属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% raw -%&#125;</span><br><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    username: <span class="string">'Muhha'</span>,</span><br><span class="line">    age: <span class="number">12</span></span><br><span class="line">&#125;</span><br><span class="line">str = <span class="string">'&lt;p&gt;&lt;%=username%&gt;&lt;/p&gt;&lt;p&gt;&lt;%=age%&gt;&lt;/p&gt;'</span>;</span><br><span class="line"><span class="keyword">var</span> compile = <span class="function"><span class="keyword">function</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> tpl = str.replace(<span class="regexp">/&lt;%=([\s\S]+?)%&gt;/gi</span>,<span class="function"><span class="keyword">function</span>(<span class="params">match, p1</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span>  <span class="string">'\'+'</span> + <span class="string">'obj.'</span> + p1 + <span class="string">'+\''</span>;</span><br><span class="line">    &#125;); <span class="comment">// 得到 &lt;p&gt;' + obj.username + '&lt;/p&gt;&lt;p&gt; '+ obj.age + '&lt;/p&gt;</span></span><br><span class="line"></span><br><span class="line">    tpl = <span class="string">'return '</span> + <span class="string">'\''</span> +tpl + <span class="string">'\''</span>; <span class="comment">//return '&lt;p&gt;' + obj.username + '&lt;/p&gt;&lt;p&gt;'+ obj.age + '&lt;/p&gt;'</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'obj'</span>,tpl); <span class="comment">//return '&lt;p&gt;' + obj.username + '&lt;/p&gt;&lt;p&gt;'+ obj.age + '&lt;/p&gt;'&#125;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> compiled = compile(str);</span><br><span class="line"><span class="keyword">var</span> rs = compiled(data); <span class="comment">// &lt;p&gt;Muhha&lt;/p&gt;&lt;p&gt;12&lt;/p&gt;</span></span><br><span class="line">&#123;%- endraw %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>不过这仍然是有缺陷的, 比如不能使用语句<br>当模板写成<figure class="highlight"><figcaption><span>= 'if(gender>1)&#123;<p><%=username%></%=username%></p>&#125;<p><%=age%></%=age%></p>';``` 这样时</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#24471;&#21040;&#30340;&#32467;&#26524;&#26159;```if(gender&#62;1)&#123;&#60;p&#62;Muhha&#60;/p&#62;&#125;&#60;p&#62;12&#60;/p&#62;</span><br></pre></td></tr></table></figure></p>
+<p>显然这对逻辑没有解析, 原因就在于return太早了<br>把整个模板当成了一个结果return了<br>我们期待的模板函数是这样的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% raw -%&#125;</span><br><span class="line"><span class="keyword">var</span> tpl = <span class="string">''</span>;</span><br><span class="line"><span class="keyword">if</span>(gender ==<span class="number">1</span>)&#123;</span><br><span class="line">    tpl +=<span class="string">'&lt;p&gt;'</span>+ obj.gender +<span class="string">'&lt;/p&gt;'</span>;</span><br><span class="line">&#125;</span><br><span class="line">tpl += <span class="string">'&lt;p&gt;'</span> + obj.age +<span class="string">'&lt;/p&gt;'</span>;</span><br><span class="line"><span class="keyword">return</span> tpl;</span><br><span class="line">&#123;%- endraw %&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="第三版">第三版</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&#123;% raw -%&#125;</span><br><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    username: <span class="string">'Muhha'</span>,</span><br><span class="line">    age: <span class="number">12</span>,</span><br><span class="line">    gender: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line">str = [</span><br><span class="line">    <span class="string">'&lt;p&gt;&lt;%=obj.username%&gt;&lt;/p&gt;'</span>,</span><br><span class="line">    <span class="string">'&lt;%if(obj.gender==1)&#123;%&gt;'</span>,</span><br><span class="line">        <span class="string">'&lt;p&gt;&lt;%=obj.gender%&gt;&lt;/p&gt;'</span>,</span><br><span class="line">    <span class="string">'&lt;%&#125;%&gt;'</span>,</span><br><span class="line">    <span class="string">'&lt;p&gt;&lt;%=obj.age%&gt;&lt;/p&gt;'</span>].join(<span class="string">'\n'</span>);</span><br><span class="line"><span class="keyword">var</span> compile = <span class="function"><span class="keyword">function</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    tpl = str.replace(<span class="regexp">/\n/g</span>, <span class="string">''</span>)</span><br><span class="line">    <span class="comment">//替换变量</span></span><br><span class="line">    .replace(<span class="regexp">/&lt;%=([\s\S]+?)%&gt;/gi</span>,<span class="function"><span class="keyword">function</span>(<span class="params">match, p1</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'\'+'</span>,</span><br><span class="line">        p1,</span><br><span class="line">        <span class="string">'+\''</span></span><br><span class="line">        ].join(<span class="string">''</span>); <span class="comment">// &lt;%=obj.username%&gt; 变成 ' + obj.username  + '</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">//替换执行语句</span></span><br><span class="line">    .replace(<span class="regexp">/&lt;%([\s\S]+?)%&gt;/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">match, p1</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'\';'</span>,</span><br><span class="line">        <span class="string">'\n'</span>,</span><br><span class="line">        p1,</span><br><span class="line">        <span class="string">'\n'</span>,</span><br><span class="line">        <span class="string">'tpl+=\''</span></span><br><span class="line">        ].join(<span class="string">''</span>);  <span class="comment">// if(a)&#123; 变成 ';\n   if(a)&#123;  tpl+= '</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    tpl = <span class="string">'\''</span> +tpl + <span class="string">'\''</span>;</span><br><span class="line">    <span class="comment">//此时tpl</span></span><br><span class="line">    <span class="comment">// '&lt;p&gt;'+obj.username+'&lt;/p&gt;';</span></span><br><span class="line">    <span class="comment">// if(obj.gender==1)&#123;</span></span><br><span class="line">    <span class="comment">// tpl+='&lt;p&gt;'+obj.gender+'&lt;/p&gt;';</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">// tpl+='&lt;p&gt;'+obj.age+'&lt;/p&gt;'</span></span><br><span class="line"></span><br><span class="line">    tpl = <span class="string">'var tpl="";\ntpl+='</span> + tpl;</span><br><span class="line">    tpl = tpl + <span class="string">';\nreturn tpl;'</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'obj'</span>,tpl);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> compiled = compile(str);</span><br><span class="line"><span class="keyword">var</span> rs = compiled(data); <span class="comment">// &lt;p&gt;Muhha&lt;/p&gt;&lt;p&gt;1&lt;/p&gt;&lt;p&gt;12&lt;/p&gt;</span></span><br><span class="line">&#123;%- endraw %&#125;</span><br></pre></td></tr></table></figure>
+<p>这样还是有缺陷的, 比如某个字段的值为<figure class="highlight"><figcaption><span>这样的话就会向页面中插入了可执行的标签</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;###&#31532;&#22235;&#29256;</span><br></pre></td></tr></table></figure></p>
+
+<p><script type="text/template" id="temp"><br>    <p>&lt;%=obj.username%&gt;</p><br>        &lt;%if(obj.gender==1){%>
+            <p><%=obj.gender%></p>
+        <%}%&gt;<br>    <p>&lt;%=obj.age%&gt;</p><br></script><br><br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">这一版还将模板放在了script标签中</span><br><span class="line">`<span class="javascript"></span>``<span class="javascript"> javascript</span><br><span class="line">&#123;% raw -%&#125;</span><br><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    username: <span class="string">'\&lt;script\&gt;Muhha\&lt;\/script\&gt;'</span>,</span><br><span class="line">    age: <span class="number">12</span>,</span><br><span class="line">    gender: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> <span class="built_in">escape</span> = <span class="function"><span class="keyword">function</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    str = <span class="string">''</span> + str;</span><br><span class="line">    str= str.replace(<span class="regexp">/&amp;(?!\w+)/g</span>, <span class="string">'&amp;amp;'</span>)</span><br><span class="line">       .replace(<span class="regexp">/&lt;/g</span>, <span class="string">'&amp;lt;'</span>)</span><br><span class="line">       .replace(<span class="regexp">/&gt;/g</span>, <span class="string">'&amp;gt;'</span>)</span><br><span class="line">       .replace(<span class="regexp">/"/g</span>, <span class="string">'&amp;quot;'</span>)</span><br><span class="line">       .replace(<span class="regexp">/'/g</span>, <span class="string">'&amp;#039'</span>); <span class="comment">// '&amp;#039' 就是单引号 &amp;apos; 这样写是因为IE不支持 &amp;apos;</span></span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> compile = <span class="function"><span class="keyword">function</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    tpl = str</span><br><span class="line">    .replace(<span class="regexp">/\n/g</span>, <span class="string">''</span>)</span><br><span class="line">    .replace(<span class="regexp">/\s/g</span>, <span class="string">''</span>)</span><br><span class="line">    <span class="comment">//替换变量</span></span><br><span class="line">    .replace(<span class="regexp">/&lt;%=([\s\S]+?)%&gt;/gi</span>,<span class="function"><span class="keyword">function</span>(<span class="params">match, p1</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'\'+'</span>,</span><br><span class="line">        <span class="string">'escape('</span> + p1 + <span class="string">')'</span>,</span><br><span class="line">        <span class="string">'+\''</span></span><br><span class="line">        ].join(<span class="string">''</span>); <span class="comment">// &lt;%=obj.username%&gt; 变成 ' + obj.username  + '</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">//替换执行语句</span></span><br><span class="line">    .replace(<span class="regexp">/&lt;%([\s\S]+?)%&gt;/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">match, p1</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'\';'</span>,</span><br><span class="line">        <span class="string">'\n'</span>,</span><br><span class="line">        p1,</span><br><span class="line">        <span class="string">'\n'</span>,</span><br><span class="line">        <span class="string">'tpl+=\''</span></span><br><span class="line">        ].join(<span class="string">''</span>);  <span class="comment">// if(a)&#123; 变成 ';\n   if(a)&#123;  tpl+= '</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    tpl = <span class="string">'\''</span> +tpl + <span class="string">'\''</span>;</span><br><span class="line">    <span class="comment">//此时tpl</span></span><br><span class="line">    <span class="comment">// '&lt;p&gt;'+obj.username+'&lt;/p&gt;';</span></span><br><span class="line">    <span class="comment">// if(obj.gender==1)&#123;</span></span><br><span class="line">    <span class="comment">// tpl+='&lt;p&gt;'+obj.gender+'&lt;/p&gt;';</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">// tpl+='&lt;p&gt;'+obj.age+'&lt;/p&gt;'</span></span><br><span class="line"></span><br><span class="line">    tpl = <span class="string">'var tpl="";\ntpl+='</span> + tpl;</span><br><span class="line">    tpl = tpl + <span class="string">';\nreturn tpl;'</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'obj, escape'</span>,tpl);</span><br><span class="line">    <span class="comment">//得到</span></span><br><span class="line">    <span class="comment">//(function(obj, escape</span></span><br><span class="line">    <span class="comment">// /**/) &#123;</span></span><br><span class="line">    <span class="comment">// var tpl="";</span></span><br><span class="line">    <span class="comment">// tpl+='&lt;p&gt;'+escape(obj.username)+'&lt;/p&gt;';</span></span><br><span class="line">    <span class="comment">// if(obj.gender==1)&#123;</span></span><br><span class="line">    <span class="comment">// tpl+='&lt;p&gt;'+escape(obj.gender)+'&lt;/p&gt;';</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">// tpl+='&lt;p&gt;'+escape(obj.age)+'&lt;/p&gt;';</span></span><br><span class="line">    <span class="comment">// return tpl;</span></span><br><span class="line">    <span class="comment">// &#125;)</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> compiled = compile(<span class="built_in">document</span>.querySelector(<span class="string">'#temp'</span>).text);  <span class="comment">//script标签有text属性  但是其他标签只能用textContent  innerText</span></span><br><span class="line"><span class="keyword">var</span> rs = compiled(data, <span class="built_in">escape</span>); <span class="comment">// &lt;p&gt;&amp;lt;script&amp;gt;Muhha&amp;lt;/script&amp;gt;&lt;/p&gt;&lt;p&gt;1&lt;/p&gt;&lt;p&gt;12&lt;/p&gt;</span></span><br><span class="line">&#123;%- endraw %&#125;</span></span><br></pre></td></tr></table></figure></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/canvas_fog/">
+  <time datetime="2015-08-16T06:38:33.468Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/08/16/canvas_fog/">Canvas 雾玻璃</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <p>&gt;</p>
+<blockquote>
+<p>Demo <a href="http://lumixraku.github.io/demos/Fog/Fog.html" target="_blank" rel="external">http://lumixraku.github.io/demos/Fog/Fog.html</a></p>
+</blockquote>
+<h3 id="Canvas_tutorial">Canvas tutorial</h3><p>给大家安利一个学习Canvas的站点</p>
+<blockquote>
+<p><a href="http://www.html5canvastutorials.com/" target="_blank" rel="external">http://www.html5canvastutorials.com/</a></p>
+</blockquote>
+<h3 id="用到的方法">用到的方法</h3><p>在开始之前, 最好了解一下Canvas的最基本的使用</p>
+<ul>
+<li><p>stroke()</p>
+</li>
+<li><p>save() clip()  restore()<br>  <a href="http://jo2.org/html5-canvas-clip/" target="_blank" rel="external">http://jo2.org/html5-canvas-clip/</a><br>  <a href="http://www.html5canvastutorials.com/advanced/html5-canvas-clipping-region-tutorial/" target="_blank" rel="external">http://www.html5canvastutorials.com/advanced/html5-canvas-clipping-region-tutorial/</a></p>
+</li>
+<li><p>drawImage()<br><a href="http://www.w3school.com.cn/tags/canvas_drawimage.asp" target="_blank" rel="external">http://www.w3school.com.cn/tags/canvas_drawimage.asp</a></p>
+</li>
+<li><p>createPattern()<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/createPattern" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/createPattern</a></p>
+</li>
+</ul>
+<h3 id="关于雾化特效">关于雾化特效</h3><blockquote>
+<p><a href="http://www.cnblogs.com/dson/p/4390641.html" target="_blank" rel="external">http://www.cnblogs.com/dson/p/4390641.html</a></p>
+</blockquote>
+<p>需要明白的是  雾气效果的实际实现和物理现实是相反的,<br>我们并不是用手指把雾抹掉, 而是用手指画出没有雾的图像.</p>
+<h3 id="图片自适应">图片自适应</h3><p>如果你是希望从一个图片中读取, 那么坐标是相对图片的实际大小, 所以你对图片设置的 width height是木有意义的, 解决办法就是再用一个 temp Canvas , 将图片读入到这个Canvas中  然后用这个temp Canvas 作为图片源</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/RequireJS_SeaJS/">
+  <time datetime="2015-08-16T06:38:09.489Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/08/16/RequireJS_SeaJS/">RequireJS SeaJS</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <ul>
+<li>一种是AMD模块规范，针对模块的异步加载，主要用于浏览器端</li>
+<li>另一种是CommonJS规范，针对模块的同步加载，主要用于服务器端，即node.js环境</li>
+</ul>
+<h3 id="CMD规范">CMD规范</h3><p>CommonJS的规范： 根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象</p>
+<h3 id="SeaJS定义模块方式">SeaJS定义模块方式</h3><p>在 SeaJS 里，模块只有一种书写格式<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> A = <span class="built_in">require</span>(<span class="string">'a'</span>);</span><br><span class="line">    A.do();</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="RequireJS定义模块方式">RequireJS定义模块方式</h3><p>在 RequireJS 里，模块有多种书写格式，推荐的是<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">define([<span class="string">'dep1'</span>, <span class="string">'dep2'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">dep1, dep2</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//Define the module value by returning a value.</span></span><br><span class="line">    dep1.do();</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>现在RequireJS 也提供了CMD的写法<br>模块的依赖可以像 CommonJS 一样「就近定义」<br>PS 两者都是以文件做为模块 一个文件一个模块</p>
+</blockquote>
+<h3 id="AMD执行策略">AMD执行策略</h3><p><a href="http://imququ.com/post/amd-simplified-commonjs-wrapping.html" target="_blank" rel="external">http://imququ.com/post/amd-simplified-commonjs-wrapping.html</a><br>AMD 运行时核心思想是「Early Executing」 也就是提前执行依赖  尽早执行<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define([<span class="string">'a'</span>, <span class="string">'b'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">A, B</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//运行至此，a.js 和 b.js 已下载完成（运行于浏览器的 Loader 必须如此）；</span></span><br><span class="line">    <span class="comment">//A、B 两个模块已经执行完，直接可用（这是 AMD 的特性）；</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="CMD的执行策略">CMD的执行策略</h3><p>按需执行  CMD 推崇 as lazy as possible.<br>[只是执行时间晚了 但是加载和RequireJS是一样的]<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.js</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//运行至此，mod1.js 和 mod2.js 已经下载完成；</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'require module: main'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> mod1 = <span class="built_in">require</span>(<span class="string">'./mod1'</span>); <span class="comment">//这里才执行 mod1</span></span><br><span class="line">    mod1.hello();</span><br><span class="line">    <span class="keyword">var</span> mod2 = <span class="built_in">require</span>(<span class="string">'./mod2'</span>); <span class="comment">//这里才执行 mod2</span></span><br><span class="line">    mod2.hello();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        hello: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'hello main'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>写法上可能更易读  「就近」书写</p>
+<h3 id="SeaJS_RequireJS_区别_知乎篇">SeaJS RequireJS 区别   知乎篇</h3><p><a href="http://www.zhihu.com/question/20342350" target="_blank" rel="external">http://www.zhihu.com/question/20342350</a></p>
+<ul>
+<li>requirejs：一个模块的factory函数执行是紧跟随在define(也就是Evaluate Script脚本模块文件)之后</li>
+<li>seajs: 执行一个模块的factory函数需要等待所有模块define完毕。</li>
+<li>RequireJS的异步模块加载迎合了浏览器端JS程序员固有的异步思维，学习成本低</li>
+<li>RequireJS和Sea.js在资源加载的时间点都是一样的，所以论“懒”的程度都是一样的。差别仅仅在于加载的脚本什么时候执行。RequireJS的依赖模块在回调函数执行前执行完毕，而Sea.js的依赖模块在回调函数执行require时执行。</li>
+<li>对于非AMD规范的js插件，require js提供了shim支持，非常方便。RequireJS早有了Shim等支持,不需要修改第三方类库就可以完全支持.如Ember,JQuery等引用,都直接可以异步加载为一个模块.</li>
+<li>requirejs目前支持了sourcemap，配合grunt，简直爽爆了。</li>
+</ul>
+<h3 id="SeaJS与RequireJS最大的区别_豆瓣篇">SeaJS与RequireJS最大的区别  豆瓣篇</h3><p><a href="http://www.douban.com/note/283566440/" target="_blank" rel="external">http://www.douban.com/note/283566440/</a><br>这篇文章的结论似乎有误  作者最开头也已经注明了<br>作者一开始认为requeireJS有bug  实际上不是<br>原因是即使是RequireJS采用了CMD的写法<br>实际上还是的执行还是不变  也就是预先加载并执行了依赖</p>
+<p>关于豆瓣的这个例子 在这篇博文中也有说明<br><a href="http://imququ.com/post/amd-simplified-commonjs-wrapping.html" target="_blank" rel="external">http://imququ.com/post/amd-simplified-commonjs-wrapping.html</a></p>
+<h4 id="结论">结论</h4><blockquote>
+<p>RequireJS的做法是并行加载所有依赖的模块, 并完成解析后, 再开始执行其他代码, 因此执行结果只会”停顿”1次, 完成整个过程是会比SeaJS要快.</p>
+<p>而SeaJS一样是并行加载所有依赖的模块, 但不会立即执行模块, 等到真正需要(require)的时候才开始解析(也就是执行),</p>
+</blockquote>
+<h4 id="评论">评论</h4><p>AMD<br>我个人感觉requirejs更科学，所有依赖的模块要先执行好。被依赖的模块必须先于当前模块执行，而没有依赖关系的模块，可以没有先后。</p>
+<p>AMD规范了”依赖提前加载提前执行”的根本</p>
+<h3 id="合并">合并</h3><p>RequireJS 有 r.js  SeaJS 有spm 来合并<br>为什么不直接用grunt的concat呢  因为这两者有个要求就是一个模块对应一个文件</p>
+<h3 id="Browserify">Browserify</h3><p>Browserify 是一个基于 Node 模块化方案的浏览器端版本</p>
+<p>browserify查找语法树种global域下的require和module变量，对其调用进行变形替换。这是静态分析，像module[‘exp‘+’ort’] = {} , require(‘path’+’to’+‘file’)目前还无法被正确替换。</p>
+<p>Browserify的出现，不仅仅是让NPM（或者说之前适用于Node.js）上的代码可以给浏览器端使用。更重要的意义，是Browserify代码组织更符合CommonJS规范，让浏览器前端代码也可以通过预编译实现CommonJS规范</p>
+<h3 id="SeaJS和Browserify">SeaJS和Browserify</h3><blockquote>
+<p>参考<br><a href="http://www.zhihu.com/question/20941305" target="_blank" rel="external">http://www.zhihu.com/question/20941305</a></p>
+</blockquote>
+<p>browserify不需要 define(function(require, exports, module) {…}) 。代码更符合CommonJS模块化规范，可以和nodejs共同require同一个文件，以及node_modules里的库</p>
+<p>依赖分析时机不一样：SeaJS是在客户端运行时解析依赖，可以说是“运行时”解析；而Browserify是在服务端就依赖分析打包成单个文件，可以说是“预编译”</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/webworker/">
+  <time datetime="2015-08-16T06:37:04.930Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/08/16/webworker/">WebWorker</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h3 id="WebWorker_是什么?">WebWorker 是什么?</h3><ul>
+<li>为 JavaScript 引入线程技术  不必再用  setTimeout()、setInterval()、XMLHttpRequest 来模拟并行</li>
+<li>Worker 利用类似线程的消息传递实现并行。这非常适合您确保对 UI 的刷新、性能以及对用户的响应。</li>
+<li>Web Worker 的三大主要特征：能够长时间运行（响应），理想的启动性能以及理想的内存消耗。</li>
+</ul>
+<p>它允许在 Web 程序中并发执行多个 JavaScript 脚本，每个脚本执行流都称为一个线程，彼此间互相独立，并且有浏览器中的 JavaScript 引擎负责管理。这将使得线程级别的消息通信成为现实。使得在 Web 页面中进行多线程编程成为可能。</p>
+<p>专用 Web Worker (Dedicated Web Worker) 提供了一个简单的方法使得 web 内容能够在后台运行脚本。一旦 worker 创建后，它可以向由它的创建者指定的事件监听函数传递消息，这样该 worker 生成的所有任务就都会接收到这些消息。</p>
+<h3 id="WebWorker_的类型">WebWorker 的类型</h3><p>一个是专用线程 Dedicated Worker(普通的Worker)，一个是共享 Shared Worker。<br>后来又有了Service Worker</p>
+<h3 id="Webworker的支持情况">Webworker的支持情况</h3><p><a href="http://caniuse.com/#search=shared" target="_blank" rel="external">http://caniuse.com/#search=shared</a><br>Service Worker 支持情况不佳 Chrome 40+ 才支持</p>
+<h3 id="使用入门">使用入门</h3><p>和windows线程通信一个机制  发消息 接收消息</p>
+<blockquote>
+<p>参考<br><a href="http://www.html5rocks.com/zh/tutorials/workers/basics/" target="_blank" rel="external">http://www.html5rocks.com/zh/tutorials/workers/basics/</a><br><a href="http://www.ibm.com/developerworks/cn/web/1112_sunch_webworker/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/web/1112_sunch_webworker/</a><br><a href="http://tutorials.jenkov.com/html5/web-workers.html" target="_blank" rel="external">http://tutorials.jenkov.com/html5/web-workers.html</a></p>
+</blockquote>
+<h2 id="Debug">Debug</h2><p>chrome://inspect/#workers   Worker Debug页<br>通过这个页面可以确定</p>
+<h3 id="专用Worker_Dedicated_Worker">专用Worker  Dedicated Worker</h3><p>创建一个新的 worker 十分简单。你所要做的就是调用 Worker() 构造函数，指定一个要在 worker 线程内运行的脚本的 URI，如果你希望能够收到 worker 的通知，可以将 worker 的 onmessage 属性设置成一个特定的事件处理函数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myWorker = <span class="keyword">new</span> Worker(<span class="string">"my_task.js"</span>);</span><br><span class="line">myWorker.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">oEvent</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Called back by the worker!\n"</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>或者，你也可以使用 addEventListener()：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myWorker = <span class="keyword">new</span> Worker(<span class="string">"my_task.js"</span>);</span><br><span class="line">myWorker.addEventListener(<span class="string">"message"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">oEvent</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Called back by the worker!\n"</span>);</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br><span class="line">    myWorker.postMessage(<span class="string">""</span>); <span class="comment">// start the worker.</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>停止 Worker 的方法有两种：在主网页中调用 worker terminate()，或在 Worker 本身内部调用 self.close()。</p>
+</blockquote>
+<h3 id="Worker的作用域">Worker的作用域</h3><p>self 和 this 指的都是 Worker 的全局作用域<br>因此下面两种方式是相同的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">self.addEventListener(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">      self.postMessage(<span class="string">'Unknown command: '</span> + data.msg);</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br><span class="line">addEventListener(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">      postMessage(<span class="string">'WORKER STARTED: '</span> + data.msg);</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>一些Demo参考 <a href="https://github.com/greenido/Web-Workers-Examples-" target="_blank" rel="external">https://github.com/greenido/Web-Workers-Examples-</a>   (SharedWorker也包含在内)</p>
+</blockquote>
+<h3 id="import_和_子worker(Chrome并不支持)">import 和 子worker(Chrome并不支持)</h3><p>import可以引入其他的JS</p>
+<h3 id="WebWorker限制">WebWorker限制</h3><ul>
+<li>DOM（非线程安全）</li>
+<li>window 对象</li>
+<li>document 对象</li>
+<li>parent 对象</li>
+</ul>
+<h3 id="SharedWorker">SharedWorker</h3><blockquote>
+<p>参考<br><a href="https://github.com/mdn/simple-shared-worker" target="_blank" rel="external">https://github.com/mdn/simple-shared-worker</a><br><a href="http://tutorials.jenkov.com/html5/web-workers.html" target="_blank" rel="external">http://tutorials.jenkov.com/html5/web-workers.html</a><br>An ordinary web worker is only accessible by the page that created it. If you want to share a web worker between multiple pages, you can use a SharedWorker. A SharedWorker is accessible by all pages that are loaded from the same origin (domain).</p>
+</blockquote>
+<p>The SharedWorker interface represents a specific kind of worker that can be accessed from several browsing contexts, such as several windows, iframes or even workers. They implement an interface different than dedicated workers and have a different global scope,</p>
+<blockquote>
+<p>If SharedWorker can be accessed from several browsing contexts, all those browsing contexts must share the exact same origin (same protocol, host and port).</p>
+</blockquote>
+<h3 id="创建一个SharedWorker">创建一个SharedWorker</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> worker = <span class="keyword">new</span> SharedWorker(<span class="string">"/html5/web-worker-shared.js"</span>);</span><br><span class="line">worker.port.addEventListener(<span class="string">"message"</span>,</span><br><span class="line">        <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">            alert(event.data);</span><br><span class="line">        &#125;</span><br><span class="line">        , <span class="literal">false</span></span><br><span class="line">);</span><br><span class="line">worker.port.start();</span><br></pre></td></tr></table></figure>
+<p>或者使用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">worker.port.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    log.textContent = e.data;</span><br><span class="line">    <span class="built_in">console</span>.log(e.data);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>此种方式不需要worker.port.start();  但是存在事件被覆盖的问题</p>
+<h3 id="实现SharedWorker">实现SharedWorker</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">onconnect = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> port = e.ports[<span class="number">0</span>];</span><br><span class="line">    port.postMessage(<span class="string">'A new connection! The current connection number is '</span> + connect_number);</span><br><span class="line">    port.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> instruction = e.data.instruction || e.data;</span><br><span class="line">        <span class="keyword">var</span> results = execute_instruction(instruction);</span><br><span class="line">        port.postMessage(<span class="string">'...'</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    port.start();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Demo参考<a href="https://github.com/mdn/simple-shared-worker" target="_blank" rel="external">https://github.com/mdn/simple-shared-worker</a></p>
+</blockquote>
+<h3 id="SharedWorker_可以做什么">SharedWorker 可以做什么</h3><ul>
+<li>load further scripts with importScripts()</li>
+<li>attach error handlers, and</li>
+<li>run the port.close() method to prevent further communication on a specific port.</li>
+</ul>
+<p>Shared web workers probably won’t be a viable technology for a couple of years, but they raise exciting opportunities for the future of JavaScript development. Let’s hope browser vendors can supply a few decent tracing and debugging tools!</p>
+<h3 id="WebWorker和SharedWorker区别">WebWorker和SharedWorker区别</h3><p>Very basic distinction: a Worker can only be accessed from the script that created it, a SharedWorker can be accessed by any script that comes from the same domain.</p>
+<p>SharedWorker’s seem to have more functionality then Worker.<br>Among that functionality is :</p>
+<ul>
+<li>A shared global scope. All SharedWorker instances share a single global scope.</li>
+<li>A shared worker can work with multiple connections. It posts messages to ports to allow communication between various scripts.</li>
+<li>A dedicated worker on the other hand is simply tied to its main connection and cannot post messages to other scripts (workers).</li>
+</ul>
+<h3 id="ServiceWorker">ServiceWorker</h3><p>A Service Worker inherits all the limitations and behaviors available to HTML5 Shared Workers. It can create XMLHttpRequests, use WebSockets, receive messages from windows and the browser, use IndexedDB, and post messages to other windows.</p>
+<p>Service workers are expected to provide a function at global scope, named onconnect. The browser will invoke onconnect at startup time, passing in an event. The worker should access the ports property of this event to extract a stable communication port back to the browser, and persist it for the life of the worker</p>
+<blockquote>
+<p>参考<br><a href="http://www.w3ctech.com/topic/866" target="_blank" rel="external">http://www.w3ctech.com/topic/866</a><br><a href="http://www.html5rocks.com/en/tutorials/service-worker/introduction/" target="_blank" rel="external">http://www.html5rocks.com/en/tutorials/service-worker/introduction/</a><br><a href="http://www.html5online.com.cn/articles/2015051201.html" target="_blank" rel="external">http://www.html5online.com.cn/articles/2015051201.html</a><br><a href="https://github.com/csbun/blog/blob/master/_posts/2015-06-02-service-worker.markdown" target="_blank" rel="external">https://github.com/csbun/blog/blob/master/_posts/2015-06-02-service-worker.markdown</a></p>
+</blockquote>
+<h4 id="我的Demo">我的Demo</h4><p><a href="https://github.com/lumixraku/repo/tree/master/WebWorker/ServiceWorker" target="_blank" rel="external">https://github.com/lumixraku/repo/tree/master/WebWorker/ServiceWorker</a></p>
+<h3 id="ServiceWorker_和_SharedWorker">ServiceWorker 和 SharedWorker</h3><p>The ServiceWorker is like a SharedWorker in that it:</p>
+<ul>
+<li>Runs in its own global script context (usually in its own thread)</li>
+<li>Isn’t tied to a particular page</li>
+<li>Has no DOM access</li>
+</ul>
+<p>Unlike a SharedWorker, it:</p>
+<ul>
+<li>Can run without any page at all</li>
+<li>Can terminate when it isn’t in use, and run again when needed (e.g., it’s event-driven)</li>
+<li>Has a defined upgrade model</li>
+<li>Is HTTPS only (more on that in a bit)<blockquote>
+<p>关于第一点  如果所有引用SharedWorker的页面都关了话  SharedWorker就不存在了  ServiceWorker不是</p>
+</blockquote>
+</li>
+</ul>
+<p><a href="http://stackoverflow.com/questions/28882289/service-worker-vs-shared-worker" target="_blank" rel="external">http://stackoverflow.com/questions/28882289/service-worker-vs-shared-worker</a></p>
+<p>A service worker has additional functionality beyond what’s available in shared workers, and it has a longer lifespan<br>serviceworker要比SharedWorker多一些功能 且有更长的生命周期<br>service和shared一样可以对 message 作响应<br>service还可以处理fetch事件(可以拦截网络请求)  以及从cache中做出响应<br>还有个区别就是生命周期<br>一个service注册到一个域名后  就是永久注册 (如果相关文件改变了 service就会更新)</p>
+<h3 id="We_can_use_ServiceWorker:">We can use ServiceWorker:</h3><ul>
+<li>To make sites work faster and/or offline using network intercepting</li>
+<li>As a basis for other ‘background’ features such as push messaging and background synchronization</li>
+</ul>
+<p>现在service worker的最佳使用场景是提供离线能力。开发人员可以注册一个service worker作为网络代理提供网络拦截。即使没有可用的网络时，这个代理也能够对缓存的数据和资源或者是已经生成的内容作出响应</p>
+<p>和现有的HTML5数据缓存功能有很大的不同，service worker的离线能力是可编程的。Russell称它是一个：“让你做出选择去做哪些事的、可编程的、浏览器内置的代理”。由于service worker运行于后台，它和当前的Web页面完全独立</p>
+<blockquote>
+<p>由于安全问题，ServiceWorker 只能在 HTTPS 环境下运行, 另外localhost 也OK。</p>
+</blockquote>
+<h3 id="更新service_worker">更新service worker</h3><p>如果sw有更新  下次访问的时候就会重新下载sw 且重新触发install<br>但是此时旧的worker仍然在管理着cache  新sw处于waiting状态<br>现有页面关闭后旧的sw就会被清掉  新sw接管 触发activate事件</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/browserify/">
+  <time datetime="2015-08-16T06:36:12.110Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/08/16/browserify/">Browserfiy</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h3 id="怎么添加lib呢">怎么添加lib呢</h3><ul>
+<li>手动去官网下载</li>
+<li>使用bower</li>
+</ul>
+<h3 id="Bower">Bower</h3><blockquote>
+<p>参考<br><a href="http://blog.fens.me/nodejs-bower-intro/" target="_blank" rel="external">http://blog.fens.me/nodejs-bower-intro/</a></p>
+</blockquote>
+<p>Bower 是 twitter 推出的一款包管理工具，基于nodejs的模块化思想，把功能分散到各个模块中，让模块和模块之间存在联系，通过 Bower 来管理模块间的这种联系</p>
+<p>简单点说 各种lib下载器 (同时还能下载依赖包)</p>
+<p>因为会使用到bower命令 最好全局安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install bower -g</span><br></pre></td></tr></table></figure>
+<p>然后使用下面的命令就能在bower_components中看到文件夹<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bower install jquery</span><br></pre></td></tr></table></figure></p>
+<p>lib都下载好了 就可以再用script标签引入</p>
+<h3 id="Browserify">Browserify</h3><blockquote>
+<p>参考<br><a href="http://javascript.ruanyifeng.com/tool/browserify.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/tool/browserify.html</a></p>
+</blockquote>
+<p>Browserify是一个node.js模块，主要用于改写现有的CommonJS模块，使得浏览器端也可以使用这些模块。使用下面的命令，在全局环境下安装Browserify。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g browserify</span><br></pre></td></tr></table></figure></p>
+<p>最好在全局环境中安装,  因为后面要用到Browserify这个命令</p>
+<p>用Node 的CMD形式随便写两个模块foo.js 和 main.js<br>[原博中有]  然后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">browserify main.js -o compiled.js</span><br></pre></td></tr></table></figure></p>
+<p>之后在HTML中引入这个 compiled.js 就可以在浏览器中使用刚才的Node模块了</p>
+<h3 id="Debug">Debug</h3><p>现在Browserify支持 source map<br>在其官方文档中 <a href="https://github.com/substack/node-browserify" target="_blank" rel="external">https://github.com/substack/node-browserify</a>    有这么一个命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ browserify main.js --debug | exorcist bundle.js.map &gt; bundle.js</span><br></pre></td></tr></table></figure></p>
+<p>将main.js 编译成 bundle.js<br>PS exorcist  也是一个包  需全局安装<br>这样之后就生成了 bundle.js 和 bundle.js.map<br>有了source map debug就很方便</p>
+<h3 id="实时更新_Beefy">实时更新 Beefy</h3><p><a href="http://didact.us/beefy/" target="_blank" rel="external">http://didact.us/beefy/</a><br>全局安装beefy<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beefy main.js:bundle.js --live</span><br></pre></td></tr></table></figure></p>
+<p>无需指定debug参数 默认debug就是打开的<br>—live 是修改后自动刷新</p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/http_cache/">
+  <time datetime="2015-08-16T06:33:46.992Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/08/16/http_cache/">HTTP &amp;&amp; 缓存</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h3 id="一个GET请求">一个GET请求</h3><p>GET请求的所有参数都会在URL中体现</p>
+<p>GET <a href="http://admin_test.oa.com/qvideo_check?m=release&amp;a=recommend_check&amp;ticket=xxx" target="_blank" rel="external">http://admin_test.oa.com/qvideo_check?m=release&amp;a=recommend_check&amp;ticket=xxx</a> HTTP/1.1<br>Host: qunadmin_test.oa.com<br>Connection: keep-alive<br>Cache-Control: max-age=0<br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,<em>/</em>;q=0.8<br>Upgrade-Insecure-Requests: 1<br>User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36<br>Accept-Encoding: gzip, deflate, sdch<br>Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2<br>Cookie: pgv_pvi=33174528; pgv_pvid=5511540156; ext-terminal=n%3A1; km_u=d8e2d0f081e337e5f39795c8200e49f21d12548710fc0d9d40cc134f3bea57ff5f4f2963cb532c97; t_uid=rakuluo; km_uid=luo; ; TCOA_TICKET=436F5964EBF9BFE887E534515FA5327F46673896BF686CC0FFA2D92CEFE263CEE2ED2082BFFC0F363DBA8AD2B5D38F12E53AB0E2D263E8B2AABAB1FA42EB5D9BCA53A608B9DA7B8FF26947AA9150049D86798FEF9F71BEADED4133410949366B66ABFA3CAC6859F1B4C8D1825E42637AC5AA0A2697B8FB0A0F277AE69EE65C7488BC1F641175932A2447540815637B78AC7B0F202B7798D2A2AF6CC502621AE55E3320B1C5A0D4F7767F50D3B4980DC4E099583885644566; ticket=436F5964EBF9BFE887E534515FA5327F3FC0EC28BB30AB7113E34EEA91ACF0A49D54D2F81DC1CEE81693AFCA142CDC90220CEB2729C8D92A93C338D292E5083BB74AC565C96148284E04B136BFD6837E9B5C9817CA57B3D2E673CB640C41238B426EF92B41AC12CA82827F631B52EEE1CCD21E694AD93D1B4DFEB63DA6AE16A90359666D500357DCA5AF5258D6848A7826AC58480D0B9A357D08B936C085E53CDD84C55636F973840</p>
+<h3 id="一个POST请求">一个POST请求</h3><p>包括请求头和请求体(请求体内含参数)两个部分 中间是一个空行<br>很容易看出这是一个HTTP 1.1类型的请求<br>POST <a href="http://admin_test.oa.com/qvk" target="_blank" rel="external">http://admin_test.oa.com/qvk</a> HTTP/1.1<br>Host: qunadmin_test.oa.com<br>Connection: keep-alive<br>Content-Length: 196<br>Origin: <a href="http://admin_test.oa.com" target="_blank" rel="external">http://admin_test.oa.com</a><br>X-Requested-With: XMLHttpRequest<br>User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36<br>Content-Type: application/x-www-form-urlencoded; charset=UTF-8<br>Accept: <em>/</em><br>Referer: <a href="http://admin_test.com/" target="_blank" rel="external">http://admin_test.com/</a>…..<br>Accept-Encoding: gzip, deflate<br>Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2<br>Cookie: pgv_pvi=33174528; pgv_pvid=5511540156; ext-terminal=n%3A1; km_u=d8e2d0f081532c97; t_uid=rakuluo; km_uid=rakuluo; t_u=3eaac1dbd7b54763%7C845b1588bc2614cb</p>
+<p>m=release&amp;a=account_check&amp;ticket=6eb657ca-a01f-11e3-9337-001517bed8zae6&amp;json=%7B%22gid%22%3A1234567%2C%22owner_uin%22%3A1234567%2C%22audit_status%22%3A2%2C%22audit_reason%22%3A%22no%20reason%22%7D</p>
+<h3 id="一个上传图片的POST请求">一个上传图片的POST请求</h3><p>POST <a href="http://localhost/github/repo/drag/ImgUpload/upload.php" target="_blank" rel="external">http://localhost/github/repo/drag/ImgUpload/upload.php</a> HTTP/1.1<br>Host: localhost<br>Connection: keep-alive<br>Content-Length: 138569<br>Origin: <a href="http://localhost" target="_blank" rel="external">http://localhost</a><br>User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36<br>Content-Type: multipart/form-data; boundary=——WebKitFormBoundaryV9kSbS9Xym2YSdfs<br>Accept: <em>/</em><br>Referer: <a href="http://localhost/github/repo/drag/ImgUpload/" target="_blank" rel="external">http://localhost/github/repo/drag/ImgUpload/</a><br>Accept-Encoding: gzip, deflate<br>Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2</p>
+<p>———WebKitFormBoundaryV9kSbS9Xym2YSdfs<br>Content-Disposition: form-data; name=”file”; filename=”2015-06-19 162748.jpg”<br>Content-Type: image/jpeg<br> ! Exif  MM *<br>….</p>
+<h3 id="Keep_Alive">Keep Alive</h3><p>Connection请求头的值为Keep-Alive时，客户端通知服务器返回本次请求结果后保持连接；Connection请求头的值为close时，客户端通知服务器返回本次请求结果后关闭连接</p>
+<h4 id="持久连接是HTTP1-1_中的">持久连接是HTTP1.1 中的</h4><p>普通模式  每个请求/应答客户和服务器都要新建一个连接，完成之后立即断开连接</p>
+<p>从HTTP/1.1起，默认都开启了Keep-Alive，保持连接特性，简单地说，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。</p>
+<p>　　Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。</p>
+<h3 id="Keep_Alive_应用场景">Keep Alive 应用场景</h3><blockquote>
+<p>参考<br> <a href="http://blog.csdn.net/hguisu/article/details/8608888" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/8608888</a></p>
+</blockquote>
+<p>访问一个包含有许多图像的网页文件的整个过程包含了多次请求和响应，每次请求和响应都需要建立一个单独的连接，每次连接只是传输一个文档和图像，上一 次和下一次请求完全分离。即使图像文件都很小，但是客户端和服务器端每次建立和关闭连接却是一个相对比较费时的过程，并且会严重影响客户机和服务器的性能。</p>
+<p>HTTP1.1支持持久连接，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟。一个包含有许多图像的网页文件的多个请求和应答可以在一个连接中传输</p>
+<h3 id="响应长度">响应长度</h3><ul>
+<li>若响应中出现了Transfer-Encoding:chucked  表示响应长度不固定<br>transfer-length由“chunked” 传输编码定义，除非消息由于关闭连接而终止</li>
+<li>若响应中出现的是 Content-Length: xxx  其值表示 entity-length（实体长度）和transfer-length（传输长度）[一般情况下他们长度是一致的  不一致则不能响应 Content-Length]<br>同时接收到Transfer-Encoding字段和Content-Length头字段，那么必须忽略Content-Length字段<blockquote>
+<p>响应长度的计算方式<br>一个字符算一个长度  一个中文字符2个</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="204和304">204和304</h3><p>不含有消息体的响应1xx  204[请求成功 不用刷新也不用重定向]  304</p>
+<h3 id="缓存">缓存</h3><blockquote>
+<p>参考<br><a href="http://blog.csdn.net/hguisu/article/details/8608888" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/8608888</a></p>
+</blockquote>
+<p>在HTTP/1.0中，使用Expire头域来判断资源的fresh或stale，并使用条件请求（conditional request）来判断资源是否仍有效。例如，cache服务器通过If-Modified-Since头域向服务器验证资源的Last-Modefied头域是否有更新，源服务器可能返回304（Not Modified），则表明该对象仍有效；也可能返回200（OK）替换请求的Cache对象</p>
+<p>为了使caching机制更加灵活，HTTP/1.1增加了Cache-Control头域（请求消息和响应消息都可使用），它支持一个可扩展的指令子集：例如max-age指令支持相对时间戳；private和no-store指令禁止对象被缓存；no-transform阻止Proxy进行任何改变响应的行为。</p>
+<p>HTTP/1.1中引入了一个ETag头域用于重激活机制，它的值entity tag可以用来唯一的描述一个资源。请求消息中可以使用If-None-Match头域来匹配资源的entitytag是否有变化。<br>例如响应的ETag:”553dcec3-3fd”<br>If-None-Match:”553dcec3-3fd”  他们是匹配的 可以从缓存拿</p>
+<h3 id="请求头总结">请求头总结</h3><blockquote>
+<p>参考<br><a href="https://www.byvoid.com/blog/http-keep-alive-header" target="_blank" rel="external">https://www.byvoid.com/blog/http-keep-alive-header</a><br><a href="http://blog.csdn.net/hguisu/article/details/8683290" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/8683290</a></p>
+</blockquote>
+<h4 id="Transport头域">Transport头域</h4><ul>
+<li>Connection: close（告诉WEB服务器或者代理服务器，在完成本次请求的响应后，断开连接，不要等待本次连接的后续请求了）  keepalive（告诉WEB服务器或者代理服务器，在完成本次请求的响应后，保持连接，等待本次连接的后续请求）</li>
+<li>Host：指定被请求资源的Internet主机和端口号</li>
+</ul>
+<h4 id="Client_头域">Client 头域</h4><ul>
+<li><p>Accept：告诉WEB服务器自己(浏览器)接受什么介质类型(MIME)，<em> 代表任意类型  Accept: </em>/*  代表浏览器可以处理所有类型</p>
+</li>
+<li><p>Accept-Encoding  告诉服务器,声明浏览器支持的编码方法  通常指定压缩方法，是否支持压缩，支持什么压缩方法（gzip，deflate），（注意：这不是只字符编码）;</p>
+<pre><code>Accept-<span class="string">Encoding:</span> compress, gzip <span class="comment">//支持compress 和gzip类型</span>
+</code></pre><blockquote>
+<p>在Linux中经常会用到后缀为.gz的文件，它们就是GZIP格式的。现今已经成为Internet 上使用非常普遍的一种数据压缩格式</p>
+<ul>
+<li>Accept-Charset: 浏览器申明自己接收的字符集</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h4 id="Cache头域">Cache头域</h4><ul>
+<li><p>Cache-Control[响应中也有次头域]</p>
+<ul>
+<li>no-cache  请求的资源不会缓存</li>
+<li>max-age（只接受 Age 值小于 max-age 值，并且没有过期的对象</li>
+<li>min-fresh：（接受其新鲜生命期大于其当前 Age 跟 min-fresh 值之和的缓存对象）</li>
+</ul>
+</li>
+<li><p>If-Modified-Since：把浏览器端缓存资源的最后修改时间发送到服务器去.务器会把这个时间与服务器上实际文件的最后修改时间进行对比。如果时间一致，那么返回304，客户端就直接使用本地缓存文件。如果时间不一致，就会返回200和新的文件内容。客户端接到之后，会丢弃旧文件，把新文件缓存起来，并显示在浏览器中。[不同的机器可能会有时间不同步的问题  所以HTTP1.1引入Etag]</p>
+</li>
+<li>If-Node-Match: If-None-Match和ETag一起工作，工作原理是在HTTP Response中添加ETag(类似于MD5一样的文件标识码)信息。 如果服务器验证资源的ETag没有改变（该资源没有更新），将返回一个304状态告诉客户端使用本地缓存文件。否则将返回200状态和新的资源和Etag.<br>请求If-None-Match:”5551df47-6c4”<br>响应头中ETag:”5551df47-6c4”        两者匹配  可以从缓存中取资源</li>
+<li>Pargma只有一个用法， 例如： Pragma: no-cache 请求的资源不会被缓存</li>
+</ul>
+<h4 id="Cookie头域">Cookie头域</h4><p>Cookie: 最重要的header, 将cookie的值发送给HTTP 服务器</p>
+<h4 id="Entity头域">Entity头域</h4><ul>
+<li>Content-Length作用：发送给HTTP服务器数据的长度。即请求消息正文的长度</li>
+<li>Content-Type:application/x-www-form-urlencoded</li>
+</ul>
+<h4 id="其他域">其他域</h4><ul>
+<li>Referer：浏览器向 WEB 服务器表明自己是从哪个 网页/URL 获得/点击 当前请求中的网址/URL</li>
+</ul>
+<h3 id="响应头总结">响应头总结</h3><h4 id="Cache头域-1">Cache头域</h4><ul>
+<li>Date: 响应的时间(服务器时间)</li>
+<li>Expired[HTTP 1.0]：资源国企时间</li>
+</ul>
+<h4 id="Cookie/Login_头域">Cookie/Login 头域</h4><ul>
+<li>p3p: 用于跨域设置Cookie, 这样可以解决iframe跨域访问cookie的问题</li>
+<li>Set-Cookie 用于把cookie 发送到客户端浏览器</li>
+</ul>
+<h4 id="Entity实体头域">Entity实体头域</h4><ul>
+<li>ETag[HTTP1.1]：就是一个对象（比如URL）的标志值，就一个对象而言，比如一个 html 文件，如果被修改了，其 Etag 也会别修改，所以ETag 的作用跟 Last-Modified 的作用差不多，主要供 WEB 服务器判断一个对象是否改变了<br>比如前一次请求某个 html 文件时，获得了其 ETag，当这次又请求这个文件时，浏览器就会把先前获得的 ETag 值发送给WEB 服务器，然后 WEB 服务器会把这个 ETag 跟该文件的当前 ETag 进行对比，然后就知道这个文件有没有改变了。</li>
+<li>Last-Modified：WEB 服务器认为对象的最后修改时间，</li>
+<li>Content-Type：WEB服务器告诉浏览器自己响应的对象的类型和字符集,</li>
+<li>Content-Encoding:  gzip  WEB服务器表明自己使用了什么压缩方法（gzip，deflate）</li>
+<li>Content-Length： WEB 服务器告诉浏览器自己响应的对象的长度。例如：Content-Length: 26012</li>
+<li>Content-Type： WEB 服务器告诉浏览器自己响应的对象的类型。例如：Content-Type：application/xml</li>
+</ul>
+<h4 id="Transport头域-1">Transport头域</h4><ul>
+<li>Connection<ul>
+<li>Connection: keep-alive   当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接</li>
+<li>Connection: close  代表一个Request完成后，客户端和服务器之间用于传输HTTP数据的TCP连接会关闭， 当客户端再次发送Request，需要重新建立TCP连接。</li>
+</ul>
+</li>
+</ul>
+<h4 id="其他头域">其他头域</h4><ul>
+<li><p>Server：Apache/2.2.8 (Win32) PHP/5.2.5</p>
+</li>
+<li><p>Age：当代理服务器用自己缓存的实体去响应请求时，用该头部表明该实体从产生到现在经过多长时间了。</p>
+</li>
+<li><p>Transfer-Encoding: WEB 服务器表明自己对本响应消息体（不是消息体里面的对象）作了怎样的编码，比如是否分块（chunked）</p>
+</li>
+</ul>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/page_load/">
+  <time datetime="2015-08-16T06:33:17.179Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/08/16/page_load/"></a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h2 id="title:提高页面访问速度">title:提高页面访问速度</h2><blockquote>
+<p>参考<br><a href="https://developer.yahoo.com/performance/rules.html" target="_blank" rel="external">https://developer.yahoo.com/performance/rules.html</a><br><a href="http://www.ghugo.com/performance-rules-web-site/(中文" target="_blank" rel="external">http://www.ghugo.com/performance-rules-web-site/(中文</a>)</p>
+</blockquote>
+<h3 id="减少请求">减少请求</h3><ul>
+<li>图片合并</li>
+<li>HTTP1.1 Keep-Alive</li>
+</ul>
+<h3 id="GET缓存">GET缓存</h3><p>GET 一个相同的URL 只有一个结果[相同是指 整个URL字符串完全匹配]<br>所以 第二次访问的时候 如果 URL字符串没变化 浏览器是 直接拿出了第一次访问的结果</p>
+<blockquote>
+<p>若我希望GET每次都是新的结果  则需加上 ？+new Date();，[总之就是使每次访问的URL字符串不一样的]</p>
+</blockquote>
+<p>对于AJAX的GET请求还可以这样</p>
+<blockquote>
+<ul>
+<li>setRequestHeader(“If-Modified-Since”,”0”);</li>
+<li>setRequestHeader(“Cache-Control”,”no-cache”);</li>
+</ul>
+</blockquote>
+<h3 id="GET_POST究竟有什么区别">GET POST究竟有什么区别</h3><blockquote>
+<p>参考<a href="http://www.zhihu.com/question/31640769" target="_blank" rel="external">http://www.zhihu.com/question/31640769</a></p>
+</blockquote>
+<p>一般来说 GET 传送数据量有限(某些ie版本的限制)，安全性低，会被缓存，而POST反之。<br><img src="http://pic3.zhimg.com/ad46b512903694303423954df74aafd6_r.jpg" alt="enter image description here"></p>
+<ul>
+<li>请求中的URL可以被手动输入</li>
+<li>请求中的URL可以被存在书签里，或者历史里，或者快速拨号里面，或者分享给别人。(搜索引擎，可以用get分享搜索结果)</li>
+<li>请求中的URL是可以被搜索引擎收录的。</li>
+<li>带云压缩的浏览器，比如Opera mini/Turbo 2, 只有GET才能在服务器端被预取的。</li>
+<li>请求中的URL可以被缓存。</li>
+</ul>
+<p>get表达的是一种幂等的[也就是请求1次和n次是一样的]，只读的，纯粹的操作，即它除了返回结果不应该会产生其它副作用（如写数据库），因此绝大部分get请求（通常超过90%）都直接被CDN缓存了，这能大大减少web服务器的负担。</p>
+<p>既然GET是幂等 所以用来添加删除之类的操作是不合适的</p>
+<h4 id="为什么GET不安全">为什么GET不安全</h4><p>显然Chrome Fiddler等都是可以看到POST请求中的数据的  所以说GET的请求在地址栏中会被看到所以不安全这个说法并不成立<br>当然了POST也只比GET安全那么一点点而已 所以HTTPS还是很有必要的</p>
+<ul>
+<li>GET请求会被历史记录</li>
+<li>服务器会在日志中记录所有的GET请求  linux中是 access_log  windows中是access.log这个文件, 而日志并没有记录POST</li>
+</ul>
+<blockquote>
+<p>MORE<br><a href="http://www.w3schools.com/tags/ref_httpmethods.asp" target="_blank" rel="external">http://www.w3schools.com/tags/ref_httpmethods.asp</a><br><a href="http://stackoverflow.com/questions/198462/is-either-get-or-post-more-secure-than-the-other" target="_blank" rel="external">http://stackoverflow.com/questions/198462/is-either-get-or-post-more-secure-than-the-other</a></p>
+</blockquote>
+<h3 id="预加载">预加载</h3><h3 id="后加载">后加载</h3><h3 id="使用GET来完成AJAX请求">使用GET来完成AJAX请求</h3><h3 id="服务端">服务端</h3><ul>
+<li>使用内容分发网络CDN<br>是由一系列分散到各个不同地理位<br>置上的Web服务器组成的，它提高了网站内容的传输速度.拥有最少网络跳数（network hops）和响应速度最快的服务器会被选定</li>
+<li>为文件头指定Expires或Cache-Control</li>
+<li>Gzip压缩文件内容</li>
+<li>配置ETag</li>
+</ul>
+<h3 id="css">css</h3><ul>
+<li><p>样式表置顶<br>如果将样式表放在底部，浏览器会拒绝渲染已经下载的网页，因为大多数浏览器在实现时都努力避免重绘</p>
+</li>
+<li><p>避免使用CSS表达式（Expression）</p>
+</li>
+<li>使用外部文件JavaScript和CSS<br>外部文件可以提高页面速度，因为JavaScript和CSS文件都能在浏览,器中产生缓存。内置在HTML文档中的JavaScript和CSS则会在每次请求中随HTML文档重新下载</li>
+<li>压缩JavaScript和CSS</li>
+<li>用link代替@import<br>前面的最佳实现中提到 CSS 应该放置在顶端以利于有序加载呈现 因为@import规则有可能胡导致白屏现象，即使把@import规则放在文档的head标签中也是如此。import中的css将会后加载</li>
+<li>避免使用滤镜</li>
+</ul>
+<h3 id="JS">JS</h3><ul>
+<li>把脚本置于页面底部<br>脚本带来的问题就是它阻止页面平行下载 HTTP1.1建议 每个主机名的并行下载内容不超过两个。如果你的图片放在多个主机名上，你可以在每个并行下载中同时下载 2个以上的文件。但是当下载脚本时，浏览器就不会同时下载其它文件了，即便是主机名不相同。</li>
+<li>削减JavaScript和CSS</li>
+<li>减少DOM访问</li>
+<li>开发智能事件处理程序<br>如果你在一个div中有 10 个按钮，你只需要在div上附加一次事件句柄就可<br>以了，而不用去为每一个按钮增加一个句柄。事件冒泡时你可以捕捉到事件并判断出是<br>哪个事件发出的。</li>
+</ul>
+<h3 id="其它">其它</h3><ul>
+<li>减小Cookie的体积<br>注意在适应级别的域名上设置 coockie 以便使子域名不受影响</li>
+<li>对静态内容的请求是无coockie的请求。创建一个子域名并用他来存放所有静态内容。</li>
+<li>favicon.ico 要小而且可缓存</li>
+</ul>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/custom_events/">
+  <time datetime="2015-08-16T06:23:59.536Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/08/16/custom_events/">自定义事件</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <blockquote>
+<p>参考<br><a href="http://www.zhangxinxu.com/wordpress/2012/04/js-dom%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/" target="_blank" rel="external">http://www.zhangxinxu.com/wordpress/2012/04/js-dom%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/</a></p>
+</blockquote>
+<p>一个最简单的自定义事件<br>这里的自定义事件并不是DOM事件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyEvent = &#123;</span><br><span class="line">    _listener: &#123;&#125;,</span><br><span class="line">    addEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type] = []</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>._listener[type].push(fn);</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    fireEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, caller</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">                fn.call(caller);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    removeEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="keyword">this</span>._listener[type].length ; i &lt; len; i++) &#123;</span><br><span class="line">                <span class="keyword">this</span>._listener[type].splice(i,<span class="number">1</span>);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f2'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">event = MyEvent;</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f1);</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f2);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>);</span><br><span class="line">event.removeEvent(<span class="string">'click'</span>,f1);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>OR 使用原型的方式<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyEvent = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._listener = &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">MyEvent.prototype = &#123;</span><br><span class="line">    constructor: <span class="keyword">this</span>,</span><br><span class="line">    addEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type] = [];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">typeof</span>(fn) === <span class="string">'function'</span> &amp;&amp; <span class="keyword">this</span>._listener[type].push(fn);</span><br><span class="line">    &#125;,</span><br><span class="line">    fireEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, caller</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">                fn.call(caller);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    removeEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="keyword">this</span>._listener[type].length ; i &lt; len; i++) &#123;</span><br><span class="line">                <span class="keyword">this</span>._listener[type].splice(i,<span class="number">1</span>);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f2'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">event = <span class="keyword">new</span> MyEvent();</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f1);</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f2);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>);</span><br><span class="line">event.removeEvent(<span class="string">'click'</span>,f1);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="添加参数">添加参数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyEvent = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._listener = &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">MyEvent.prototype = &#123;</span><br><span class="line">    constructor: <span class="keyword">this</span>,</span><br><span class="line">    addEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type] = [];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">typeof</span>(fn) === <span class="string">'function'</span> &amp;&amp; <span class="keyword">this</span>._listener[type].push(fn);</span><br><span class="line">    &#125;,</span><br><span class="line">    fireEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, scope</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> realArguments = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">                fn.apply(scope, [].slice.call(realArguments, <span class="number">2</span>));</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    removeEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="keyword">this</span>._listener[type].length ; i &lt; len; i++) &#123;</span><br><span class="line">                <span class="keyword">this</span>._listener[type].splice(i,<span class="number">1</span>);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params">p1, p2</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f2 -'</span> + p1 +<span class="string">' -'</span> + p2);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line">event = <span class="keyword">new</span> MyEvent();</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f1);</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f2);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>);</span><br><span class="line">event.removeEvent(<span class="string">'click'</span>,f1);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>, <span class="keyword">new</span> Person(<span class="string">'haha'</span>) ,<span class="string">'p1'</span>,<span class="string">'p2'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="自定义DOM事件">自定义DOM事件</h3><p>话说我在什么情况下需要自定义DOM事件呢<br>对于input的change事件, 如果是js修改了input的值是无法出发的<br>所以我们需要这样<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'#input'</span>);</span><br><span class="line">input.onchange= <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'hheh'</span>);</span><br><span class="line">&#125;</span><br><span class="line">input.value = <span class="string">'wahah'</span>;</span><br><span class="line"><span class="keyword">var</span> evt = <span class="built_in">document</span>.createEvent(<span class="string">"HTMLEvents"</span>);</span><br><span class="line">evt.initEvent(<span class="string">"change"</span>, <span class="literal">false</span>, <span class="literal">true</span>);</span><br><span class="line">input.dispatchEvent(evt);</span><br></pre></td></tr></table></figure></p>
+<p>用上面的风格写一个简单的DOM事件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DOMEvent</span>(<span class="params">el</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.el = el;</span><br><span class="line">&#125;</span><br><span class="line">DOMEvent.prototype = &#123;</span><br><span class="line">    constructor: <span class="keyword">this</span>,</span><br><span class="line">    addEvent: <span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.el.addEventListener(type, fn, <span class="literal">false</span>);</span><br><span class="line">        <span class="keyword">var</span> ev = <span class="built_in">document</span>.createEvent(<span class="string">'Eventname'</span>);</span><br><span class="line">        ev.initEvent(type, <span class="literal">false</span>, <span class="literal">false</span>);</span><br><span class="line">        <span class="keyword">this</span>.el[<span class="string">'ev'</span> + type] = ev;</span><br><span class="line">    &#125;,</span><br><span class="line">    fireEvent: <span class="function"><span class="keyword">function</span>(<span class="params">type</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ev =<span class="keyword">this</span>.el[<span class="string">'ev'</span> + type];</span><br><span class="line">        <span class="keyword">if</span>(ev)&#123;</span><br><span class="line">            <span class="keyword">this</span>.el.dispatchEvent(ev);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> ele = <span class="built_in">document</span>.querySelector(<span class="string">'.test'</span>);</span><br><span class="line">DOMEvent(ele).addEvent(<span class="string">'alert'</span>, f1);</span><br><span class="line">DOMEvent(ele).fireEvent(<span class="string">'alert'</span>);</span><br></pre></td></tr></table></figure></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/throttle/">
+  <time datetime="2015-08-16T06:22:37.130Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/08/16/throttle/">JS 节流阀</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <blockquote>
+<p>参考 <a href="https://github.com/hahnzhu/read-code-per-day/issues/5" target="_blank" rel="external">https://github.com/hahnzhu/read-code-per-day/issues/5</a></p>
+</blockquote>
+<h3 id="节流阀">节流阀</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var resizeTimer = null;&#10;$(window).on(&#39;mousemove&#39;, function (e) &#123;&#10;        console.log(&#39;move&#39;);&#10;    /* &#31532;&#19968;&#27425;&#35775;&#38382;&#65292;&#19981;&#23384;&#22312; resizeTimer&#65292;&#36339;&#36807;&#36825;&#37324; */&#10;    if (resizeTimer) &#123;&#10;        clearTimeout(resizeTimer);&#10;    &#125;&#10;    /* &#31532;&#19968;&#27425;&#35775;&#38382;&#65292;&#36171;&#20540;&#32473; resizeTimer&#65292;&#32465;&#23450;&#30340;&#20989;&#25968; 400ms &#21518;&#35843;&#29992; */&#10;    resizeTimer = setTimeout(function()&#123;&#10;        console.log(&#34;move timer&#34; /*+ e.clientX + &#39;-&#39; + e.clientY*/ );&#10;    &#125;, 40);&#10;&#125;);</span><br></pre></td></tr></table></figure>
+<p>发现实际中并不是40ms调用一次move timer<br>原因就在于timeout  它是等这个函数执行完之后间隔40ms 才有机会去执行下一个函数</p>
+<h3 id="函数去抖">函数去抖</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, threshhold, scope</span>) </span>&#123;</span><br><span class="line">    threshhold || (threshhold = <span class="number">250</span>);</span><br><span class="line">    <span class="keyword">var</span> last,</span><br><span class="line">        deferTimer;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'move'</span>);<span class="comment">// 这个函数是mousemove事件处理的函数</span></span><br><span class="line">        <span class="keyword">var</span> context = scope || <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> now = +<span class="keyword">new</span> <span class="built_in">Date</span>,</span><br><span class="line">            args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="keyword">if</span> (last &amp;&amp; now &lt; last + threshhold) &#123;</span><br><span class="line">            <span class="comment">// hold on to it</span></span><br><span class="line">            clearTimeout(deferTimer);</span><br><span class="line">            deferTimer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                last = now;</span><br><span class="line">                fn.apply(context, args);</span><br><span class="line">            &#125;, threshhold);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            last = now;</span><br><span class="line">            fn.apply(context, args);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">$(<span class="string">'body'</span>).on(<span class="string">'mousemove'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'move'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">'body'</span>).on(<span class="string">'mousemove'</span>, debounce(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'tick'</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>));</span><br></pre></td></tr></table></figure>
+<p>每次mousemove都是在执行 debounce返回的一个函数<br>这个返回的函数用到了debounce中的一个变量last<br>奇怪! 这个last 又不是全局的变量  为什么这个函数每次执行都依赖上次last的结果?  因为这里是一个闭包</p>
+<h3 id="通过闭包_使局部变量变成全局变量">通过闭包 使局部变量变成全局变量</h3><p>因为这个a后面一直被fun函数使用  所以这个变量不会被销毁  正是闭包特性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">closure</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ++a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">fun = closure();</span><br><span class="line"><span class="built_in">console</span>.log(fun());<span class="comment">//2</span></span><br><span class="line"><span class="built_in">console</span>.log(fun());<span class="comment">//3</span></span><br><span class="line"><span class="built_in">console</span>.log(fun());<span class="comment">//4</span></span><br></pre></td></tr></table></figure></p>
+
+    
+  </div>
+  <footer class="end-sep">
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+
+  
+    <article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/promise/">
+  <time datetime="2015-08-16T06:22:23.411Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title"><a href="/2015/08/16/promise/">Promise</a></h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <blockquote>
+<p>参考<br><a href="http://lucifier129.github.io/nodeppt/20150528/promise.htm" target="_blank" rel="external">http://lucifier129.github.io/nodeppt/20150528/promise.htm</a><br><a href="http://efe.baidu.com/blog/promises-anti-pattern/" target="_blank" rel="external">http://efe.baidu.com/blog/promises-anti-pattern/</a><br><a href="http://www.html5rocks.com/zh/tutorials/es6/promises/#toc-api" target="_blank" rel="external">http://www.html5rocks.com/zh/tutorials/es6/promises/#toc-api</a></p>
+</blockquote>
+<h3 id="使用浏览器的Promise">使用浏览器的Promise</h3><p>将一个非Promise变成Promise</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 返回一个新的 Promise</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 经典 XHR 操作</span></span><br><span class="line">        <span class="keyword">var</span> req = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        req.open(<span class="string">'GET'</span>, url);</span><br><span class="line"></span><br><span class="line">        req.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 当发生 404 等状况的时候调用此函数</span></span><br><span class="line">            <span class="comment">// 所以先检查状态码</span></span><br><span class="line">            <span class="keyword">if</span> (req.status == <span class="number">200</span>) &#123;</span><br><span class="line">                <span class="comment">// 以响应文本为结果，完成此 Promise</span></span><br><span class="line">                resolve(req.response);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 否则就以状态码为结果否定掉此 Promise</span></span><br><span class="line">                <span class="comment">// （提供一个有意义的 Error 对象）</span></span><br><span class="line">                reject(<span class="built_in">Error</span>(req.statusText));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 网络异常的处理方法</span></span><br><span class="line">        req.onerror = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            reject(<span class="built_in">Error</span>(<span class="string">"Network Error"</span>));</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发出请求</span></span><br><span class="line">        req.send();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">story = get(<span class="string">'story.json'</span>);</span><br><span class="line">story.then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(res);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(obj);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>再来一个例子<br>我把ajax的例子放在前面是因为我觉得 ajax的使用场景会更容易理解<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> getData = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> data;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        data = <span class="string">'data'</span>;</span><br><span class="line">    &#125;,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(getData()); <span class="comment">//undefined //显然这样是得不到结果的</span></span><br><span class="line"><span class="comment">//所以我们必须传入一个回调函数</span></span><br><span class="line"><span class="keyword">var</span> getData = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> data;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        data = <span class="string">'data'</span>;</span><br><span class="line">        callback(data);</span><br><span class="line">    &#125;,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line">getData(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>改成Promise<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> getData = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            resolve(<span class="string">'data'</span>);</span><br><span class="line">        &#125;,<span class="number">0</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> promise;</span><br><span class="line">&#125;</span><br><span class="line">getData().then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="关于defer">关于defer</h3><p>下面是用Q.js 的defer</p>
+<blockquote>
+<p><a href="http://efe.baidu.com/blog/promises-anti-pattern/" target="_blank" rel="external">http://efe.baidu.com/blog/promises-anti-pattern/</a> 这里建议不在使用defer<br>尽管这个写法在<a href="https://github.com/kriskowal/q" target="_blank" rel="external">https://github.com/kriskowal/q</a> 中可以看到</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">load</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> deferred = Q.defer();</span><br><span class="line">    <span class="keyword">var</span> req = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    req.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (req.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">            deferred.resolve(req.responseText);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    req.open(<span class="string">'GET'</span>, url, <span class="literal">true</span>);</span><br><span class="line">    req.send();</span><br><span class="line">    <span class="keyword">return</span> deferred.promise;</span><br><span class="line">&#125;</span><br><span class="line">load(<span class="string">'story.json'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>最好这么用 (这里实际上就是告诉你如何用Q.js包装出一个Promise)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">load</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Q.Promise(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> req = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        req.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (req.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">                resolve(req.responseText);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        req.open(<span class="string">'GET'</span>, url, <span class="literal">true</span>);</span><br><span class="line">        req.send();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">load(<span class="string">'story.json'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="链式操作">链式操作</h3><p>比如我需要等意见事情做完了再做另一件事情<br>最容易想到的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">get(<span class="string">'story.json'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    get(<span class="string">'story.txt'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">data2</span>)</span>&#123;</span><br><span class="line">        get(<span class="string">'xxx'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">data3</span>)</span>&#123;</span><br><span class="line">            <span class="comment">//.....</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>突然觉得不对  不是说Promise是用来解决嵌套的问题嘛  这看起来还是在嵌套啊</p>
+<p>我们需要return一个promise对象  这才是真正解决深层嵌套<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">get(<span class="string">'story.json'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> get(<span class="string">'story.txt'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">rs</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(rs); <span class="comment">//虽然前一个Promise返回的是一个Promise对象  但是这里的rs并不是一个Promise  而是前面的Promise对象resolve的结果 //也就是story.txt中的内容</span></span><br><span class="line">    <span class="keyword">return</span> get(<span class="string">'xxx'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">xxx</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> get(<span class="string">'dot'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">dot</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>当然了 假如你需要某次回调中得到所有异步的结果  你可以用第一种嵌套形式<br>或者使用Promise.all</p>
+</blockquote>
+<h3 id="Promise-all">Promise.all</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p1 = <span class="built_in">Promise</span>.resolve(<span class="number">1</span>),</span><br><span class="line">    p2 = <span class="built_in">Promise</span>.resolve(<span class="number">2</span>),</span><br><span class="line">    p3 = <span class="built_in">Promise</span>.resolve(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">Promise</span>.all([p1, p2, p3]).then(<span class="function"><span class="keyword">function</span> (<span class="params">results</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(results);  <span class="comment">// [1, 2, 3]</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//Promise.all 常用在 forEach 中</span></span><br><span class="line"><span class="comment">//比如</span></span><br><span class="line">get(<span class="string">'story.json'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">story</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> promiseArr = story.chapters.map(<span class="function"><span class="keyword">function</span>(<span class="params">chapter</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> get(chapter.url);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.all(promiseArr);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">resultsArr</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//resultsArr 是一个数组</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
     
   </div>
@@ -103,6 +784,8 @@
 
   <nav id="pagination">
   
+  
+    <a href="/page/2/" class="next">下一页</a>
   
   <div class="clearfix"></div>
 </nav>
