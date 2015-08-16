@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>HTTP &amp;&amp; 缓存 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="John Doe">
+  
+  
+    <meta name="description" content="一个GET请求GET请求的所有参数都会在URL中体现
+GET http://admin_test.oa.com/qvideo_check?m=release&amp;amp;a=recommend_check&amp;amp;ticket=xxx HTTP/1.1Host: qunadmin_test.oa.comConnection: keep-aliveCache-Control: max-age=0Acce">
+  
+  <meta name="description" content="一个GET请求GET请求的所有参数都会在URL中体现
+GET http://admin_test.oa.com/qvideo_check?m=release&amp;amp;a=recommend_check&amp;amp;ticket=xxx HTTP/1.1Host: qunadmin_test.oa.comConnection: keep-aliveCache-Control: max-age=0Acce">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP && 缓存">
+<meta property="og:url" content="http://yoursite.com/2015/08/16/http_cache/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一个GET请求GET请求的所有参数都会在URL中体现
+GET http://admin_test.oa.com/qvideo_check?m=release&amp;amp;a=recommend_check&amp;amp;ticket=xxx HTTP/1.1Host: qunadmin_test.oa.comConnection: keep-aliveCache-Control: max-age=0Acce">
+<meta property="og:updated_time" content="2015-08-16T06:33:46.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP && 缓存">
+<meta name="twitter:description" content="一个GET请求GET请求的所有参数都会在URL中体现
+GET http://admin_test.oa.com/qvideo_check?m=release&amp;amp;a=recommend_check&amp;amp;ticket=xxx HTTP/1.1Host: qunadmin_test.oa.comConnection: keep-aliveCache-Control: max-age=0Acce">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Hexo</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+        <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/http_cache/">
+  <time datetime="2015-08-16T06:33:46.992Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">HTTP &amp;&amp; 缓存</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h3 id="一个GET请求">一个GET请求</h3><p>GET请求的所有参数都会在URL中体现</p>
+<p>GET <a href="http://admin_test.oa.com/qvideo_check?m=release&amp;a=recommend_check&amp;ticket=xxx" target="_blank" rel="external">http://admin_test.oa.com/qvideo_check?m=release&amp;a=recommend_check&amp;ticket=xxx</a> HTTP/1.1<br>Host: qunadmin_test.oa.com<br>Connection: keep-alive<br>Cache-Control: max-age=0<br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,<em>/</em>;q=0.8<br>Upgrade-Insecure-Requests: 1<br>User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36<br>Accept-Encoding: gzip, deflate, sdch<br>Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2<br>Cookie: pgv_pvi=33174528; pgv_pvid=5511540156; ext-terminal=n%3A1; km_u=d8e2d0f081e337e5f39795c8200e49f21d12548710fc0d9d40cc134f3bea57ff5f4f2963cb532c97; t_uid=rakuluo; km_uid=luo; ; TCOA_TICKET=436F5964EBF9BFE887E534515FA5327F46673896BF686CC0FFA2D92CEFE263CEE2ED2082BFFC0F363DBA8AD2B5D38F12E53AB0E2D263E8B2AABAB1FA42EB5D9BCA53A608B9DA7B8FF26947AA9150049D86798FEF9F71BEADED4133410949366B66ABFA3CAC6859F1B4C8D1825E42637AC5AA0A2697B8FB0A0F277AE69EE65C7488BC1F641175932A2447540815637B78AC7B0F202B7798D2A2AF6CC502621AE55E3320B1C5A0D4F7767F50D3B4980DC4E099583885644566; ticket=436F5964EBF9BFE887E534515FA5327F3FC0EC28BB30AB7113E34EEA91ACF0A49D54D2F81DC1CEE81693AFCA142CDC90220CEB2729C8D92A93C338D292E5083BB74AC565C96148284E04B136BFD6837E9B5C9817CA57B3D2E673CB640C41238B426EF92B41AC12CA82827F631B52EEE1CCD21E694AD93D1B4DFEB63DA6AE16A90359666D500357DCA5AF5258D6848A7826AC58480D0B9A357D08B936C085E53CDD84C55636F973840</p>
+<h3 id="一个POST请求">一个POST请求</h3><p>包括请求头和请求体(请求体内含参数)两个部分 中间是一个空行<br>很容易看出这是一个HTTP 1.1类型的请求<br>POST <a href="http://admin_test.oa.com/qvk" target="_blank" rel="external">http://admin_test.oa.com/qvk</a> HTTP/1.1<br>Host: qunadmin_test.oa.com<br>Connection: keep-alive<br>Content-Length: 196<br>Origin: <a href="http://admin_test.oa.com" target="_blank" rel="external">http://admin_test.oa.com</a><br>X-Requested-With: XMLHttpRequest<br>User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36<br>Content-Type: application/x-www-form-urlencoded; charset=UTF-8<br>Accept: <em>/</em><br>Referer: <a href="http://admin_test.com/" target="_blank" rel="external">http://admin_test.com/</a>…..<br>Accept-Encoding: gzip, deflate<br>Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2<br>Cookie: pgv_pvi=33174528; pgv_pvid=5511540156; ext-terminal=n%3A1; km_u=d8e2d0f081532c97; t_uid=rakuluo; km_uid=rakuluo; t_u=3eaac1dbd7b54763%7C845b1588bc2614cb</p>
+<p>m=release&amp;a=account_check&amp;ticket=6eb657ca-a01f-11e3-9337-001517bed8zae6&amp;json=%7B%22gid%22%3A1234567%2C%22owner_uin%22%3A1234567%2C%22audit_status%22%3A2%2C%22audit_reason%22%3A%22no%20reason%22%7D</p>
+<h3 id="一个上传图片的POST请求">一个上传图片的POST请求</h3><p>POST <a href="http://localhost/github/repo/drag/ImgUpload/upload.php" target="_blank" rel="external">http://localhost/github/repo/drag/ImgUpload/upload.php</a> HTTP/1.1<br>Host: localhost<br>Connection: keep-alive<br>Content-Length: 138569<br>Origin: <a href="http://localhost" target="_blank" rel="external">http://localhost</a><br>User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36<br>Content-Type: multipart/form-data; boundary=——WebKitFormBoundaryV9kSbS9Xym2YSdfs<br>Accept: <em>/</em><br>Referer: <a href="http://localhost/github/repo/drag/ImgUpload/" target="_blank" rel="external">http://localhost/github/repo/drag/ImgUpload/</a><br>Accept-Encoding: gzip, deflate<br>Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2</p>
+<p>———WebKitFormBoundaryV9kSbS9Xym2YSdfs<br>Content-Disposition: form-data; name=”file”; filename=”2015-06-19 162748.jpg”<br>Content-Type: image/jpeg<br> ! Exif  MM *<br>….</p>
+<h3 id="Keep_Alive">Keep Alive</h3><p>Connection请求头的值为Keep-Alive时，客户端通知服务器返回本次请求结果后保持连接；Connection请求头的值为close时，客户端通知服务器返回本次请求结果后关闭连接</p>
+<h4 id="持久连接是HTTP1-1_中的">持久连接是HTTP1.1 中的</h4><p>普通模式  每个请求/应答客户和服务器都要新建一个连接，完成之后立即断开连接</p>
+<p>从HTTP/1.1起，默认都开启了Keep-Alive，保持连接特性，简单地说，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。</p>
+<p>　　Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。</p>
+<h3 id="Keep_Alive_应用场景">Keep Alive 应用场景</h3><blockquote>
+<p>参考<br> <a href="http://blog.csdn.net/hguisu/article/details/8608888" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/8608888</a></p>
+</blockquote>
+<p>访问一个包含有许多图像的网页文件的整个过程包含了多次请求和响应，每次请求和响应都需要建立一个单独的连接，每次连接只是传输一个文档和图像，上一 次和下一次请求完全分离。即使图像文件都很小，但是客户端和服务器端每次建立和关闭连接却是一个相对比较费时的过程，并且会严重影响客户机和服务器的性能。</p>
+<p>HTTP1.1支持持久连接，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟。一个包含有许多图像的网页文件的多个请求和应答可以在一个连接中传输</p>
+<h3 id="响应长度">响应长度</h3><ul>
+<li>若响应中出现了Transfer-Encoding:chucked  表示响应长度不固定<br>transfer-length由“chunked” 传输编码定义，除非消息由于关闭连接而终止</li>
+<li>若响应中出现的是 Content-Length: xxx  其值表示 entity-length（实体长度）和transfer-length（传输长度）[一般情况下他们长度是一致的  不一致则不能响应 Content-Length]<br>同时接收到Transfer-Encoding字段和Content-Length头字段，那么必须忽略Content-Length字段<blockquote>
+<p>响应长度的计算方式<br>一个字符算一个长度  一个中文字符2个</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="204和304">204和304</h3><p>不含有消息体的响应1xx  204[请求成功 不用刷新也不用重定向]  304</p>
+<h3 id="缓存">缓存</h3><blockquote>
+<p>参考<br><a href="http://blog.csdn.net/hguisu/article/details/8608888" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/8608888</a></p>
+</blockquote>
+<p>在HTTP/1.0中，使用Expire头域来判断资源的fresh或stale，并使用条件请求（conditional request）来判断资源是否仍有效。例如，cache服务器通过If-Modified-Since头域向服务器验证资源的Last-Modefied头域是否有更新，源服务器可能返回304（Not Modified），则表明该对象仍有效；也可能返回200（OK）替换请求的Cache对象</p>
+<p>为了使caching机制更加灵活，HTTP/1.1增加了Cache-Control头域（请求消息和响应消息都可使用），它支持一个可扩展的指令子集：例如max-age指令支持相对时间戳；private和no-store指令禁止对象被缓存；no-transform阻止Proxy进行任何改变响应的行为。</p>
+<p>HTTP/1.1中引入了一个ETag头域用于重激活机制，它的值entity tag可以用来唯一的描述一个资源。请求消息中可以使用If-None-Match头域来匹配资源的entitytag是否有变化。<br>例如响应的ETag:”553dcec3-3fd”<br>If-None-Match:”553dcec3-3fd”  他们是匹配的 可以从缓存拿</p>
+<h3 id="请求头总结">请求头总结</h3><blockquote>
+<p>参考<br><a href="https://www.byvoid.com/blog/http-keep-alive-header" target="_blank" rel="external">https://www.byvoid.com/blog/http-keep-alive-header</a><br><a href="http://blog.csdn.net/hguisu/article/details/8683290" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/8683290</a></p>
+</blockquote>
+<h4 id="Transport头域">Transport头域</h4><ul>
+<li>Connection: close（告诉WEB服务器或者代理服务器，在完成本次请求的响应后，断开连接，不要等待本次连接的后续请求了）  keepalive（告诉WEB服务器或者代理服务器，在完成本次请求的响应后，保持连接，等待本次连接的后续请求）</li>
+<li>Host：指定被请求资源的Internet主机和端口号</li>
+</ul>
+<h4 id="Client_头域">Client 头域</h4><ul>
+<li><p>Accept：告诉WEB服务器自己(浏览器)接受什么介质类型(MIME)，<em> 代表任意类型  Accept: </em>/*  代表浏览器可以处理所有类型</p>
+</li>
+<li><p>Accept-Encoding  告诉服务器,声明浏览器支持的编码方法  通常指定压缩方法，是否支持压缩，支持什么压缩方法（gzip，deflate），（注意：这不是只字符编码）;</p>
+<pre><code>Accept-<span class="string">Encoding:</span> compress, gzip <span class="comment">//支持compress 和gzip类型</span>
+</code></pre><blockquote>
+<p>在Linux中经常会用到后缀为.gz的文件，它们就是GZIP格式的。现今已经成为Internet 上使用非常普遍的一种数据压缩格式</p>
+<ul>
+<li>Accept-Charset: 浏览器申明自己接收的字符集</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h4 id="Cache头域">Cache头域</h4><ul>
+<li><p>Cache-Control[响应中也有次头域]</p>
+<ul>
+<li>no-cache  请求的资源不会缓存</li>
+<li>max-age（只接受 Age 值小于 max-age 值，并且没有过期的对象</li>
+<li>min-fresh：（接受其新鲜生命期大于其当前 Age 跟 min-fresh 值之和的缓存对象）</li>
+</ul>
+</li>
+<li><p>If-Modified-Since：把浏览器端缓存资源的最后修改时间发送到服务器去.务器会把这个时间与服务器上实际文件的最后修改时间进行对比。如果时间一致，那么返回304，客户端就直接使用本地缓存文件。如果时间不一致，就会返回200和新的文件内容。客户端接到之后，会丢弃旧文件，把新文件缓存起来，并显示在浏览器中。[不同的机器可能会有时间不同步的问题  所以HTTP1.1引入Etag]</p>
+</li>
+<li>If-Node-Match: If-None-Match和ETag一起工作，工作原理是在HTTP Response中添加ETag(类似于MD5一样的文件标识码)信息。 如果服务器验证资源的ETag没有改变（该资源没有更新），将返回一个304状态告诉客户端使用本地缓存文件。否则将返回200状态和新的资源和Etag.<br>请求If-None-Match:”5551df47-6c4”<br>响应头中ETag:”5551df47-6c4”        两者匹配  可以从缓存中取资源</li>
+<li>Pargma只有一个用法， 例如： Pragma: no-cache 请求的资源不会被缓存</li>
+</ul>
+<h4 id="Cookie头域">Cookie头域</h4><p>Cookie: 最重要的header, 将cookie的值发送给HTTP 服务器</p>
+<h4 id="Entity头域">Entity头域</h4><ul>
+<li>Content-Length作用：发送给HTTP服务器数据的长度。即请求消息正文的长度</li>
+<li>Content-Type:application/x-www-form-urlencoded</li>
+</ul>
+<h4 id="其他域">其他域</h4><ul>
+<li>Referer：浏览器向 WEB 服务器表明自己是从哪个 网页/URL 获得/点击 当前请求中的网址/URL</li>
+</ul>
+<h3 id="响应头总结">响应头总结</h3><h4 id="Cache头域-1">Cache头域</h4><ul>
+<li>Date: 响应的时间(服务器时间)</li>
+<li>Expired[HTTP 1.0]：资源国企时间</li>
+</ul>
+<h4 id="Cookie/Login_头域">Cookie/Login 头域</h4><ul>
+<li>p3p: 用于跨域设置Cookie, 这样可以解决iframe跨域访问cookie的问题</li>
+<li>Set-Cookie 用于把cookie 发送到客户端浏览器</li>
+</ul>
+<h4 id="Entity实体头域">Entity实体头域</h4><ul>
+<li>ETag[HTTP1.1]：就是一个对象（比如URL）的标志值，就一个对象而言，比如一个 html 文件，如果被修改了，其 Etag 也会别修改，所以ETag 的作用跟 Last-Modified 的作用差不多，主要供 WEB 服务器判断一个对象是否改变了<br>比如前一次请求某个 html 文件时，获得了其 ETag，当这次又请求这个文件时，浏览器就会把先前获得的 ETag 值发送给WEB 服务器，然后 WEB 服务器会把这个 ETag 跟该文件的当前 ETag 进行对比，然后就知道这个文件有没有改变了。</li>
+<li>Last-Modified：WEB 服务器认为对象的最后修改时间，</li>
+<li>Content-Type：WEB服务器告诉浏览器自己响应的对象的类型和字符集,</li>
+<li>Content-Encoding:  gzip  WEB服务器表明自己使用了什么压缩方法（gzip，deflate）</li>
+<li>Content-Length： WEB 服务器告诉浏览器自己响应的对象的长度。例如：Content-Length: 26012</li>
+<li>Content-Type： WEB 服务器告诉浏览器自己响应的对象的类型。例如：Content-Type：application/xml</li>
+</ul>
+<h4 id="Transport头域-1">Transport头域</h4><ul>
+<li>Connection<ul>
+<li>Connection: keep-alive   当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接</li>
+<li>Connection: close  代表一个Request完成后，客户端和服务器之间用于传输HTTP数据的TCP连接会关闭， 当客户端再次发送Request，需要重新建立TCP连接。</li>
+</ul>
+</li>
+</ul>
+<h4 id="其他头域">其他头域</h4><ul>
+<li><p>Server：Apache/2.2.8 (Win32) PHP/5.2.5</p>
+</li>
+<li><p>Age：当代理服务器用自己缓存的实体去响应请求时，用该头部表明该实体从产生到现在经过多长时间了。</p>
+</li>
+<li><p>Transfer-Encoding: WEB 服务器表明自己对本响应消息体（不是消息体里面的对象）作了怎样的编码，比如是否分块（chunked）</p>
+</li>
+</ul>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="/">John Doe</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

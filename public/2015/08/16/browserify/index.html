@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>Browserfiy | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="John Doe">
+  
+  
+    <meta name="description" content="怎么添加lib呢
+手动去官网下载
+使用bower
+
+Bower
+参考http://blog.fens.me/nodejs-bower-intro/
+
+Bower 是 twitter 推出的一款包管理工具，基于nodejs的模块化思想，把功能分散到各个模块中，让模块和模块之间存在联系，通过 Bower 来管理模块间的这种联系
+简单点说 各种lib下载器 (同时还能下载依赖包)
+因为会使用到bower">
+  
+  <meta name="description" content="怎么添加lib呢
+手动去官网下载
+使用bower
+
+Bower
+参考http://blog.fens.me/nodejs-bower-intro/
+
+Bower 是 twitter 推出的一款包管理工具，基于nodejs的模块化思想，把功能分散到各个模块中，让模块和模块之间存在联系，通过 Bower 来管理模块间的这种联系
+简单点说 各种lib下载器 (同时还能下载依赖包)
+因为会使用到bower">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Browserfiy">
+<meta property="og:url" content="http://yoursite.com/2015/08/16/browserify/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="怎么添加lib呢
+手动去官网下载
+使用bower
+
+Bower
+参考http://blog.fens.me/nodejs-bower-intro/
+
+Bower 是 twitter 推出的一款包管理工具，基于nodejs的模块化思想，把功能分散到各个模块中，让模块和模块之间存在联系，通过 Bower 来管理模块间的这种联系
+简单点说 各种lib下载器 (同时还能下载依赖包)
+因为会使用到bower">
+<meta property="og:updated_time" content="2015-08-16T06:36:12.110Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Browserfiy">
+<meta name="twitter:description" content="怎么添加lib呢
+手动去官网下载
+使用bower
+
+Bower
+参考http://blog.fens.me/nodejs-bower-intro/
+
+Bower 是 twitter 推出的一款包管理工具，基于nodejs的模块化思想，把功能分散到各个模块中，让模块和模块之间存在联系，通过 Bower 来管理模块间的这种联系
+简单点说 各种lib下载器 (同时还能下载依赖包)
+因为会使用到bower">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Hexo</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+        <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/browserify/">
+  <time datetime="2015-08-16T06:36:12.110Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">Browserfiy</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h3 id="怎么添加lib呢">怎么添加lib呢</h3><ul>
+<li>手动去官网下载</li>
+<li>使用bower</li>
+</ul>
+<h3 id="Bower">Bower</h3><blockquote>
+<p>参考<br><a href="http://blog.fens.me/nodejs-bower-intro/" target="_blank" rel="external">http://blog.fens.me/nodejs-bower-intro/</a></p>
+</blockquote>
+<p>Bower 是 twitter 推出的一款包管理工具，基于nodejs的模块化思想，把功能分散到各个模块中，让模块和模块之间存在联系，通过 Bower 来管理模块间的这种联系</p>
+<p>简单点说 各种lib下载器 (同时还能下载依赖包)</p>
+<p>因为会使用到bower命令 最好全局安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install bower -g</span><br></pre></td></tr></table></figure>
+<p>然后使用下面的命令就能在bower_components中看到文件夹<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bower install jquery</span><br></pre></td></tr></table></figure></p>
+<p>lib都下载好了 就可以再用script标签引入</p>
+<h3 id="Browserify">Browserify</h3><blockquote>
+<p>参考<br><a href="http://javascript.ruanyifeng.com/tool/browserify.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/tool/browserify.html</a></p>
+</blockquote>
+<p>Browserify是一个node.js模块，主要用于改写现有的CommonJS模块，使得浏览器端也可以使用这些模块。使用下面的命令，在全局环境下安装Browserify。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g browserify</span><br></pre></td></tr></table></figure></p>
+<p>最好在全局环境中安装,  因为后面要用到Browserify这个命令</p>
+<p>用Node 的CMD形式随便写两个模块foo.js 和 main.js<br>[原博中有]  然后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">browserify main.js -o compiled.js</span><br></pre></td></tr></table></figure></p>
+<p>之后在HTML中引入这个 compiled.js 就可以在浏览器中使用刚才的Node模块了</p>
+<h3 id="Debug">Debug</h3><p>现在Browserify支持 source map<br>在其官方文档中 <a href="https://github.com/substack/node-browserify" target="_blank" rel="external">https://github.com/substack/node-browserify</a>    有这么一个命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ browserify main.js --debug | exorcist bundle.js.map &gt; bundle.js</span><br></pre></td></tr></table></figure></p>
+<p>将main.js 编译成 bundle.js<br>PS exorcist  也是一个包  需全局安装<br>这样之后就生成了 bundle.js 和 bundle.js.map<br>有了source map debug就很方便</p>
+<h3 id="实时更新_Beefy">实时更新 Beefy</h3><p><a href="http://didact.us/beefy/" target="_blank" rel="external">http://didact.us/beefy/</a><br>全局安装beefy<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beefy main.js:bundle.js --live</span><br></pre></td></tr></table></figure></p>
+<p>无需指定debug参数 默认debug就是打开的<br>—live 是修改后自动刷新</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="/">John Doe</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

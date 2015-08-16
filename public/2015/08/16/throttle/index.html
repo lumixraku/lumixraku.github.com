@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>JS 节流阀 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="John Doe">
+  
+  
+    <meta name="description" content="参考 https://github.com/hahnzhu/read-code-per-day/issues/5
+
+节流阀1var resizeTimer = null;&amp;#10;$(window).on(&amp;#39;mousemove&amp;#39;, function (e) &amp;#123;&amp;#10;        console.log(&amp;#39;move&amp;#39;);&amp;#10;    /* &amp;#31">
+  
+  <meta name="description" content="参考 https://github.com/hahnzhu/read-code-per-day/issues/5
+
+节流阀1var resizeTimer = null;&amp;#10;$(window).on(&amp;#39;mousemove&amp;#39;, function (e) &amp;#123;&amp;#10;        console.log(&amp;#39;move&amp;#39;);&amp;#10;    /* &amp;#31">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS 节流阀">
+<meta property="og:url" content="http://yoursite.com/2015/08/16/throttle/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="参考 https://github.com/hahnzhu/read-code-per-day/issues/5
+
+节流阀1var resizeTimer = null;&amp;#10;$(window).on(&amp;#39;mousemove&amp;#39;, function (e) &amp;#123;&amp;#10;        console.log(&amp;#39;move&amp;#39;);&amp;#10;    /* &amp;#31">
+<meta property="og:updated_time" content="2015-08-16T06:22:37.130Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS 节流阀">
+<meta name="twitter:description" content="参考 https://github.com/hahnzhu/read-code-per-day/issues/5
+
+节流阀1var resizeTimer = null;&amp;#10;$(window).on(&amp;#39;mousemove&amp;#39;, function (e) &amp;#123;&amp;#10;        console.log(&amp;#39;move&amp;#39;);&amp;#10;    /* &amp;#31">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Hexo</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+        <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/throttle/">
+  <time datetime="2015-08-16T06:22:37.130Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">JS 节流阀</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <blockquote>
+<p>参考 <a href="https://github.com/hahnzhu/read-code-per-day/issues/5" target="_blank" rel="external">https://github.com/hahnzhu/read-code-per-day/issues/5</a></p>
+</blockquote>
+<h3 id="节流阀">节流阀</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var resizeTimer = null;&#10;$(window).on(&#39;mousemove&#39;, function (e) &#123;&#10;        console.log(&#39;move&#39;);&#10;    /* &#31532;&#19968;&#27425;&#35775;&#38382;&#65292;&#19981;&#23384;&#22312; resizeTimer&#65292;&#36339;&#36807;&#36825;&#37324; */&#10;    if (resizeTimer) &#123;&#10;        clearTimeout(resizeTimer);&#10;    &#125;&#10;    /* &#31532;&#19968;&#27425;&#35775;&#38382;&#65292;&#36171;&#20540;&#32473; resizeTimer&#65292;&#32465;&#23450;&#30340;&#20989;&#25968; 400ms &#21518;&#35843;&#29992; */&#10;    resizeTimer = setTimeout(function()&#123;&#10;        console.log(&#34;move timer&#34; /*+ e.clientX + &#39;-&#39; + e.clientY*/ );&#10;    &#125;, 40);&#10;&#125;);</span><br></pre></td></tr></table></figure>
+<p>发现实际中并不是40ms调用一次move timer<br>原因就在于timeout  它是等这个函数执行完之后间隔40ms 才有机会去执行下一个函数</p>
+<h3 id="函数去抖">函数去抖</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn, threshhold, scope</span>) </span>&#123;</span><br><span class="line">    threshhold || (threshhold = <span class="number">250</span>);</span><br><span class="line">    <span class="keyword">var</span> last,</span><br><span class="line">        deferTimer;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'move'</span>);<span class="comment">// 这个函数是mousemove事件处理的函数</span></span><br><span class="line">        <span class="keyword">var</span> context = scope || <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> now = +<span class="keyword">new</span> <span class="built_in">Date</span>,</span><br><span class="line">            args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="keyword">if</span> (last &amp;&amp; now &lt; last + threshhold) &#123;</span><br><span class="line">            <span class="comment">// hold on to it</span></span><br><span class="line">            clearTimeout(deferTimer);</span><br><span class="line">            deferTimer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                last = now;</span><br><span class="line">                fn.apply(context, args);</span><br><span class="line">            &#125;, threshhold);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            last = now;</span><br><span class="line">            fn.apply(context, args);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">$(<span class="string">'body'</span>).on(<span class="string">'mousemove'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'move'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">'body'</span>).on(<span class="string">'mousemove'</span>, debounce(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'tick'</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>));</span><br></pre></td></tr></table></figure>
+<p>每次mousemove都是在执行 debounce返回的一个函数<br>这个返回的函数用到了debounce中的一个变量last<br>奇怪! 这个last 又不是全局的变量  为什么这个函数每次执行都依赖上次last的结果?  因为这里是一个闭包</p>
+<h3 id="通过闭包_使局部变量变成全局变量">通过闭包 使局部变量变成全局变量</h3><p>因为这个a后面一直被fun函数使用  所以这个变量不会被销毁  正是闭包特性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">closure</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ++a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">fun = closure();</span><br><span class="line"><span class="built_in">console</span>.log(fun());<span class="comment">//2</span></span><br><span class="line"><span class="built_in">console</span>.log(fun());<span class="comment">//3</span></span><br><span class="line"><span class="built_in">console</span>.log(fun());<span class="comment">//4</span></span><br></pre></td></tr></table></figure></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="/">John Doe</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

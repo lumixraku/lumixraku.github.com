@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>自定义事件 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="John Doe">
+  
+  
+    <meta name="description" content="参考http://www.zhangxinxu.com/wordpress/2012/04/js-dom%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/
+
+一个最简单的自定义事件这里的自定义事件并不是DOM事件123456789101112131415161718192021222324252627282930313233343536373839var">
+  
+  <meta name="description" content="参考http://www.zhangxinxu.com/wordpress/2012/04/js-dom%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/
+
+一个最简单的自定义事件这里的自定义事件并不是DOM事件123456789101112131415161718192021222324252627282930313233343536373839var">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义事件">
+<meta property="og:url" content="http://yoursite.com/2015/08/16/custom_events/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="参考http://www.zhangxinxu.com/wordpress/2012/04/js-dom%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/
+
+一个最简单的自定义事件这里的自定义事件并不是DOM事件123456789101112131415161718192021222324252627282930313233343536373839var">
+<meta property="og:updated_time" content="2015-08-16T06:23:59.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义事件">
+<meta name="twitter:description" content="参考http://www.zhangxinxu.com/wordpress/2012/04/js-dom%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/
+
+一个最简单的自定义事件这里的自定义事件并不是DOM事件123456789101112131415161718192021222324252627282930313233343536373839var">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Hexo</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+        <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/custom_events/">
+  <time datetime="2015-08-16T06:23:59.536Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">自定义事件</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <blockquote>
+<p>参考<br><a href="http://www.zhangxinxu.com/wordpress/2012/04/js-dom%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/" target="_blank" rel="external">http://www.zhangxinxu.com/wordpress/2012/04/js-dom%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6/</a></p>
+</blockquote>
+<p>一个最简单的自定义事件<br>这里的自定义事件并不是DOM事件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyEvent = &#123;</span><br><span class="line">    _listener: &#123;&#125;,</span><br><span class="line">    addEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type] = []</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>._listener[type].push(fn);</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    fireEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, caller</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">                fn.call(caller);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    removeEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="keyword">this</span>._listener[type].length ; i &lt; len; i++) &#123;</span><br><span class="line">                <span class="keyword">this</span>._listener[type].splice(i,<span class="number">1</span>);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f2'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">event = MyEvent;</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f1);</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f2);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>);</span><br><span class="line">event.removeEvent(<span class="string">'click'</span>,f1);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>OR 使用原型的方式<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyEvent = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._listener = &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">MyEvent.prototype = &#123;</span><br><span class="line">    constructor: <span class="keyword">this</span>,</span><br><span class="line">    addEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type] = [];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">typeof</span>(fn) === <span class="string">'function'</span> &amp;&amp; <span class="keyword">this</span>._listener[type].push(fn);</span><br><span class="line">    &#125;,</span><br><span class="line">    fireEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, caller</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">                fn.call(caller);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    removeEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="keyword">this</span>._listener[type].length ; i &lt; len; i++) &#123;</span><br><span class="line">                <span class="keyword">this</span>._listener[type].splice(i,<span class="number">1</span>);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f2'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">event = <span class="keyword">new</span> MyEvent();</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f1);</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f2);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>);</span><br><span class="line">event.removeEvent(<span class="string">'click'</span>,f1);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="添加参数">添加参数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyEvent = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>._listener = &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">MyEvent.prototype = &#123;</span><br><span class="line">    constructor: <span class="keyword">this</span>,</span><br><span class="line">    addEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type] = [];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">typeof</span>(fn) === <span class="string">'function'</span> &amp;&amp; <span class="keyword">this</span>._listener[type].push(fn);</span><br><span class="line">    &#125;,</span><br><span class="line">    fireEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, scope</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> realArguments = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">this</span>._listener[type].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">                fn.apply(scope, [].slice.call(realArguments, <span class="number">2</span>));</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    removeEvent:<span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>._listener[type])&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="keyword">this</span>._listener[type].length ; i &lt; len; i++) &#123;</span><br><span class="line">                <span class="keyword">this</span>._listener[type].splice(i,<span class="number">1</span>);</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params">p1, p2</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f2 -'</span> + p1 +<span class="string">' -'</span> + p2);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line">event = <span class="keyword">new</span> MyEvent();</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f1);</span><br><span class="line">event.addEvent(<span class="string">'click'</span>, f2);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>);</span><br><span class="line">event.removeEvent(<span class="string">'click'</span>,f1);</span><br><span class="line">event.fireEvent(<span class="string">'click'</span>, <span class="keyword">new</span> Person(<span class="string">'haha'</span>) ,<span class="string">'p1'</span>,<span class="string">'p2'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="自定义DOM事件">自定义DOM事件</h3><p>话说我在什么情况下需要自定义DOM事件呢<br>对于input的change事件, 如果是js修改了input的值是无法出发的<br>所以我们需要这样<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> input = <span class="built_in">document</span>.querySelector(<span class="string">'#input'</span>);</span><br><span class="line">input.onchange= <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'hheh'</span>);</span><br><span class="line">&#125;</span><br><span class="line">input.value = <span class="string">'wahah'</span>;</span><br><span class="line"><span class="keyword">var</span> evt = <span class="built_in">document</span>.createEvent(<span class="string">"HTMLEvents"</span>);</span><br><span class="line">evt.initEvent(<span class="string">"change"</span>, <span class="literal">false</span>, <span class="literal">true</span>);</span><br><span class="line">input.dispatchEvent(evt);</span><br></pre></td></tr></table></figure></p>
+<p>用上面的风格写一个简单的DOM事件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DOMEvent</span>(<span class="params">el</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.el = el;</span><br><span class="line">&#125;</span><br><span class="line">DOMEvent.prototype = &#123;</span><br><span class="line">    constructor: <span class="keyword">this</span>,</span><br><span class="line">    addEvent: <span class="function"><span class="keyword">function</span>(<span class="params">type, fn</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.el.addEventListener(type, fn, <span class="literal">false</span>);</span><br><span class="line">        <span class="keyword">var</span> ev = <span class="built_in">document</span>.createEvent(<span class="string">'Eventname'</span>);</span><br><span class="line">        ev.initEvent(type, <span class="literal">false</span>, <span class="literal">false</span>);</span><br><span class="line">        <span class="keyword">this</span>.el[<span class="string">'ev'</span> + type] = ev;</span><br><span class="line">    &#125;,</span><br><span class="line">    fireEvent: <span class="function"><span class="keyword">function</span>(<span class="params">type</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ev =<span class="keyword">this</span>.el[<span class="string">'ev'</span> + type];</span><br><span class="line">        <span class="keyword">if</span>(ev)&#123;</span><br><span class="line">            <span class="keyword">this</span>.el.dispatchEvent(ev);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> ele = <span class="built_in">document</span>.querySelector(<span class="string">'.test'</span>);</span><br><span class="line">DOMEvent(ele).addEvent(<span class="string">'alert'</span>, f1);</span><br><span class="line">DOMEvent(ele).fireEvent(<span class="string">'alert'</span>);</span><br></pre></td></tr></table></figure></p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="/">John Doe</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>

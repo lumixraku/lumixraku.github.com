@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>RequireJS SeaJS | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="John Doe">
+  
+  
+    <meta name="description" content="一种是AMD模块规范，针对模块的异步加载，主要用于浏览器端
+另一种是CommonJS规范，针对模块的同步加载，主要用于服务器端，即node.js环境
+
+CMD规范CommonJS的规范： 根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象
+SeaJS定义模块方式在 SeaJS 里，模块只有一种书写格式">
+  
+  <meta name="description" content="一种是AMD模块规范，针对模块的异步加载，主要用于浏览器端
+另一种是CommonJS规范，针对模块的同步加载，主要用于服务器端，即node.js环境
+
+CMD规范CommonJS的规范： 根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象
+SeaJS定义模块方式在 SeaJS 里，模块只有一种书写格式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RequireJS SeaJS">
+<meta property="og:url" content="http://yoursite.com/2015/08/16/RequireJS_SeaJS/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一种是AMD模块规范，针对模块的异步加载，主要用于浏览器端
+另一种是CommonJS规范，针对模块的同步加载，主要用于服务器端，即node.js环境
+
+CMD规范CommonJS的规范： 根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象
+SeaJS定义模块方式在 SeaJS 里，模块只有一种书写格式">
+<meta property="og:updated_time" content="2015-08-16T06:38:09.489Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RequireJS SeaJS">
+<meta name="twitter:description" content="一种是AMD模块规范，针对模块的异步加载，主要用于浏览器端
+另一种是CommonJS规范，针对模块的同步加载，主要用于服务器端，即node.js环境
+
+CMD规范CommonJS的规范： 根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象
+SeaJS定义模块方式在 SeaJS 里，模块只有一种书写格式">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Hexo</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+        <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/RequireJS_SeaJS/">
+  <time datetime="2015-08-16T06:38:09.489Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">RequireJS SeaJS</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <ul>
+<li>一种是AMD模块规范，针对模块的异步加载，主要用于浏览器端</li>
+<li>另一种是CommonJS规范，针对模块的同步加载，主要用于服务器端，即node.js环境</li>
+</ul>
+<h3 id="CMD规范">CMD规范</h3><p>CommonJS的规范： 根据CommonJS规范，一个单独的文件就是一个模块。加载模块使用require方法，该方法读取一个文件并执行，最后返回文件内部的exports对象</p>
+<h3 id="SeaJS定义模块方式">SeaJS定义模块方式</h3><p>在 SeaJS 里，模块只有一种书写格式<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> A = <span class="built_in">require</span>(<span class="string">'a'</span>);</span><br><span class="line">    A.do();</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="RequireJS定义模块方式">RequireJS定义模块方式</h3><p>在 RequireJS 里，模块有多种书写格式，推荐的是<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">define([<span class="string">'dep1'</span>, <span class="string">'dep2'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">dep1, dep2</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//Define the module value by returning a value.</span></span><br><span class="line">    dep1.do();</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>现在RequireJS 也提供了CMD的写法<br>模块的依赖可以像 CommonJS 一样「就近定义」<br>PS 两者都是以文件做为模块 一个文件一个模块</p>
+</blockquote>
+<h3 id="AMD执行策略">AMD执行策略</h3><p><a href="http://imququ.com/post/amd-simplified-commonjs-wrapping.html" target="_blank" rel="external">http://imququ.com/post/amd-simplified-commonjs-wrapping.html</a><br>AMD 运行时核心思想是「Early Executing」 也就是提前执行依赖  尽早执行<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define([<span class="string">'a'</span>, <span class="string">'b'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">A, B</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//运行至此，a.js 和 b.js 已下载完成（运行于浏览器的 Loader 必须如此）；</span></span><br><span class="line">    <span class="comment">//A、B 两个模块已经执行完，直接可用（这是 AMD 的特性）；</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="CMD的执行策略">CMD的执行策略</h3><p>按需执行  CMD 推崇 as lazy as possible.<br>[只是执行时间晚了 但是加载和RequireJS是一样的]<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.js</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//运行至此，mod1.js 和 mod2.js 已经下载完成；</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'require module: main'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> mod1 = <span class="built_in">require</span>(<span class="string">'./mod1'</span>); <span class="comment">//这里才执行 mod1</span></span><br><span class="line">    mod1.hello();</span><br><span class="line">    <span class="keyword">var</span> mod2 = <span class="built_in">require</span>(<span class="string">'./mod2'</span>); <span class="comment">//这里才执行 mod2</span></span><br><span class="line">    mod2.hello();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        hello: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'hello main'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>写法上可能更易读  「就近」书写</p>
+<h3 id="SeaJS_RequireJS_区别_知乎篇">SeaJS RequireJS 区别   知乎篇</h3><p><a href="http://www.zhihu.com/question/20342350" target="_blank" rel="external">http://www.zhihu.com/question/20342350</a></p>
+<ul>
+<li>requirejs：一个模块的factory函数执行是紧跟随在define(也就是Evaluate Script脚本模块文件)之后</li>
+<li>seajs: 执行一个模块的factory函数需要等待所有模块define完毕。</li>
+<li>RequireJS的异步模块加载迎合了浏览器端JS程序员固有的异步思维，学习成本低</li>
+<li>RequireJS和Sea.js在资源加载的时间点都是一样的，所以论“懒”的程度都是一样的。差别仅仅在于加载的脚本什么时候执行。RequireJS的依赖模块在回调函数执行前执行完毕，而Sea.js的依赖模块在回调函数执行require时执行。</li>
+<li>对于非AMD规范的js插件，require js提供了shim支持，非常方便。RequireJS早有了Shim等支持,不需要修改第三方类库就可以完全支持.如Ember,JQuery等引用,都直接可以异步加载为一个模块.</li>
+<li>requirejs目前支持了sourcemap，配合grunt，简直爽爆了。</li>
+</ul>
+<h3 id="SeaJS与RequireJS最大的区别_豆瓣篇">SeaJS与RequireJS最大的区别  豆瓣篇</h3><p><a href="http://www.douban.com/note/283566440/" target="_blank" rel="external">http://www.douban.com/note/283566440/</a><br>这篇文章的结论似乎有误  作者最开头也已经注明了<br>作者一开始认为requeireJS有bug  实际上不是<br>原因是即使是RequireJS采用了CMD的写法<br>实际上还是的执行还是不变  也就是预先加载并执行了依赖</p>
+<p>关于豆瓣的这个例子 在这篇博文中也有说明<br><a href="http://imququ.com/post/amd-simplified-commonjs-wrapping.html" target="_blank" rel="external">http://imququ.com/post/amd-simplified-commonjs-wrapping.html</a></p>
+<h4 id="结论">结论</h4><blockquote>
+<p>RequireJS的做法是并行加载所有依赖的模块, 并完成解析后, 再开始执行其他代码, 因此执行结果只会”停顿”1次, 完成整个过程是会比SeaJS要快.</p>
+<p>而SeaJS一样是并行加载所有依赖的模块, 但不会立即执行模块, 等到真正需要(require)的时候才开始解析(也就是执行),</p>
+</blockquote>
+<h4 id="评论">评论</h4><p>AMD<br>我个人感觉requirejs更科学，所有依赖的模块要先执行好。被依赖的模块必须先于当前模块执行，而没有依赖关系的模块，可以没有先后。</p>
+<p>AMD规范了”依赖提前加载提前执行”的根本</p>
+<h3 id="合并">合并</h3><p>RequireJS 有 r.js  SeaJS 有spm 来合并<br>为什么不直接用grunt的concat呢  因为这两者有个要求就是一个模块对应一个文件</p>
+<h3 id="Browserify">Browserify</h3><p>Browserify 是一个基于 Node 模块化方案的浏览器端版本</p>
+<p>browserify查找语法树种global域下的require和module变量，对其调用进行变形替换。这是静态分析，像module[‘exp‘+’ort’] = {} , require(‘path’+’to’+‘file’)目前还无法被正确替换。</p>
+<p>Browserify的出现，不仅仅是让NPM（或者说之前适用于Node.js）上的代码可以给浏览器端使用。更重要的意义，是Browserify代码组织更符合CommonJS规范，让浏览器前端代码也可以通过预编译实现CommonJS规范</p>
+<h3 id="SeaJS和Browserify">SeaJS和Browserify</h3><blockquote>
+<p>参考<br><a href="http://www.zhihu.com/question/20941305" target="_blank" rel="external">http://www.zhihu.com/question/20941305</a></p>
+</blockquote>
+<p>browserify不需要 define(function(require, exports, module) {…}) 。代码更符合CommonJS模块化规范，可以和nodejs共同require同一个文件，以及node_modules里的库</p>
+<p>依赖分析时机不一样：SeaJS是在客户端运行时解析依赖，可以说是“运行时”解析；而Browserify是在服务端就依赖分析打包成单个文件，可以说是“预编译”</p>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="/">John Doe</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>
