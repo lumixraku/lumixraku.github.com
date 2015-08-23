@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+    <style>
+    .clear-fix:after{
+        content: '';
+        display: table;
+        clear: both;
+    }
+    .stage_area{
+        position: relative;
+        border: 1px solid black;
+        box-sizing: border-box;
+        margin: 50px 0 50px 0;
+    }
+    .center{
+        top:0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        position: absolute;
+        border-radius: 50%;
+        background-color: black;
+        width: 20px;
+        height: 20px;
+    }
+    .piece {
+        width: 100px;
+        height: 100px;
+        background-color: #cad5eb;
+        padding: 10px;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        float: left;
+        position: relative;
+    }
+    #stageFirst{
+        position: relative;
+    }
+    #stageFirst .eventmove{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        z-index: 500
+    }
+    #stage2{
+        width: 300px;
+        perspective: 200px;
+    }
+    #stage3{
+        width: 600px;
+    }
+    #stage3 .piece{
+        perspective: 500px;
+    }
+    </style>
+
+</head>
+
+<body>
+    <p>将鼠标在第一个stage上移动  感受不同视角的变化</p>
+    <div id="stageFirst" class="stage_area clear-fix" style="perspective: 500px;">
+        <div class="piece" style="z-index: 24; transform: rotateY(45deg); background-color: rgba(168, 204, 51, 0.74902);"></div>
+        <div class="piece" style="z-index: 31; transform: rotateY(45deg); background-color: rgba(204, 51, 189, 0.74902);"></div>
+        <div class="piece" style="z-index: 45; transform: rotateY(45deg); background-color: rgba(51, 171, 204, 0.74902);"></div>
+        <div class="piece" style="z-index: 83; transform: rotateY(45deg); background-color: rgba(204, 51, 163, 0.74902);"></div>
+        <div class="piece" style="z-index: 500; transform: rotateY(45deg); background-color: rgba(102, 51, 204, 0.74902);"></div>
+        <div class="piece" style="z-index: 125; transform: rotateY(45deg); background-color: rgba(204, 51, 71, 0.74902);"></div>
+        <div class="piece" style="z-index: 56; transform: rotateY(45deg); background-color: rgba(51, 204, 186, 0.74902);"></div>
+        <div class="piece" style="z-index: 36; transform: rotateY(45deg); background-color: rgba(51, 204, 69, 0.74902);"></div>
+        <div class="piece" style="z-index: 26; transform: rotateY(45deg); background-color: rgba(204, 84, 51, 0.74902);"></div>
+        <div class="center"></div>
+        <div class="eventmove"></div>
+    </div>
+    <div id="stage3" class="stage_area clear-fix">
+        <div class="piece" style="z-index: 24; transform: rotateY(45deg); background-color: rgba(168, 204, 51, 0.74902);"></div>
+        <div class="piece" style="z-index: 31; transform: rotateY(45deg); background-color: rgba(204, 51, 189, 0.74902);"></div>
+        <div class="piece" style="z-index: 45; transform: rotateY(45deg); background-color: rgba(51, 171, 204, 0.74902);"></div>
+        <div class="piece" style="z-index: 83; transform: rotateY(45deg); background-color: rgba(204, 51, 163, 0.74902);"></div>
+        <div class="piece" style="z-index: 500; transform: rotateY(45deg); background-color: rgba(102, 51, 204, 0.74902);"></div>
+        <div class="piece" style="z-index: 125; transform: rotateY(45deg); background-color: rgba(204, 51, 71, 0.74902);"></div>
+        <div class="piece" style="z-index: 56; transform: rotateY(45deg); background-color: rgba(51, 204, 186, 0.74902);"></div>
+        <div class="piece" style="z-index: 36; transform: rotateY(45deg); background-color: rgba(51, 204, 69, 0.74902);"></div>
+        <div class="piece" style="z-index: 26; transform: rotateY(45deg); background-color: rgba(204, 84, 51, 0.74902);"></div>
+        <div class="center"></div>
+    </div>
+    <script>
+    var stageF = document.querySelector('#stageFirst .eventmove');
+    stageF.w = stageF.clientWidth;
+    stageF.h = stageF.clientHeight;
+    stageF.addEventListener('mousemove', function(e){
+        console.log('mousemouve');
+        var self = this;
+        var pos = {
+            offsetX: e.offsetX,
+            offsetY: e.offsetY,
+            width: stageF.w,
+            height: stageF.h
+        }
+        debounce(function(){
+            var percentX = (pos.offsetX/pos.width*100).toFixed(2) + '%';
+            var percentY = (pos.offsetY/pos.height*100).toFixed(2) + '%';
+            console.log(percentX);
+            requestAnimationFrame(function(){
+                self.parentNode.style.cssText = 'perspective: 500px;perspective-origin: '+ percentX +' ' + percentY+ '; ';
+            });
+        }, 50)();
+    }, false);
+    function debounce(fn, threshhold, scope) {
+        threshhold || (threshhold = 16);
+        var last,
+            deferTimer;
+        return function() {
+            var context = scope || this;
+            var now = +new Date,
+                args = arguments;
+            if (last && now < last + threshhold) {
+                // hold on to it
+                clearTimeout(deferTimer);
+                deferTimer = setTimeout(function() {
+                    last = now;
+                    fn.apply(context, args);
+                }, threshhold);
+            } else {
+                last = now;
+                fn.apply(context, args);
+            }
+        };
+    }
+    </script>
+</body>
+</html>
