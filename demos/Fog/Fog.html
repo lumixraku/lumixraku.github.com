@@ -16,14 +16,11 @@
     #img {
         max-width: 100%;
         max-height: 100%;
-        vertical-align: middle;
+        /*vertical-align: middle;*/
         visibility: hidden;
     }
 
     .default-show {
-        position: absolute;
-        left: 0px;
-        top: 0px;
         background-image: url('bar.jpg');
         background-size: cover;
         filter: blur(10px);
@@ -33,26 +30,44 @@
 
     #CanvasDoodle {
         position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index:5;
     }
-
+    .goto{
+        margin: 0 auto;
+        width: 70px;
+        padding: 20px;
+        text-align: center;
+        margin-top: 50px;
+        text-shadow: 0 -1px 1px rgba(0,0,0,.25);
+        box-shadow: 0 1px 3px rgba(0,0,0,.5);
+        -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.5);
+        background-color: #5bc0de;
+        color: #fff;
+        font-size: 9pt;
+        font-weight: bold;
+        cursor: pointer;
+    }
     </style>
 </head>
 
 <body>
-    <!-- 首先显示的图片在底层 -->
-    <div class="default-show">
-        <img id="img" src="bar.jpg" alt="">
+    <div class="wrapper">
+        <!-- 首先显示的图片在底层 -->
+        <!-- 擦除后的图片在上层  默认是透明 -->
+        <div class="default-show">
+            <img id="img" src="bar.jpg" alt="">
+        </div>
+        <canvas id="CanvasDoodle"></canvas>
     </div>
-    <!-- 擦除后的图片在上层  默认是透明 -->
-    <canvas id="CanvasDoodle"></canvas>
+    <div>
+        <div class="goto">去移动版</div>
+    </div>
     <script>
     function CanvasDoodle(canvas) {
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
-        this.width = canvas.width;
-        this.height = canvas.height;
-        this.left = parseInt(canvas.style.left);
-        this.top = parseInt(canvas.style.top);
         this.touchX = 0;
         this.touchY = 0;
         this.needDraw = false;
@@ -72,9 +87,10 @@
             tempCanvas.width = img.width;
             tempCanvas.height = img.height;
             tCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, img.width, img.height);
-
-            _self.canvas.setAttribute('width', img.width);
-            _self.canvas.setAttribute('height', img.height);
+            _self.canvas.width = img.width;
+            _self.canvas.height = img.height;
+            // _self.canvas.setAttribute('width', img.width);
+            // _self.canvas.setAttribute('height', img.height);
 
             var pat = _self.ctx.createPattern(tempCanvas, "no-repeat");
             //strokeStyle最常见的是设置绘制的颜色  strokeStyle="green";
@@ -133,7 +149,12 @@
 
         var canvas = document.querySelector('#CanvasDoodle');
         new CanvasDoodle(canvas);
+        var btngoto = document.querySelector('.goto');
+        btngoto.addEventListener('click', function(){
+            window.parent.location = '/demos/Fog/Fog.html';
+        },false)
     }
+
 
     </script>
 </body>
