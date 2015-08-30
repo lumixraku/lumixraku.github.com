@@ -85,11 +85,12 @@
             //这样就可以修改 源img的大小了
             _self.tempCanvas = tempCanvas;
             var wrapper = document.querySelector('.wrapper');
-            tempCanvas.width = wrapper.clientWidth;
-            tempCanvas.height = wrapper.clientHeight;
-            tCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, wrapper.clientWidth, img.clientHeight);
-            _self.canvas.width = wrapper.clientWidth;
-            _self.canvas.height = wrapper.clientHeight;
+            tempCanvas.width = wrapper.clientWidth;//这个可以保证就是图片在页面中的宽度  但是高度在不同机器上不准
+            tempCanvas.height = img.naturalHeight / img.naturalWidth * wrapper.clientWidth;
+            alert(tempCanvas.height);
+            tCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, tempCanvas.width, tempCanvas.height);
+            _self.canvas.width = tempCanvas.width;
+            _self.canvas.height = tempCanvas.height;
 
             // _self.canvas.setAttribute('width', img.width);
             // _self.canvas.setAttribute('height', img.height);
@@ -101,7 +102,7 @@
             _self.ctx.strokeStyle = pat; //笔刷颜色
             _self.ctx.lineCap = "round"; //笔刷形状
             _self.ctx.lineJoin = "round"; //两条线交汇时 圆形边角
-            _self.ctx.lineWidth = "65";
+            _self.ctx.lineWidth = "45";
 
             this.canvas.addEventListener('mousedown', startDraw, false);
             this.canvas.addEventListener('mousemove', draw, false);
