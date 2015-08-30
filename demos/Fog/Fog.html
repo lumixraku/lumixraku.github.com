@@ -87,7 +87,6 @@
             var wrapper = document.querySelector('.wrapper');
             tempCanvas.width = wrapper.clientWidth;//这个可以保证就是图片在页面中的宽度  但是高度在不同机器上不准
             tempCanvas.height = img.naturalHeight / img.naturalWidth * wrapper.clientWidth;
-            alert(tempCanvas.height);
             tCtx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, tempCanvas.width, tempCanvas.height);
             _self.canvas.width = tempCanvas.width;
             _self.canvas.height = tempCanvas.height;
