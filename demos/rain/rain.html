@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        background: #f2f2f2;
+        height: 100%;
+        overflow: hidden;
+        font-family: 'Consolas';
+        color: #666;
+    }
+
+    canvas {
+        display: block;
+        background: rgb(39, 40, 34);
+        height: 100%;
+    }
+
+    a {
+        width: 800px;
+        display: block;
+        margin: 0 auto;
+        position: relative;
+        top: -380px;
+        left: 4px;
+        font-family: Helvetica, sans-serif;
+        font-size: 18px;
+        text-decoration: none;
+        color: #aaa;
+    }
+
+    a:hover {
+        color: #888;
+    }
+    .switch-wrapper{
+        height: 5%;
+        width: 100%;
+        position: absolute;
+        top: 15%;
+    }
+    .switch-wrapper,
+    .switch-wrapper ul{
+        display: flex;
+        justify-content: center;
+    }
+    .switch-wrapper ul{
+        background: rgba(255,255,255,0.9);
+        border-radius: 0.4rem;
+    }
+    .switch-wrapper ul li{
+        display: flex;
+        text-align: center;
+        align-items: center;
+        padding: 0.5rem;
+    }
+    .switch-wrapper ul li:not(:last-child) {
+        border-right: 1px solid rgb(127,127,127);
+    }
+    {
+
+    }
+    </style>
+</head>
+
+<body>
+    <div class="switch-wrapper">
+        <ul>
+            <li class="type">rain</li>
+            <li class="type">snow</li>
+        </ul>
+    </div>
+    <canvas id="c"> </canvas>
+    <script>
+        function RainAndSnow(canvasId, opt) {
+            var rain = [],
+                drops = [];
+            var gravity = opt.gravity || 0.2;
+            var wind = opt.wind || 0.015;
+            var rain_chance = opt.rain_chance || 0.4;
+            var snow_chance = opt.snow_chance || 0.05;
+            var canvas = document.getElementById(canvasId);
+            canvas.width = (document.body.clientWidth || opt.width) * window.devicePixelRatio;
+            canvas.height = (document.body.clientHeight || opt.height) * window.devicePixelRatio;
+            var ctx = canvas.getContext('2d');
+            ctx.lineWidth = (opt.lineWidth || 1) * window.devicePixelRatio;
+            var defaultColorStyle = (opt.type == 'rain') ? 'rgba(127,127,127,0.8)' : 'rgba(255,255,255,0.7)'
+            ctx.strokeStyle = ctx.fillStyle = opt.colorStyle || defaultColorStyle ;
+            window.requestAnimFrame =
+                window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function(callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+            this.init = function() {
+                this.update();
+            }
+            this.update = function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                var i = rain.length;
+                while (i--) {
+                    var raindrop = rain[i];
+                    raindrop.update();
+                    if (opt.type == 'rain' && raindrop.pos.y >= canvas.height) { //雨滴落到地面
+                        var n = Math.round(4 + Math.random() * 4);
+                        while (n--)
+                            drops.push(new Drop(raindrop.pos.x, canvas.height));
+                        rain.splice(i, 1);
+                    }
+                    raindrop.draw();
+                }
+                var i = drops.length;
+                while (i--) {
+                    var drop = drops[i];
+                    drop.update();
+                    drop.draw();
+                    if (drop.pos.y > canvas.height) drops.splice(i, 1);
+                }
+                if(opt.type == 'rain' && Math.random() < rain_chance){
+                    rain.push(new Rain());
+                }else if(opt.type == 'snow' && Math.random() < snow_chance){
+                    rain.push(new Snow());
+                }
+                requestAnimFrame(arguments.callee);
+            }
+            // ---------------------------------------
+            function Vector(x, y) {
+                this.x = x || 0;
+                this.y = y || 0;
+            };
+            Vector.prototype.add = function(v) {
+                if (v.x != null && v.y != null) {
+                    this.x += v.x;
+                    this.y += v.y;
+                } else {
+                    this.x += v;
+                    this.y += v;
+                }
+                return this;
+            };
+            Vector.prototype.copy = function() {
+                return new Vector(this.x, this.y);
+            };
+            //--------------------------------------------
+            function Rain() {
+                this.pos = new Vector(Math.random() * canvas.width, -50); //一滴雨的坐标
+                this.prev = this.pos;
+                this.vel = new Vector(); //空Vector得到的坐标是0
+            };
+            Rain.prototype.update = function() {
+                this.prev = this.pos.copy();
+                this.vel.y += gravity; //雨滴下落的速度越来越快了 因为重力加速度的缘故
+                this.vel.x += wind;
+                this.pos.add(this.vel); //pos 是一个Vector实例  add表示在原有基础上加坐标值 //计算新坐标
+            };
+            Rain.prototype.draw = function() {
+                ctx.beginPath();
+                ctx.moveTo(this.pos.x, this.pos.y);
+                ctx.lineTo(this.prev.x, this.prev.y);
+                ctx.stroke();
+            };
+            //------------------------------------------
+            function Snow(){
+                //这里是一个雪花的初始坐标
+                //因为有风的影响  起始点不能只是 [0, width]  要不然飘到底部的时候屏幕就有一部分没有雪花了
+                //所以设置位置为 [-width, width ] 这个范围
+                this.pos = new Vector((Math.random() * canvas.width * 2) - canvas.width, -10);
+                this.vel = new Vector(wind, 2);
+            }
+            Snow.prototype.update = function(){
+                this.vel.x += wind/10;
+                this.pos.add(this.vel);
+            }
+            Snow.prototype.draw = function(){
+                var radius = (opt.radius || 2) * window.devicePixelRatio;
+                ctx.beginPath();
+                ctx.arc(this.pos.x, this.pos.y, radius, 0, 2 * Math.PI, false);
+                ctx.fill();
+            }
+            //--------------------------------------------
+            // Drop 是当雨水落到地面的水花
+            function Drop(x, y) {
+                var dist = Math.random() * 7;
+                var angle = Math.PI + Math.random() * Math.PI; // angle的取值是PI ~ 2PI
+                this.pos = new Vector(x, y);
+                this.vel = new Vector( //由于angle取值范围已经限定 所以这里x取值可正可负  y取值为负数（向上的速度）
+                    Math.cos(angle) * dist,
+                    Math.sin(angle) * dist
+                );
+            };
+            Drop.prototype.update = function() {
+                this.vel.y += gravity; //一个Drop的update函数第一次被调用的时候就是雨滴倒地面的时候， 此时雨滴的速度是向上的， y是负值
+                this.vel.x *= 0.95; //溅起的水花下落速度比雨滴慢
+                this.vel.y *= 0.95;
+                this.pos.add(this.vel);
+            };
+            Drop.prototype.draw = function() {
+                ctx.beginPath();
+                ctx.arc(this.pos.x, this.pos.y, 1, 0, Math.PI * 2);
+                ctx.fill();
+            };
+        }
+        new RainAndSnow('c', {
+            type: 'rain'
+        }).init();
+        var switcher = document.querySelector('.switch-wrapper');
+        switcher.addEventListener('click', function(e){
+            var target = e.target;
+            if(inParent(target, 'type')){
+                if(target.innerText == 'rain'){
+                    new RainAndSnow('c', {
+                        type: 'rain'
+                    }).init();
+                }else if(target.innerText == 'snow'){
+                    new RainAndSnow('c', {
+                        type: 'snow'
+                    }).init();
+                }
+            }
+        }, false);
+        function inParent(ele, className){
+            while(ele){
+                if(ele.classList.contains(className)){
+                    return true;
+                } else {
+                    ele = ele.parentElement;
+                }
+            }
+            return false;
+        }
+    </script>
+</body>
+
+</html>
