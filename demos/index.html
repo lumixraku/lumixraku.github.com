@@ -79,7 +79,7 @@
             <div class="item first">Clock2</div>
             <div class="item second">Clock2</div>
         </div>
-        <div class="menu" data-url="Fog/Fog.html">
+        <div class="menu" data-url="Fog/Fog.html" mobile="true">
             <div class="item first">Canvas雾玻璃</div>
             <div class="item second">Canvas雾玻璃</div>
         </div>
@@ -88,8 +88,8 @@
             <div class="item second">图片预览上传</div>
         </div>
         <div class="menu" data-url="SimpleCarousel/simpleCarouselJQ.html">
-            <div class="item first">轮播(支持移动端)</div>
-            <div class="item second">轮播(支持移动端)</div>
+            <div class="item first">轮播</div>
+            <div class="item second">轮播</div>
         </div>
         <div class="menu" data-url="hover/hover.html">
             <div class="item first">图片列表</div>
@@ -119,6 +119,10 @@
             <div class="item first">Rain&Snow</div>
             <div class="item second">Rain&Snow</div>
         </div>
+        <div class="menu" data-url="weather/index.html">
+            <div class="item first">天气</div>
+            <div class="item second">天气</div>
+        </div>
     </div>
     <iframe id="ifr" src="" frameborder="0"></iframe>
     <script type="text/javascript">
@@ -139,8 +143,9 @@
         el.addEventListener('click', function(e) {
             var target = e.target.parentNode;
             var url = target.getAttribute('data-url');
-            iframe.src = url;
-            autoHeight();
+            window.location = url;
+            // iframe.src = url;
+            // autoHeight();
         }, false);
     });
 

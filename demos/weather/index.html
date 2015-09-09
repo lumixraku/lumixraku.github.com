@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="weather.css">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=vLCGXZMxvFbXpcz7zSIM0KMa"></script>
+</head>
+<body>
+    <script id="hours" type="text/template">
+        <%
+        var i=0;
+        for(i=0; i<list.length; i++){
+            var item = list[i];
+        %>
+            <div class="ahour">
+                <div class="hourtime">
+                    <span><%=item.clock%></span>
+                </div>
+                <div class="hourstate <%=item.weather[0].iconClass%>" >
+                </div>
+                <div class="hourtemp">
+                    <span><%=item.main.temp%></span>
+                </div>
+            </div>
+        <%}%>
+    </script>
+    <script id="moreInfo" type="text.template">
+    <%
+        var i = 0;
+        list.forEach(function(item){
+    %>
+        <div class="aInfo">
+            <div class="infoKey">
+                <%=item.infoKey%>
+            </div>
+            <div class="infoValue">
+                <%=item.infoValue%>
+            </div>
+        </div>
+    <%
+        });
+    %>
+    </script>
+    <div class="current-wrapper">
+        <div class="location"></div>
+        <div class="weatherstate"></div>
+        <div class="todayTemp"></div>
+    </div>
+    <div class="hourtemp-wrapper">
+        <div class="minmax"></div>
+        <div class="hours"></div>
+    </div>
+    <div class="week-wrapper">
+        <div class="day-state-wrapper"></div>
+        <div class="week-state-wrapper"></div>
+        <div class="canvas-wrapper">
+            <!-- 引入canvaswrapper 的目的是因为这个wrapper的大小就是canvas的大小  方便计算 -->
+            <canvas id="weekcanvas"></canvas>
+        </div>
+    </div>
+    <div class="more-info-wrapper">
+    </div>
+</body>
+    <script src="compiled.js"></script>
+</html>
