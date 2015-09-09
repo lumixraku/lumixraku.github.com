@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<!-- saved from url=(0025)http://css3generator.com/ -->
+<html lang="en" ng-app="css3g" class="ng-scope">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+    @charset "UTF-8";
+    [ng\:cloak],
+    [ng-cloak],
+    [data-ng-cloak],
+    [x-ng-cloak],
+    .ng-cloak,
+    .x-ng-cloak,
+    .ng-hide {
+        display: none !important;
+    }
+
+    ng\:form {
+        display: block;
+    }
+    </style>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CSS3 Generator">
+    <meta name="author" content="Randy Jensen">
+    <meta property="og:image" content="http://css3generator.com/favicon.ico">
+    <meta property="og:title" content="CSS3Generator by @RandyJensen">
+    <meta property="og:url" content="http://css3generator.com">
+    <meta property="og:site_name" content="CSS3Generator by @RandyJensen">
+    <link rel="icon" type="image/ico" href="http://css3generator.com/favicon.ico">
+    <link rel="stylesheet" href="./generator_files/poiretone.css">
+    <link rel="stylesheet" type="text/css" href="./generator_files/style.min.css">
+    <link href="./generator_files/css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" async="" src="./generator_files/ga.js"></script>
+    <script src="./generator_files/jscolor.js"></script>
+    <script src="./generator_files/ZeroClipboard.min.js"></script>
+    <script src="./generator_files/angular.min.js"></script>
+    <script src="./generator_files/angular-sanitize.js"></script>
+    <script src="./generator_files/main.min.js"></script>
+    <title>CSS3 Generator</title>
+</head>
+
+<body ng-controller="CSS3GInteract" class="ng-scope">
+    <div class="wrapper">
+        <header>
+            <h1>CSS3 Generator</h1></header>
+        <div class="option-boxes cf fly" ng-class="{fly: isFlying}">
+            <div ng-click="cssEdit(&#39;borderRadius&#39;, &#39;border-radius-code&#39;); whatBrowser(&#39;6&#39;,&#39;4&#39;,&#39;5&#39;,&#39;9&#39;,&#39;10.5&#39;,&#39;2.1&#39;,&#39;3.1&#39;);" class="option-box option-box-border-radius">Border Radius</div>
+            <div ng-click="cssEdit(&#39;boxShadow&#39;, &#39;box-shadow-code&#39;); whatBrowser(&#39;4&#39;,&#39;4&#39;,&#39;3.1&#39;,&#39;9&#39;,&#39;10.5&#39;,&#39;2.1&#39;,&#39;3.2&#39;);" class="option-box option-box-box-shadow">Box Shadow</div>
+            <div ng-click="cssEdit(&#39;textShadow&#39;, &#39;text-shadow-code&#39;); whatBrowser(&#39;4&#39;,&#39;3.5&#39;,&#39;4&#39;,&#39;10&#39;,&#39;9.6&#39;,&#39;2.1&#39;,&#39;3.2&#39;);" class="option-box option-box-text-shadow">Text Shadow</div>
+            <div ng-click="cssEdit(&#39;rgba&#39;, &#39;rgba-code&#39;); whatBrowser(&#39;4&#39;,&#39;3&#39;,&#39;3.1&#39;,&#39;9&#39;,&#39;10&#39;,&#39;2.1&#39;,&#39;3.2&#39;);" class="option-box option-box-rgba">RGBA</div>
+            <div ng-click="cssEdit(&#39;fontFace&#39;, &#39;font-face-code&#39;); whatBrowser(&#39;4&#39;,&#39;3.5&#39;,&#39;3.2&#39;,&#39;9&#39;,&#39;10.1&#39;,&#39;4.0&#39;,&#39;4.2&#39;);" class="option-box option-box-font-face">@Font Face</div>
+            <div ng-click="cssEdit(&#39;multipleColumns&#39;, &#39;multiple-columns-code&#39;); whatBrowser(&#39;4&#39;,&#39;2&#39;,&#39;3.1&#39;,&#39;10&#39;,&#39;11.1&#39;,&#39;2.1&#39;,&#39;3.2&#39;);" class="option-box option-box-multiple-columns">Multiple Columns</div>
+            <div ng-click="cssEdit(&#39;boxResize&#39;, &#39;box-resize-code&#39;); whatBrowser(&#39;4&#39;,&#39;4&#39;,&#39;4&#39;,false,&#39;15&#39;,false,false);" class="option-box option-box-box-resize">Box Resize</div>
+            <div ng-click="cssEdit(&#39;boxSizing&#39;, &#39;box-sizing-code&#39;); whatBrowser(&#39;4&#39;,&#39;2&#39;,&#39;3.1&#39;,&#39;8&#39;,&#39;9.5&#39;,&#39;2.1&#39;,&#39;3.2&#39;);" class="option-box option-box-box-sizing">Box Sizing</div>
+            <div ng-click="cssEdit(&#39;outline&#39;, &#39;outline-code&#39;); whatBrowser(&#39;4&#39;,&#39;2&#39;,&#39;3.1&#39;,&#39;8&#39;,&#39;9&#39;,&#39;2.1&#39;,&#39;3.2&#39;);" class="option-box option-box-outline">Outline</div>
+            <div ng-click="cssEdit(&#39;transition&#39;, &#39;transition-code&#39;); whatBrowser(&#39;4&#39;,&#39;4&#39;,&#39;3.1&#39;,&#39;10&#39;,&#39;10.5&#39;,&#39;2.1&#39;,&#39;3.2&#39;);" class="option-box option-box-transitions">Transition</div>
+            <div ng-click="cssEdit(&#39;transform&#39;, &#39;transform-code&#39;); whatBrowser(&#39;4&#39;,&#39;3.5&#39;,&#39;3.1&#39;,&#39;9&#39;,&#39;10.5&#39;,&#39;2.1&#39;,&#39;3.2&#39;);" class="option-box option-box-transform">Transform</div>
+            <div ng-click="cssEdit(&#39;flexbox&#39;, &#39;flexbox-code&#39;); whatBrowser(&#39;21&#39;,&#39;28&#39;,&#39;6.1&#39;,&#39;11&#39;,&#39;12.1&#39;,&#39;4.4&#39;,&#39;7.1&#39;);" class="option-box option-flexbox">Flexbox</div>
+            <div ng-click="cssEdit(&#39;gradients&#39;); whatBrowser(&#39;4&#39;,&#39;3.6&#39;,&#39;4&#39;,&#39;10&#39;,&#39;11.1&#39;,&#39;2.1&#39;,&#39;3.2&#39;);" class="option-box option-box-gradients">Gradient</div>
+        </div>
+        <section class="choose-area cf">
+            <span ng-click="canFly()" class="customSelect choose-property">
+                <span class="customSelectInner cf">
+                    <span ng-bind="title" class="ng-binding">Transition</span>
+                    <span ng-bind-html="browserText" class="browsers ng-binding">&nbsp;
+                        <img src="./generator_files/chrome.svg" height="20" width="20" alt="Chrome 4">4 &nbsp;
+                        <img src="./generator_files/firefox.svg" height="20" width="20" alt="Firefox 4">4 &nbsp;
+                        <img src="./generator_files/safari.svg" height="20" width="20" alt="Safari 3.1">3.1 &nbsp;
+                        <img src="./generator_files/ie.svg" height="20" width="20" alt="IE 10">10 &nbsp;
+                        <img src="./generator_files/opera.svg" height="20" width="20" alt="Opera 10.5">10.5 &nbsp;
+                        <img src="./generator_files/android.svg" height="20" width="20" alt="Android 2.1">2.1 &nbsp;
+                        <img src="./generator_files/iphone.svg" height="20" width="20" alt="iPhone 3.2">3.2</span>
+                    <span class="block-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </span>
+            </span>
+        </section>
+        <div class="main-area">
+            <aside id="interaction-area" class="interaction-area" ng-class="{empty: isEmpty}">
+                <div id="interaction-area-border-radius" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span>Top Left:</span>
+                        <input tabindex="1" name="border-radius-input-tl" type="text" size="2" class="border-radius border-radius-tl ng-pristine ng-valid" ng-model="borderRadiusTL" ng-keyup="doBorderRadius($event, &#39;tl&#39;)"><i>px</i></label>
+                    <hr>
+                    <label>
+                        <span>Top Right:</span>
+                        <input tabindex="2" name="border-radius-input-tr" type="text" size="2" class="border-radius border-radius-tr ng-pristine ng-valid" ng-model="borderRadiusTR" ng-keyup="doBorderRadius($event, &#39;tr&#39;)"><i>px</i></label>
+                    <label>
+                        <span>Bottom Right:</span>
+                        <input tabindex="3" name="border-radius-input-br" type="text" size="2" class="border-radius border-radius-br ng-pristine ng-valid" ng-model="borderRadiusBR" ng-keyup="doBorderRadius($event, &#39;br&#39;)"><i>px</i></label>
+                    <label>
+                        <span>Bottom Left:</span>
+                        <input tabindex="4" name="border-radius-input-bl" type="text" size="2" class="border-radius border-radius-bl ng-pristine ng-valid" ng-model="borderRadiusBL" ng-keyup="doBorderRadius($event, &#39;bl&#39;)"><i>px</i></label>
+                    <div id="border-radius-code" class="code-area"><pre ng-bind-html="borderRadiusCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;border-radius-code&#39;)">Copy</div>
+                    </div>
+                </div>
+                <div id="interaction-area-box-shadow" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span>Inset:</span>
+                        <select tabindex="10" id="box-shadow-inset" name="box-shadow-inset" ng-model="boxShadowInset" ng-change="doBoxShadow($event, &#39;inset&#39;)" class="ng-pristine ng-valid">
+                            <option value="">No</option>
+                            <option value="inset">Inset</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Horizontal Length:</span>
+                        <input tabindex="11" name="box-shadow-horizontal" type="text" size="2" ng-model="boxShadowHorizontal" ng-keyup="doBoxShadow($event, &#39;horizontal&#39;)" class="ng-pristine ng-valid"><i>px</i></label>
+                    <label>
+                        <span>Vertical Length:</span>
+                        <input tabindex="12" name="box-shadow-vertical" type="text" size="2" ng-model="boxShadowVertical" ng-keyup="doBoxShadow($event, &#39;vertical&#39;)" class="ng-pristine ng-valid"><i>px</i></label>
+                    <label>
+                        <span>Blur Radius:</span>
+                        <input tabindex="13" name="box-shadow-blur" type="text" size="2" ng-model="boxShadowBlur" ng-keyup="doBoxShadow($event, &#39;blur&#39;)" class="ng-pristine ng-valid"><i>px</i></label>
+                    <label>
+                        <span>Spread:</span>
+                        <input tabindex="14" name="box-shadow-spread" type="text" size="2" ng-model="boxShadowSpread" ng-keyup="doBoxShadow($event, &#39;spread&#39;)" class="ng-pristine ng-valid"><i>px</i></label>
+                    <label>
+                        <span>Color Type:</span>
+                        <select tabindex="15" id="box-shadow-color" name="box-shadow-color" ng-model="boxShadowColor" ng-change="doBoxShadow($event, &#39;color&#39;)" class="ng-pristine ng-valid">
+                            <option value="? undefined:undefined ?"></option>
+                            <option value="rgba">RGBA</option>
+                            <option value="hex">Hex</option>
+                        </select>
+                    </label>
+                    <label ng-class="{hide: doHideBoxRGBA}" class="hide">
+                        <span>RGBA Color:</span> (
+                        <input tabindex="16" name="box-shadow-r" type="text" size="3" ng-model="boxShadowR" ng-keyup="doBoxShadow($event, &#39;r&#39;)" class="ng-pristine ng-valid">,
+                        <input tabindex="17" name="box-shadow-g" type="text" size="3" ng-model="boxShadowG" ng-keyup="doBoxShadow($event, &#39;g&#39;)" class="ng-pristine ng-valid">,
+                        <input tabindex="18" name="box-shadow-b" type="text" size="3" ng-model="boxShadowB" ng-keyup="doBoxShadow($event, &#39;b&#39;)" class="ng-pristine ng-valid">,
+                        <input tabindex="19" name="box-shadow-a" type="text" size="3" ng-model="boxShadowA" ng-keyup="doBoxShadow($event, &#39;a&#39;)" class="ng-pristine ng-valid">)</label>
+                    <label ng-class="{hide: doHideBoxHex}" class="hide">
+                        <span>Hex Color:</span>
+                        <input tabindex="20" name="box-shadow-hex-color" type="text" size="5" class="box-shadow box-shadow-hex-color color {pickerFaceColor:&#39;#444&#39;,pickerBorder:0,pickerInsetColor:&#39;transparent&#39;,adjust:false} ng-pristine ng-valid" ng-model="boxShadowHexColor" ng-change="doBoxShadow($event, &#39;hexColor&#39;)" autocomplete="off">
+                    </label>
+                    <div id="box-shadow-code" class="code-area"><pre ng-bind-html="boxShadowCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;box-shadow-code&#39;)">Copy</div>
+                    </div>
+                </div>
+                <div id="interaction-area-text-shadow" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span>Horizontal Length:</span>
+                        <input tabindex="30" name="text-shadow-horizontal-length" type="text" size="2" class="text-shadow text-shadow-horizontal-length ng-pristine ng-valid" ng-model="textShadowHorizontalLength" ng-keyup="doTextShadow($event, &#39;horizontal&#39;)"><i>px</i></label>
+                    <label>
+                        <span>Vertical Length:</span>
+                        <input tabindex="31" name="text-shadow-vertical-length" type="text" size="2" class="text-shadow text-shadow-vertical-length ng-pristine ng-valid" ng-model="textShadowVerticalLength" ng-keyup="doTextShadow($event, &#39;vertical&#39;)"><i>px</i></label>
+                    <label>
+                        <span>Blur Radius:</span>
+                        <input tabindex="32" name="text-shadow-blur" type="text" size="2" class="text-shadow text-shadow-blur ng-pristine ng-valid" ng-model="textShadowBlur" ng-keyup="doTextShadow($event, &#39;blur&#39;)"><i>px</i></label>
+                    <label>
+                        <span>Shadow Color:</span>
+                        <input tabindex="33" name="text-shadow-color" type="text" size="5" class="text-shadow text-shadow-color color {pickerFaceColor:&#39;#444&#39;,pickerBorder:0,pickerInsetColor:&#39;transparent&#39;,adjust:false} ng-pristine ng-valid" ng-model="textShadowColor" ng-change="doTextShadow($event, &#39;color&#39;)" autocomplete="off">
+                    </label>
+                    <div id="text-shadow-code" class="code-area"><pre ng-bind-html="textShadowCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;text-shadow-code&#39;)">Copy</div>
+                    </div>
+                </div>
+                <div id="interaction-area-rgba" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span>R:</span>
+                        <input tabindex="40" name="rgba-r" type="text" size="2" class="rgba rgba-r ng-pristine ng-valid" ng-model="rgbaR" ng-keyup="doRGBA($event, &#39;r&#39;)">
+                    </label>
+                    <label>
+                        <span>G:</span>
+                        <input tabindex="41" name="rgba-g" type="text" size="2" class="rgba rgba-g ng-pristine ng-valid" ng-model="rgbaG" ng-keyup="doRGBA($event, &#39;g&#39;)">
+                    </label>
+                    <label>
+                        <span>B:</span>
+                        <input tabindex="42" name="rgba-b" type="text" size="2" class="rgba rgba-b ng-pristine ng-valid" ng-model="rgbaB" ng-keyup="doRGBA($event, &#39;b&#39;)">
+                    </label>
+                    <label>
+                        <span>Opacity:</span>
+                        <input tabindex="43" name="rgba-a" type="text" size="2" class="rgba rgba-a ng-pristine ng-valid" ng-model="rgbaA" ng-keyup="doRGBA($event, &#39;a&#39;)">
+                    </label>
+                    <div id="rgba-code" class="code-area"><pre ng-bind-html="rgbaCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;rgba-code&#39;)">Copy</div>
+                    </div>
+                </div>
+                <div id="interaction-area-font-face" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span>Font Family:</span>
+                        <input tabindex="50" name="font-face-family" type="text" size="10" class="font-face font-face-family ng-pristine ng-valid" ng-model="fontFaceFamily" ng-keyup="doFontFace($event, &#39;family&#39;)">
+                    </label>
+                    <label>
+                        <span>Font Name:</span>
+                        <input tabindex="51" name="font-face-name" type="text" size="10" class="font-face font-face-name ng-pristine ng-valid" ng-model="fontFaceName" ng-keyup="doFontFace($event, &#39;name&#39;)">
+                    </label>
+                    <div id="font-face-code" class="code-area"><pre ng-bind-html="fontFaceCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;font-face-code&#39;)">Copy</div>
+                    </div>
+                </div>
+                <div id="interaction-area-multiple-columns" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span># of Columns:</span>
+                        <input tabindex="60" name="multiple-columns-number" type="text" size="10" class="multiple-columns multiple-columns-number ng-pristine ng-valid" ng-model="multipleColumnsNumber" ng-keyup="doMultipleColumns($event, &#39;number&#39;)">
+                    </label>
+                    <label>
+                        <span>Column Gap:</span>
+                        <input tabindex="61" name="multiple-columns-gap" type="text" size="10" class="multiple-columns multiple-columns-gap ng-pristine ng-valid" ng-model="multipleColumnsGap" ng-keyup="doMultipleColumns($event, &#39;gap&#39;)"><i>px</i></label>
+                    <div class="info-box">
+                        <p id="multiple-columns-box">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    </div>
+                    <div id="multiple-columns-code" class="code-area"><pre ng-bind-html="multipleColumnsCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;multiple-columns-code&#39;)">Copy</div>
+                    </div>
+                </div>
+                <div id="interaction-area-box-resize" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span>Box Resize:</span>
+                        <select tabindex="70" id="box-resize-type" name="box-resize-type" ng-model="boxResizeType" ng-change="doBoxResize($event, &#39;type&#39;)" class="ng-pristine ng-valid">
+                            <option value="? undefined:undefined ?"></option>
+                            <option value="none">None</option>
+                            <option value="horizontal">Horizontal</option>
+                            <option value="vertical">Vertical</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </label>
+                    <div id="box-resize-code" class="code-area"><pre ng-bind-html="boxResizeCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;box-resize-code&#39;)">Copy</div>
+                    </div>
+                </div>
+                <div id="interaction-area-box-sizing" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span>Box Sizing:</span>
+                        <select tabindex="80" id="box-sizing-type" name="box-sizing-type" ng-model="boxSizingType" ng-change="doBoxSizing($event, &#39;type&#39;)" class="ng-pristine ng-valid">
+                            <option value="? undefined:undefined ?"></option>
+                            <option value="border-box">Border Box</option>
+                            <option value="content-box">Content Box</option>
+                        </select>
+                    </label>
+                    <div id="box-sizing-code" class="code-area"><pre ng-bind-html="boxSizingCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;box-sizing-code&#39;)">Copy</div>
+                    </div>
+                </div>
+                <div id="interaction-area-outline" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span>Outline Thickness:</span>
+                        <input tabindex="90" name="outline-thickness" type="text" size="10" class="outline outline-thickness ng-pristine ng-valid" ng-model="outlineThickness" ng-keyup="doOutline($event, &#39;thickness&#39;)"><i>px</i></label>
+                    <label>
+                        <span>Outline:</span>
+                        <select tabindex="26" id="outline-style" name="outline-style" ng-model="outlineStyle" ng-change="doOutline($event, &#39;type&#39;)" class="ng-pristine ng-valid">
+                            <option value="? undefined:undefined ?"></option>
+                            <option value="dotted">Dotted</option>
+                            <option value="dashed">Dashed</option>
+                            <option value="solid">Solid</option>
+                            <option value="groove">Groove</option>
+                            <option value="ridge">Ridge</option>
+                            <option value="inset">Inset</option>
+                            <option value="outset">Outset</option>
+                            <option value="double">Double</option>
+                            <option value="auto">Auto</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Outline Color:</span>
+                        <input tabindex="91" name="outline-color" type="text" size="10" class="outline outline-color color {pickerFaceColor:&#39;#444&#39;,pickerBorder:0,pickerInsetColor:&#39;transparent&#39;,adjust:false} ng-pristine ng-valid" ng-model="outlineColor" ng-change="doOutline($event, &#39;number&#39;)" autocomplete="off">
+                    </label>
+                    <label>
+                        <span>Outline Offset:</span>
+                        <input tabindex="92" name="outline-offset" type="text" size="10" class="outline outline-offset ng-pristine ng-valid" ng-model="outlineOffset" ng-change="doOutline($event, &#39;offset&#39;)">
+                    </label>
+                    <div id="outline-code" class="code-area"><pre ng-bind-html="outlineCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;outline-code&#39;)">Copy</div>
+                    </div>
+                </div>
+                <div id="interaction-area-transition" class="interaction-area-specific" style="display: block;">
+                    <label>
+                        <span>Property:</span>
+                        <select tabindex="100" id="transition-property" name="transition-property" ng-model="transitionProperty" ng-change="doTransition($event, &#39;property&#39;)" class="ng-valid ng-dirty">
+                            <option value="all">All</option>
+                            <option value="background">Background</option>
+                            <option value="color">Color</option>
+                            <option value="height">Height</option>
+                            <option value="width">Width</option>
+                            <option value="outline">Outline</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Duration:</span>
+                        <input tabindex="101" name="transition-duration" type="text" size="10" class="transition transition-duration ng-valid ng-dirty" ng-model="transitionDuration" ng-keyup="doTransition($event, &#39;duration&#39;)">
+                        <select tabindex="102" id="transition-time" name="transition-time" ng-model="transitionTime" ng-change="doTransition($event, &#39;time&#39;)" class="ng-valid ng-dirty">
+                            <option value="ms">Milliseconds</option>
+                            <option value="s">Seconds</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Function:</span>
+                        <select tabindex="103" id="transition-function" name="transition-function" ng-model="transitionFunction" ng-change="doTransition($event, &#39;function&#39;)" class="ng-valid ng-dirty">
+                            <option value="ease">Ease</option>
+                            <option value="linear">Linear</option>
+                            <option value="ease-in">Ease-In</option>
+                            <option value="ease-out">Ease-Out</option>
+                            <option value="ease-in-out">Ease-In-Out</option>
+                        </select>
+                    </label>
+                    <p id="transition-example" class="example-box" style="display: block; transition: all 200ms ease;">Hover over me</p>
+                    <div id="transition-code" class="code-area" style="display: block;"><pre ng-bind-html="transitionCode" class="ng-binding">-webkit-transition: all 200ms ease;<br>-moz-transition: all 200ms ease;<br>-ms-transition: all 200ms ease;<br>-o-transition: all 200ms ease;<br>transition: all 200ms ease;</pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;transition-code&#39;)">Copy</div>
+                    </div>
+                </div>
+                <div id="interaction-area-transform" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span>Scale:</span>
+                        <input tabindex="110" name="transform-scale" type="text" size="2" class="transform transform-scale ng-pristine ng-valid" ng-model="transformScale" ng-keyup="doTransform($event, &#39;scale&#39;)">
+                    </label>
+                    <label>
+                        <span>Rotate:</span>
+                        <input tabindex="111" name="transform-rotate" type="text" size="2" class="transform transform-rotate ng-pristine ng-valid" ng-model="transformRotate" ng-keyup="doTransform($event, &#39;rotate&#39;)"><i>deg</i></label>
+                    <label>
+                        <span>Translate:</span>
+                        <input tabindex="112" name="transform-translate-x" type="text" size="2" class="transform transform-translate-x ng-pristine ng-valid" ng-model="transformTranslateX" ng-keyup="doTransform($event, &#39;translate-x&#39;)"><i style="padding-right:10px">px</i>
+                        <input tabindex="113" name="transform-translate-y" type="text" size="2" class="transform transform-translate-y ng-pristine ng-valid" ng-model="transformTranslateY" ng-keyup="doTransform($event, &#39;translate-y&#39;)"><i>px</i></label>
+                    <label>
+                        <span>Skew:</span>
+                        <input tabindex="114" name="transform-skew-x" type="text" size="2" class="transform transform-skew-x ng-pristine ng-valid" ng-model="transformSkewX" ng-keyup="doTransform($event, &#39;skew-x&#39;)"><i>deg</i>
+                        <input tabindex="115" name="transform-skew-y" type="text" size="2" class="transform transform-skew-y ng-pristine ng-valid" ng-model="transformSkewY" ng-keyup="doTransform($event, &#39;skew-y&#39;)"><i>deg</i></label>
+                    <p id="transform-example" class="example-box">Watch me</p>
+                    <div id="transform-code" class="code-area"><pre ng-bind-html="transformCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;transform-code&#39;)">
+                            <span>Copy</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="interaction-area-flexbox" class="interaction-area-specific" style="display: none;">
+                    <label>
+                        <span>Flex Display:</span>
+                        <select tabindex="70" id="flexbox-type" name="flexbox-type" ng-model="flexboxType" ng-change="doFlexbox($event, &#39;type&#39;)" class="ng-pristine ng-valid">
+                            <option value="">Flex</option>
+                            <option value="inline-flex">Inline Flex</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Flex Direction:</span>
+                        <select tabindex="70" id="flexbox-direction" name="flexbox-direction" ng-model="flexboxDirection" ng-change="doFlexbox($event, &#39;direction&#39;)" class="ng-pristine ng-valid">
+                            <option value="">Row</option>
+                            <option value="row-reverse">Row Reverse</option>
+                            <option value="column">Column</option>
+                            <option value="column-reverse">Column Reverse</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Flex Wrap:</span>
+                        <select tabindex="70" id="flexbox-wrap" name="flexbox-wrap" ng-model="flexboxWrap" ng-change="doFlexbox($event, &#39;wrap&#39;)" class="ng-pristine ng-valid">
+                            <option value="">Wrap</option>
+                            <option value="nowrap">No Wrap</option>
+                            <option value="wrap-reverse">Wrap Reverse</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Justify Content:</span>
+                        <select tabindex="70" id="flexbox-justify" name="flexbox-justify" ng-model="flexboxJustify" ng-change="doFlexbox($event, &#39;justify&#39;)" class="ng-pristine ng-valid">
+                            <option value="">Flex Start</option>
+                            <option value="flex-end">Flex End</option>
+                            <option value="center">Center</option>
+                            <option value="space-between">Space Between</option>
+                            <option value="space-around">Space Around</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Align Items:</span>
+                        <select tabindex="70" id="flexbox-align" name="flexbox-align" ng-model="flexboxAlign" ng-change="doFlexbox($event, &#39;align&#39;)" class="ng-pristine ng-valid">
+                            <option value="">Flex Start</option>
+                            <option value="flex-end">Flex End</option>
+                            <option value="center">Center</option>
+                            <option value="baseline">Baseline</option>
+                            <option value="stretch">Stretch</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Align Content:</span>
+                        <select tabindex="70" id="flexbox-align-content" name="flexbox-align-content" ng-model="flexboxAlignContent" ng-change="doFlexbox($event, &#39;aligncontent&#39;)" class="ng-pristine ng-valid">
+                            <option value="">Flex Start</option>
+                            <option value="flex-end">Flex End</option>
+                            <option value="center">Center</option>
+                            <option value="space-between">Space Between</option>
+                            <option value="space-around">Space Around</option>
+                            <option value="stretch">Stretch</option>
+                        </select><em class="flexbox-note">(Only takes affect when there are multiple lines)</em></label>
+                    <div id="flexbox-example" class="flexcontainer">
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+                        <div>4</div>
+                        <div>5</div>
+                    </div>
+                    <div id="flexbox-code" class="code-area"><pre ng-bind-html="flexboxCode" class="ng-binding"></pre>
+                        <div class="copy-code" ng-mousemove="zclip(&#39;flexbox-code&#39;)">Copy</div>
+                    </div>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                </div>
+                <div id="interaction-area-gradients" class="interaction-area-specific" style="display: none;">
+                    <p>You can find a nice
+                        <a href="http://www.colorzilla.com/gradient-editor/">gradient generator here</a>.</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+    <footer>
+        <a href="http://www.randyjensen.com/">Randy Jensen</a>
+    </footer>
+    <div id="copied" class="hidden">Code Copied!</div>
+    <div id="fake-load-svg">
+        <img src="./generator_files/chrome.svg" height="20" width="20">
+        <img src="./generator_files/firefox.svg" height="20" width="20">
+        <img src="./generator_files/safari.svg" height="20" width="20">
+        <img src="./generator_files/ie.svg" height="20" width="20">
+        <img src="./generator_files/opera.svg" height="20" width="20">
+        <img src="./generator_files/android.svg" height="20" width="20">
+        <img src="./generator_files/iphone.svg" height="20" width="20">
+    </div>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-24827958-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    <script type="text/javascript" src="generator_files/adpacks.js" id="_adpacks_js"></script>
+    <div id="bsa" class="gotta-pay-the-bills"></div>
+    <script>
+    window.onload = function() {
+        setTimeout(function() {
+            //document.getElementById('bsa').appendChild(
+            //    document.getElementById('bsap_1386')
+            //);
+            document.getElementById('bsa').appendChild(
+                document.querySelector('.bsap')
+            );
+            document.getElementById('bsap_1386').style.display = 'block';
+            document.querySelector('.bsap').style.display = 'block';
+        }, 2000);
+    }
+    </script>
+    <div id="global-zeroclipboard-html-bridge" class="global-zeroclipboard-container" style="position: absolute; left: 0px; top: -9999px; width: 15px; height: 15px; z-index: 999999999;">
+        <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="global-zeroclipboard-flash-bridge" width="100%" height="100%">
+            <param name="movie" value="../zclip/ZeroClipboard.swf">
+            <param name="allowScriptAccess" value="sameDomain">
+            <param name="scale" value="exactfit">
+            <param name="loop" value="false">
+            <param name="menu" value="false">
+            <param name="quality" value="best">
+            <param name="bgcolor" value="#ffffff">
+            <param name="wmode" value="transparent">
+            <param name="flashvars" value="">
+            <embed src="../zclip/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="100%" height="100%" name="global-zeroclipboard-flash-bridge" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="" scale="exactfit"> </object>
+    </div>
+    <div id="transit-notify-list">
+        <div class="transit-list-inner"></div>
+    </div>
+</body>
+<div></div>
+
+</html>
