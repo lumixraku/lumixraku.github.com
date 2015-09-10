@@ -1,6 +1,7 @@
 html, body{
-    height: 100%;
+    /*height: 100%;*/
     margin: 0;
+    font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
 }
 @font-face {
     font-family: 'icomoon';
@@ -51,6 +52,22 @@ html, body{
 .icon-cloud:before {
     content: "\e607";
 }
+body{
+    color: white;
+    text-shadow: 0 0 3px #030303;
+}
+body.sunny{
+    background: url('imgs/sunny.jpg');
+    background-size: cover;
+}
+body.cloudy{
+    background: url('imgs/cloudy.jpg');
+    background-size: cover;
+}
+body.rain{
+    background: url('imgs/cloudy.jpg');
+    background-size: cover;
+}
 
 
 .current-wrapper{
@@ -69,7 +86,7 @@ html, body{
     height: 15%;
     width: 40%;
     text-align: center;
-    font-size: 8vw;
+    font-size: 7vw;
 }
 .weatherstate{
     height: 10%;
@@ -121,7 +138,7 @@ html, body{
 
 }
 .week-wrapper{
-    height: 37vh;
+    height: 40vh;
     position: relative;
 }
 .week-state-wrapper,
@@ -133,7 +150,7 @@ html, body{
     -webkit-flex-direction: row;
 }
 .canvas-wrapper{
-    height: 27vh;
+    height: 30vh;
 }
 #weekcanvas{
     height: 100%;
@@ -152,15 +169,15 @@ html, body{
 .aInfo{
     display: flex;
     display: -webkit-flex;
-    height: 4vh;
-    line-height: 4vh;
+    height: 5vh;
+    line-height: 5vh;
 }
 .aInfo .infoKey,
 .aInfo .infoValue{
     flex: 1 0 0;
     -webkit-flex: 1 0 0;
     margin-right: 3vw;
-    font-size: 80%;
+    font-size: 90%;
 }
 
 .aInfo .infoKey{
@@ -173,7 +190,7 @@ html, body{
     position: absolute;
     left: 0;
     top: 0;
-    background: #000;
+    background: #fff;
     width: 100%;
     height: 1px;
     transform: scaleY(0.5);

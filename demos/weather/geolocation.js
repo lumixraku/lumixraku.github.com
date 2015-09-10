@@ -8,8 +8,7 @@ var geoPromise = new Promise(function(resolve, reject){
                 latitude: r.point.lat,
                 longitude: r.point.lng
             });
-        }
-        else {
+        } else {
             resolve({
                 latitude:39,
                 longitude:116

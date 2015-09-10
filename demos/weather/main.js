@@ -1,87 +1,110 @@
 var weatherInfo = {};
 var $ = require('./jquery');
 var _ = require('./underscore');
+var geoPromise = require('./geolocation');
 var currentPromise = require('./currentWeather');
 var hourForecastPromise = require('./hourForecast');
 var weekPromise = require('./weekWeather');
 init();
-
-currentPromise.then(function(data){
+geoPromise.then(function(data) {
+    var pt = new BMap.Point(data.longitude, data.latitude);
+    var geoc = new BMap.Geocoder();
+    geoc.getLocation(pt, function(rs) {
+        var addComp = rs.addressComponents;
+        $('.location').html(addComp.city);
+    });
+});
+currentPromise.then(function(data) {
     renderCurrent(data);
 });
 
-hourForecastPromise.then(function(data){
+hourForecastPromise.then(function(data) {
     renderHour(data);
 });
-weekPromise.then(function(data){
+weekPromise.then(function(data) {
     renderWeekTemp(data);
     renderWeekState(data);
 })
-function getIcon(state){
+
+function getIcon(state) {
     var iconclass = '';
     state = state.toLowerCase();
-    switch(state){
+    switch (state) {
         case 'clear':
-        iconclass = 'icon-sun';
-        break;
+            iconclass = 'icon-sun';
+            break;
         case 'cloud':
-        iconclass = 'icon-cloudy';
-        break;
+            iconclass = 'icon-cloudy';
+            break;
         case 'rain':
-        iconclass = 'icon-rain';
-        break;
+            iconclass = 'icon-rain';
+            break;
         default:
-        iconclass = 'icon-sun';
+            iconclass = 'icon-sun';
     };
     return iconclass;
 }
 
-function formatAMPM(time){
-    var time = new Date(time*1000);
+function formatAMPM(time) {
+    var time = new Date(time * 1000);
     time = time.getHours();
-    if(time > 12){
-        time = time -12 + 'PM';
-    }else{
+    if (time > 12) {
+        time = time - 12 + 'PM';
+    } else {
         time += 'AM';
     }
     return time;
 }
-function init(){
-    var cWrapper  = $('.canvas-wrapper');
+
+function init() {
+    var cWrapper = $('.canvas-wrapper');
     var canvas = $('#weekcanvas')[0];
-    canvas.width =cWrapper[0].clientWidth * window.devicePixelRatio;
+    canvas.width = cWrapper[0].clientWidth * window.devicePixelRatio;
     canvas.height = cWrapper[0].clientHeight * window.devicePixelRatio;
     var currentData, weekData, hourData;
-    if(localStorage.getItem('currentData')){
+    if (localStorage.getItem('currentData')) {
         currentData = JSON.parse(localStorage.getItem('currentData'));
         renderCurrent(currentData);
         renderMore(currentData);
     }
-    if(localStorage.getItem('weekData')){
+    if (localStorage.getItem('weekData')) {
         weekData = JSON.parse(localStorage.getItem('weekData'));
         renderWeekTemp(weekData);
         renderWeekState(weekData);
     }
-    if(localStorage.getItem('hourData')){
+    if (localStorage.getItem('hourData')) {
         hourData = JSON.parse(localStorage.getItem('hourData'));
         renderHour(hourData);
     }
-    currentPromise.then(function(data){
+    currentPromise.then(function(data) {
         renderCurrent(data);
         renderMore(data);
     });
 }
 
 
-function renderCurrent(data){
+function renderCurrent(data) {
     $('.todayTemp').text(data.main.temp);
     $('.weatherstate').text(data.weather[0].main);
-    $('.location').text(data.name);
+    var state = data.weather[0].main.toLowerCase();
+    switch (state) {
+        case 'sunny':
+            document.body.className = 'sunny';
+            break;
+        case 'cloudy':
+            document.body.className = 'cloudy';
+            break;
+        case 'rain':
+            document.body.className = 'rain';
+            break;
+        default:
+            document.body.className = 'sunny';
+    }
 }
 
-function renderHour(data){
+function renderHour(data) {
     data.list = data.list.slice(0, 11);
-    data.list.forEach(function(item){
+    data.list.forEach(function(item) {
         item.clock = formatAMPM(item.dt);
         item.weather[0].iconClass = getIcon(item.weather[0].main);
     });
@@ -90,82 +113,89 @@ function renderHour(data){
     var html = templateFun(data);
     $('.hourtemp-wrapper .hours').html(html);
 }
-function renderWeekTemp(weekData){
+
+function renderWeekTemp(weekData) {
     var weekEdgeValue = findMaxMin(weekData);
     var canvas = $('#weekcanvas')[0];
-    var MAX=0, MIN=1;
-    var weekMaxArr = getWeekMaxMin(weekData,MAX);
+    var MAX = 0,
+        MIN = 1;
+    var weekMaxArr = getWeekMaxMin(weekData, MAX);
     var weekMinArr = getWeekMaxMin(weekData, MIN);
     draw(canvas, weekMinArr, weekMaxArr, weekEdgeValue.min, weekEdgeValue.max);
-    function draw(canvas, weekMinArr, weekMaxArr, weekMin, weekMax){
-        var padding = 25;
+
+    function draw(canvas, weekMinArr, weekMaxArr, weekMin, weekMax) {
+        var padding = 15*window.devicePixelRatio;
         var ctx = canvas.getContext('2d');
-        var range = canvas.height - padding*2;
-        var unit = range/(weekMax - weekMin);
+        var range = canvas.height - padding * 2;
+        var unit = range / (weekMax - weekMin);
         var topPoint = 0 + padding;
-        var colCount = 7;//列数
-        var xSeries = (function(){
-            var colWidth = canvas.width/colCount;
+        var colCount = 7; //列数
+        var xSeries = (function() {
+            var colWidth = canvas.width / colCount;
             var xSer = [];
             for (var i = 0; i < colCount; i++) {
-                xSer.push(i * colWidth + colWidth/2);
+                xSer.push(i * colWidth + colWidth / 2);
             }
             return xSer;
         })();
-        var yMaxSeries = (function(){
+        var yMaxSeries = (function() {
             var yMaxPoint = [];
-            weekMaxArr.forEach(function(dayMax){
+            weekMaxArr.forEach(function(dayMax) {
                 yMaxPoint.push((weekMax - dayMax) * unit + topPoint);
             });
             return yMaxPoint;
         })();
-        var yMinSeries = (function(){
+        var yMinSeries = (function() {
             var yMinPoint = [];
-            weekMinArr.forEach(function(dayMin){
+            weekMinArr.forEach(function(dayMin) {
                 yMinPoint.push((weekMax - dayMin) * unit + topPoint)
             });
             return yMinPoint;
         })();
         //draw;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        yMaxSeries.reduce(function(prey, cury, i){
+        ctx.strokeStyle = '#fff';
+        yMaxSeries.reduce(function(prey, cury, i) {
             ctx.beginPath();
-            ctx.moveTo(xSeries[i-1], prey);
+            ctx.moveTo(xSeries[i - 1], prey);
             ctx.lineTo(xSeries[i], cury);
             ctx.stroke();
-            return cury;//作为下一次的prey
+            return cury; //作为下一次的prey
         });
-        yMinSeries.reduce(function(prey, cury, i){
+        yMinSeries.reduce(function(prey, cury, i) {
             ctx.beginPath();
-            ctx.moveTo(xSeries[i-1], prey);
+            ctx.moveTo(xSeries[i - 1], prey);
             ctx.lineTo(xSeries[i], cury);
             ctx.stroke();
             return cury;
         });
-        yMaxSeries.forEach(function(y,i){
-            canvasText(ctx, xSeries[i],y, weekMaxArr[i], MAX);
+        yMaxSeries.forEach(function(y, i) {
+            canvasText(ctx, xSeries[i], y, weekMaxArr[i], MAX);
         });
-        yMinSeries.forEach(function(y,i){
-            canvasText(ctx, xSeries[i],y, weekMinArr[i], MIN);
+        yMinSeries.forEach(function(y, i) {
+            canvasText(ctx, xSeries[i], y, weekMinArr[i], MIN);
         })
-        function canvasText(ctx, x, y, value, type){
-            ctx.font="12px Verdana";
-            if(type == MAX){
+
+        function canvasText(ctx, x, y, value, type) {
+            ctx.font = "12px Verdana";
+            ctx.fillStyle = '#fff';
+            if (type == MAX) {
                 ctx.fillText(value, x - 5, y - 15);
-            }else{
+            } else {
                 ctx.fillText(value, x - 5, y + 15);
             }
         }
     }
-    function findMaxMin(data){
-        var min,max;
+
+    function findMaxMin(data) {
+        var min, max;
         min = data.list[0].temp.min;
         max = data.list[0].temp.max;
-        data.list.forEach(function(day){
-            if(day.temp.min < min){
+        data.list.forEach(function(day) {
+            if (day.temp.min < min) {
                 min = day.temp.min;
             }
-            if(day.temp.max > max){
+            if (day.temp.max > max) {
                 max = day.temp.max;
             }
         });
@@ -174,12 +204,13 @@ function renderWeekTemp(weekData){
             max: max
         }
     }
-    function getWeekMaxMin(data, type){
+
+    function getWeekMaxMin(data, type) {
         var arr = [];
-        data.list.forEach(function(day){
-            if(type == MAX){
+        data.list.forEach(function(day) {
+            if (type == MAX) {
                 arr.push(day.temp.max);
-            }else{
+            } else {
                 arr.push(day.temp.min);
             }
         });
@@ -187,11 +218,11 @@ function renderWeekTemp(weekData){
     }
 }
 
-function renderWeekState(weekData){
+function renderWeekState(weekData) {
     var oFragState = document.createDocumentFragment();
     var oFrageDay = document.createDocumentFragment();
     var DAY = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    weekData.list.forEach(function(day){
+    weekData.list.forEach(function(day) {
         var divState = document.createElement('div');
         var divDay = document.createElement('div');
         divState.className = 'day-state';
@@ -199,7 +230,7 @@ function renderWeekState(weekData){
         divState.classList.add(getIcon(day.weather[0].main));
         oFragState.appendChild(divState);
         divDay.className = 'day-day';
-        divDay.innerText = DAY[new Date(day.dt*1000).getDay()];
+        divDay.innerText = DAY[new Date(day.dt * 1000).getDay()];
         oFrageDay.appendChild(divDay);
     });
     $('.week-state-wrapper').empty();
@@ -208,33 +239,25 @@ function renderWeekState(weekData){
     $('.day-state-wrapper').append(oFrageDay);
 }
 
-function renderMore(data){
+function renderMore(data) {
     data.list = [];
     data.list.push({
-        infoKey:'Sunrise',
+        infoKey: 'Sunrise:',
         infoValue: formatAMPM(data.sys.sunrise)
-    },{
-        infoKey:'Sunset',
+    }, {
+        infoKey: 'Sunset:',
         infoValue: formatAMPM(data.sys.sunset)
-    },{
-        infoKey:'wind speed',
+    }, {
+        infoKey: 'Wind Speed:',
         infoValue: data.wind.speed
-    },{
-        infoKey: 'Humidity',
+    }, {
+        infoKey: 'Humidity:',
         infoValue: data.main.humidity
-    },{
-        infoKey: 'Pressure',
+    }, {
+        infoKey: 'Pressure:',
         infoValue: data.main.pressure
     });
     var templateFun = _.template($('#moreInfo').html());
     $('.more-info-wrapper').html(templateFun(data));
 
 }
-
-
-
-
-
-
-
-
