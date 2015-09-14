@@ -1,5 +1,6 @@
 var geo = require('./geolocation');
 var $ = require('./lib/jquery');
+console.log('heheh');
 module.exports = geo.then(function(coords){
     return $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/weather',

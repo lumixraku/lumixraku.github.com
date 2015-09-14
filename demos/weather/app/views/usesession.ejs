@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <% include common %>
+
+    <% if(locals.islogin){ %>
+         用户已登录
+    <% } else { %>
+         <form method="post">
+              <input type="submit" value="登录">
+          </form>
+    <% } %>
+
+  </body>
+</html>
+
