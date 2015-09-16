@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>Document</title>
+    <style>
+    html,body{
+        height: 100%;
+        font-size: 10px;
+    }
+    .page{
+        display: flex;
+        align-items:center;
+        justify-content: center;
+        height: 100%;
+    }
+    .wrapper{
+        background-color: rgb(187,173,160);
+        position: relative;
+    }
+    .block{
+        position: absolute;
+        background-color: rgb(238,228,218);
+        height: 6rem;
+        width: 6rem;
+        line-height: 6rem;
+        text-align: center;
+        font-size: 4rem;
+    }
+    .block.darkblock{
+        background-color: rgb(187,173,160);
+    }
+    .block.animate{
+        transition: all 700ms ease-in;
+    }
+    </style>
+</head>
+<body>
+<div class="page">
+<div class="wrapper">
+
+</div>
+</div>
+<script src="2048.js"></script>
+</body>
+</html>
