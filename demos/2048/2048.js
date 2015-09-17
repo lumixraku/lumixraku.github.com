@@ -28,6 +28,39 @@ function Blocks(){
     this.setBy = function(x,y,block){
         blocks[x-1][y-1] = block;
     }
+    this.getAll = function(){
+        var allblocks = [];
+        blocks.forEach(function(row){
+            row.forEach(function(block){
+                allblocks.push(block);
+            });
+        });
+        return allblocks;
+    }
+    this.moveRight = function(){
+        var all = this.getAll();
+        all.forEach(function(item){
+            item.moveRight();
+        });
+    }
+    this.moveLeft = function(){
+        var all = this.getAll();
+        all.forEach(function(item){
+            item.moveLeft();
+        });
+    }
+    this.moveUp = function(){
+        var all = this.getAll();
+        all.forEach(function(item){
+            item.moveUp();
+        });
+    }
+    this.moveDown = function(){
+        var all = this.getAll();
+        all.forEach(function(item){
+            item.moveDown();
+        });
+    }
     // this.add = function(x, y, ablock){
     //     blocks[x+1].push(ablock);
     // }
@@ -38,7 +71,7 @@ function Block(value, x,y){
     this.x = x;
     this.y = y;
     this.element = document.createElement('div');
-    this.element.classList.add('block');;
+    this.element.classList.add('block');
     this.setValue= function(value){
         this.value = value;
         this.element.innerText = value;
@@ -49,23 +82,29 @@ function Block(value, x,y){
     }
 
     this.moveUp = function(){
-        if(this.y == 1) return;
+        var self = this;
+        if(self.y == 1) return;
         var blockUp = blocks.getBy(x,y-1);
-        if(blockUp.getValue() == this.value){
-            blockUp.value = this.value + blockUp.getValue();
-            blockUp.refreshElement();
-            this.value = 0;
-            this.refreshElement();
+        if(blockUp.getValue() == self.value){
+            self.animationEle(blockUp.x, blockUp.y).then(function(){
+                blockUp.value = self.value + blockUp.getValue();
+                blockUp.refreshElement();
+                self.value = 0;
+                self.refreshElement();
+            });
         }
     }
     this.moveDown = function (){
-        if(this.y == 4) return;
+        var self = this;
+        if(self.y == 4) return;
         var blockDown = blocks.getBy(x,y+1);
-        if(blockDown.getValue() == this.value){
-            blockDown.value = this.value + blockDown.getValue();
-            blockDown.refreshElement();
-            this.value = 0;
-            this.refreshElement();
+        if(blockDown.getValue() == self.value){
+            self.animationEle(blockDown.x, blockDown.y).then(function(){
+                blockDown.value = self.value + blockDown.getValue();
+                blockDown.refreshElement();
+                self.value = 0;
+                self.refreshElement();
+            });
         }
     }
     this.moveLeft = function(){
@@ -82,13 +121,16 @@ function Block(value, x,y){
         }
     }
     this.moveRight = function(){
-        if(this.x == 4) return;
+        var self = this;
+        if(self.x == 4) return;
         var blockRight = blocks.getBy(x+1,y);
-        if(blockRight.getValue() == this.value){
-            blockRight.value = this.value + blockRight.getValue();
-            blockRight.refreshElement();
-            this.value = 0;
-            this.refreshElement();
+        if(blockRight.getValue() == self.value){
+            self.animationEle(blockRight.x, blockRight.y).then(function(){
+                blockRight.value = self.value + blockRight.getValue();
+                blockRight.refreshElement();
+                self.value = 0;
+                self.refreshElement();
+            });
         }
     }
     this.animationEle = function(x, y){
@@ -96,35 +138,60 @@ function Block(value, x,y){
         var distpos = {}, currpos = {}, movedirection = '';
         distpos.x = x*PADDING + (x-1)*BLOCK_SIZE;
         distpos.y = y*PADDING + (y-1)*BLOCK_SIZE;
-        currpos.x = parseFloat(this.element.style.left);
-        currpos.y = parseFloat(this.element.style.top);
-        if(distpos.x < currpos.x){
-            movedirection = 'left';
-        }
-        if(distpos.x > currpos.x){
-            movedirection = 'right';
-        }
-        if(distpos.y > currpos.y){
-            movedirection = 'down';
-        }
-        if(distpos.y < currpos.y){
-            movedirection = 'up';
-        }
-        if(movedirection == 'left'){
-            return new Promise(function(resovle, reject){
-                function step(){
-                    console.log(currpos.x + '---' + distpos.x);
-                    if(currpos.x <= distpos.x) {
-                        resovle();
-                        return;
-                    };
-                    currpos.x = currpos.x - 0.6;
-                    self.element.style.cssText = ['left:',currpos.x, 'rem;top:',currpos.y,'rem;','height:', BLOCK_SIZE,'rem;width:',BLOCK_SIZE,'rem;'].join('');
-                    requestAnimationFrame(step);
+        currpos.x = +parseFloat(this.element.style.left).toFixed(1);
+        currpos.y = +parseFloat(this.element.style.top).toFixed(1);
+        if(distpos.x < currpos.x ) movedirection = 'left';
+        if(distpos.x > currpos.x ) movedirection = 'right';
+        if(distpos.y > currpos.y ) movedirection = 'down';
+        if(distpos.y < currpos.y ) movedirection = 'up';
+        return new Promise(function(resolve, reject){
+            function step(){
+                console.log('step');
+                if(movedirection == 'left'){
+                    if(currpos.x <= distpos.x){
+                        self.element.style.left = distpos.x + 'rem';
+                        resolve();
+                        return ;
+                    }
+                    currpos.x -=0.5 ;
+                    if(currpos.x > distpos.x ){
+                        self.element.style.left = currpos.x + 'rem';
+                    }
+                }else if(movedirection == 'right'){
+                    if(currpos.x >= distpos.x){
+                        self.element.style.left = distpos.x + 'rem';
+                        resolve();
+                        return ;
+                    }
+                    currpos.x +=0.5 ;
+                    if(currpos.x < distpos.x ){
+                        self.element.style.left = currpos.x + 'rem';
+                    }
+                }else if(movedirection == 'down'){
+                    if(currpos.y >= distpos.y){
+                        self.element.style.top = distpos.y + 'rem';
+                        resolve();
+                        return ;
+                    }
+                    currpos.y +=0.5 ;
+                    if(currpos.y < distpos.y ){
+                        self.element.style.top = currpos.y + 'rem';
+                    }
+                }else if(movedirection == 'up'){
+                    if(currpos.y <= distpos.y){
+                        self.element.style.left = distpos.y + 'rem';
+                        resolve();
+                        return ;
+                    }
+                    currpos.y -=0.5 ;
+                    if(currpos.y < distpos.y ){
+                        self.element.style.left = currpos.y + 'rem';
+                    }
                 }
                 requestAnimationFrame(step);
-            });
-        }
+            }
+            requestAnimationFrame(step);
+        });
     }
 
     this.refreshElement = function(){
@@ -151,9 +218,18 @@ function Block(value, x,y){
 
 blocks = new Blocks();
 blocks.init();
-blocks.getBy(4,1).moveLeft();
+// blocks.getBy(4,1).moveLeft();
+// blocks.getBy(2,3).moveRight();
+// blocks.getBy(3,2).moveUp();
+// blocks.getBy(2,3).moveDown();
 // blocks.getBy(1,1).moveRight();
 // blocks.getBy(2,1).moveRight();
+// blocks.getBy(2,2).moveRight();
+// setTimeout(function(){
+//     blocks.getBy(3,1).moveRight();
+// },2000);
+
+blocks.moveDown();
 console.log(blocks.getBy(2,1));
 
 

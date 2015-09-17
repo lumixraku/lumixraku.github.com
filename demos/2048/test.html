@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>
+    </title>
+    <style>
+    .box {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        background: #0F0;
+        opacity: 1;
+/*        -webkit-transition: all 1s ease-in-out;
+        -moz-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;*/
+    }
+
+    div.box.active {
+        opacity: 1;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <script>
+    var next = document.querySelector('.box');
+
+
+    setTimeout(function() {
+        // next.style.transitionProperty = 'left top';
+        // next.style.transitionDuration = '1s';
+        // next.style.left = '50px';
+        // next.style.top = '50px';
+        next.style.cssText = 'transition-duration: 1s; left: 50px; top: 50px;';
+    }, 0);
+    next.addEventListener('transitionend', function(){
+        console.log('end');
+    }, false);
+    </script>
+</body>
+
+</html>
