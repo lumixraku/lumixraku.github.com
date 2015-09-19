@@ -1,235 +1,226 @@
 var pxUnit = 'rem';
 var BLOCK_SIZE = 6;
-var PADDING = BLOCK_SIZE/5;
-var WRAPPER_SIZE = BLOCK_SIZE*4 + PADDING*5;
+var PADDING = BLOCK_SIZE / 5;
+var WRAPPER_SIZE = BLOCK_SIZE * 4 + PADDING * 5;
 var wrapper;
+var blockList = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0]
+];
+
+var UP = 0,
+    LEFT = 1,
+    RIGHT = 2,
+    DOWN = 3;
 
 init();
-function init(){
+test();
+
+
+function init() {
     wrapper = document.querySelector('.wrapper');
-    wrapper.style.cssText = ['width:',WRAPPER_SIZE,'rem ;height:',WRAPPER_SIZE, 'rem'].join('');
+    wrapper.style.cssText = ['width:', WRAPPER_SIZE, 'rem ;height:', WRAPPER_SIZE, 'rem'].join('');
+    //其它则初始为没有值的方块
+    for (var x = 1; x <= 4; x++) {
+        for (var y = 1; y <= 4; y++) {
+            addBlock(x, y, 0);
+        }
+    }
+    //初始化需要添加两个数字为2的方块
+    setBlock(4, 3, 2);
+    setBlock(4, 4, 2);
+    setBlock(4, 1, 4);
+
 }
 
-function Blocks(){
-    var blocks = [];
-    this.init = function(){
-        for (var i = 0; i < 4; i++) {
-            blocks[i] = [];
-            for (var j = 0; j < 4; j++) {
-                var block = new Block(2, i+1 ,j+1 );
-                blocks[i][j] = block;
-                wrapper.appendChild(block.refreshElement());
+function test() {
+    var btns = document.querySelector('.btns');
+    btns.addEventListener('click', function(e) {
+        var target = e.target;
+        if (target.classList.contains('btnUp')) {
+            swipeUp();
+        } else if (target.classList.contains('btnDown')) {
+            swipeDown();
+        } else if (target.classList.contains('btnLeft')) {
+            swipeLeft();
+        } else if (target.classList.contains('btnRight')) {
+            swipeRight();
+        }
+    }, false);
+}
+
+
+function newBlockELe() {
+    var block = document.createElement('div');
+    block.classList.add('block');
+    block.style.width = BLOCK_SIZE + 'rem';
+    block.style.height = BLOCK_SIZE + 'rem';
+    return block;
+}
+
+function addBlock(x, y, value) {
+    var pos = getPosition(x, y);
+    var block = newBlockELe();
+    if (value) {
+        block.innerText = value + '';
+    } else {
+        block.classList.add('dark');
+    }
+    block.style.top = pos.y + 'rem';
+    block.style.left = pos.x + 'rem';
+    wrapper.appendChild(block);
+    blockList[x - 1][y - 1] = block;
+}
+
+function getBlockBy(x, y) {
+    return blockList[x - 1][y - 1];
+}
+
+function setBlock(x, y, value) {
+    var block = blockList[x - 1][y - 1];
+    if (value) {
+        block.innerText = value;
+        block.classList.remove('dark');
+    } else {
+        block.innerText = '';
+        block.classList.add('dark');
+    }
+}
+//对于up  prev就是curr上方的方块
+function blockMerge(prev, curr) {
+    if (curr.innerText) {
+        if (prev.innerText == '') {
+            animate(prev, curr)
+            // .then(function(){
+                prev.innerText = curr.innerText;
+                prev.classList.remove('dark');
+                toDark(curr);
+            // });
+        } else if (prev.innerText == curr.innerText) {
+            animate(prev, curr);
+            prev.innerText = (+prev.innerText) * 2;
+            toDark(curr);
+        }
+
+    }
+}
+
+function toDark(ele) {
+    ele.innerText = '';
+    ele.classList.add('dark');
+}
+
+function animate(prev, curr) {
+    var left = parseFloat(prev.style.left).toFixed(1),
+        top = parseFloat(prev.style.top).toFixed(1),
+        currentTop = parseFloat(curr.style.top).toFixed(1),
+        currentLeft = parseFloat(curr.style.left).toFixed(1),
+        curTop = currentTop,
+        curLeft = currentLeft;
+    var animate = document.createElement('div');
+    animate.classList.add('animate');
+    animate.style.top = currentTop + 'rem';
+    animate.style.left = currentLeft + 'rem';
+    animate.innerText = curr.innerText;
+    animate.style.width = '6rem';
+    animate.style.height = '6rem';
+    animate.style.zIndex = '99';
+    wrapper.appendChild(animate);
+    // return new Promise(function(resovle, reject) {
+
+        var timer = setInterval(function() {
+            curTop = curTop - 0.5;
+            animate.style.top = curTop + 'rem';
+            if (curTop < top) {
+                clearInterval(timer);
+                animate.style.top = currentTop + 'rem'; //还原  并不是真正的移动方块
+                animate.remove();
+                // resovle();
+            }
+        }, 16);
+    // });
+}
+
+function getPosition(x, y) {
+    return {
+        x: x * PADDING + (x - 1) * BLOCK_SIZE,
+        y: y * PADDING + (y - 1) * BLOCK_SIZE
+    }
+}
+
+
+function swipeUp() {
+    //对于后面三排方块 每一个都检测能否上移
+    for (var x = 1; x <= 4; x++) {
+        for (var y = 2; y <= 4; y++) { //后三排
+            var currentY = y;
+            while (currentY != 1) {
+                // console.log('x'+x, 'y'+currentY);
+                // if(x ==4 )debugger
+                blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
+                currentY--;
             }
         }
     }
-    this.getBy = function (x, y){
-        return blocks[x-1][y-1];
-    }
-    this.setBy = function(x,y,block){
-        blocks[x-1][y-1] = block;
-    }
-    this.getAll = function(){
-        var allblocks = [];
-        blocks.forEach(function(row){
-            row.forEach(function(block){
-                allblocks.push(block);
-            });
-        });
-        return allblocks;
-    }
-    this.moveRight = function(){
-        var all = this.getAll();
-        all.forEach(function(item){
-            item.moveRight();
-        });
-    }
-    this.moveLeft = function(){
-        var all = this.getAll();
-        all.forEach(function(item){
-            item.moveLeft();
-        });
-    }
-    this.moveUp = function(){
-        var all = this.getAll();
-        all.forEach(function(item){
-            item.moveUp();
-        });
-    }
-    this.moveDown = function(){
-        var all = this.getAll();
-        all.forEach(function(item){
-            item.moveDown();
-        });
-    }
-    // this.add = function(x, y, ablock){
-    //     blocks[x+1].push(ablock);
-    // }
+    randomAdd(UP);
 }
-//x横  y纵
-function Block(value, x,y){
-    this.value = value;
-    this.x = x;
-    this.y = y;
-    this.element = document.createElement('div');
-    this.element.classList.add('block');
-    this.setValue= function(value){
-        this.value = value;
-        this.element.innerText = value;
-    }
 
-    this.getValue = function(){
-        return this.value;
-    }
-
-    this.moveUp = function(){
-        var self = this;
-        if(self.y == 1) return;
-        var blockUp = blocks.getBy(x,y-1);
-        if(blockUp.getValue() == self.value){
-            self.animationEle(blockUp.x, blockUp.y).then(function(){
-                blockUp.value = self.value + blockUp.getValue();
-                blockUp.refreshElement();
-                self.value = 0;
-                self.refreshElement();
-            });
-        }
-    }
-    this.moveDown = function (){
-        var self = this;
-        if(self.y == 4) return;
-        var blockDown = blocks.getBy(x,y+1);
-        if(blockDown.getValue() == self.value){
-            self.animationEle(blockDown.x, blockDown.y).then(function(){
-                blockDown.value = self.value + blockDown.getValue();
-                blockDown.refreshElement();
-                self.value = 0;
-                self.refreshElement();
-            });
-        }
-    }
-    this.moveLeft = function(){
-        var self = this;
-        if(self.x == 1) return;
-        var blockLeft = blocks.getBy(x-1,y);
-        if(blockLeft.getValue() == self.value){
-            self.animationEle(blockLeft.x, blockLeft.y).then(function(){
-                blockLeft.value = self.value + blockLeft.getValue();
-                blockLeft.refreshElement();
-                self.value = 0;
-                self.refreshElement();
-            });
-        }
-    }
-    this.moveRight = function(){
-        var self = this;
-        if(self.x == 4) return;
-        var blockRight = blocks.getBy(x+1,y);
-        if(blockRight.getValue() == self.value){
-            self.animationEle(blockRight.x, blockRight.y).then(function(){
-                blockRight.value = self.value + blockRight.getValue();
-                blockRight.refreshElement();
-                self.value = 0;
-                self.refreshElement();
-            });
-        }
-    }
-    this.animationEle = function(x, y){
-        var self = this;
-        var distpos = {}, currpos = {}, movedirection = '';
-        distpos.x = x*PADDING + (x-1)*BLOCK_SIZE;
-        distpos.y = y*PADDING + (y-1)*BLOCK_SIZE;
-        currpos.x = +parseFloat(this.element.style.left).toFixed(1);
-        currpos.y = +parseFloat(this.element.style.top).toFixed(1);
-        if(distpos.x < currpos.x ) movedirection = 'left';
-        if(distpos.x > currpos.x ) movedirection = 'right';
-        if(distpos.y > currpos.y ) movedirection = 'down';
-        if(distpos.y < currpos.y ) movedirection = 'up';
-        return new Promise(function(resolve, reject){
-            function step(){
-                console.log('step');
-                if(movedirection == 'left'){
-                    if(currpos.x <= distpos.x){
-                        self.element.style.left = distpos.x + 'rem';
-                        resolve();
-                        return ;
-                    }
-                    currpos.x -=0.5 ;
-                    if(currpos.x > distpos.x ){
-                        self.element.style.left = currpos.x + 'rem';
-                    }
-                }else if(movedirection == 'right'){
-                    if(currpos.x >= distpos.x){
-                        self.element.style.left = distpos.x + 'rem';
-                        resolve();
-                        return ;
-                    }
-                    currpos.x +=0.5 ;
-                    if(currpos.x < distpos.x ){
-                        self.element.style.left = currpos.x + 'rem';
-                    }
-                }else if(movedirection == 'down'){
-                    if(currpos.y >= distpos.y){
-                        self.element.style.top = distpos.y + 'rem';
-                        resolve();
-                        return ;
-                    }
-                    currpos.y +=0.5 ;
-                    if(currpos.y < distpos.y ){
-                        self.element.style.top = currpos.y + 'rem';
-                    }
-                }else if(movedirection == 'up'){
-                    if(currpos.y <= distpos.y){
-                        self.element.style.left = distpos.y + 'rem';
-                        resolve();
-                        return ;
-                    }
-                    currpos.y -=0.5 ;
-                    if(currpos.y < distpos.y ){
-                        self.element.style.left = currpos.y + 'rem';
-                    }
-                }
-                requestAnimationFrame(step);
+function swipeDown() {
+    //对于后面三排方块 每一个都检测能否上移
+    for (var x = 2; x <= 4; x++) {
+        for (var y = 2; y <= 4; y++) {
+            var currentY = y;
+            while (currentY != 1) {
+                // console.log('x'+x, 'y'+currentY);
+                // if(x ==4 )debugger
+                blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
+                currentY--;
             }
-            requestAnimationFrame(step);
-        });
-    }
-
-    this.refreshElement = function(){
-        this.element.style.cssText = getCorrdinateCssText(this.x,this.y);
-        if(this.value == 0){
-            this.element.innerText = '';
-            this.element.classList.add('darkblock');
-
-        }else{
-            this.element.innerText = this.value+'';
-            this.element.classList.remove('darkblock');
         }
-        return this.element;
     }
-
-    function getCorrdinateCssText(x,y){
-        var pos = {};
-        pos.x = x*PADDING + (x-1)*BLOCK_SIZE;
-        pos.y = y*PADDING + (y-1)*BLOCK_SIZE;
-        return ['left:',pos.x, 'rem;top:',pos.y,'rem;','height:', BLOCK_SIZE,'rem;width:',BLOCK_SIZE,'rem;'].join('');
-    }
-
 }
 
-blocks = new Blocks();
-blocks.init();
-// blocks.getBy(4,1).moveLeft();
-// blocks.getBy(2,3).moveRight();
-// blocks.getBy(3,2).moveUp();
-// blocks.getBy(2,3).moveDown();
-// blocks.getBy(1,1).moveRight();
-// blocks.getBy(2,1).moveRight();
-// blocks.getBy(2,2).moveRight();
-// setTimeout(function(){
-//     blocks.getBy(3,1).moveRight();
-// },2000);
+function swipeLeft() {
+    for (var x = 2; x <= 4; x++) {
+        for (var y = 2; y <= 4; y++) {
+            var currentY = y;
+            while (currentY != 1) {
+                // console.log('x'+x, 'y'+currentY);
+                // if(x ==4 )debugger
+                blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
+                currentY--;
+            }
+        }
+    }
+}
 
-blocks.moveDown();
-console.log(blocks.getBy(2,1));
+function swipeRight() {
+    //对于后面三排方块 每一个都检测能否上移
+    for (var x = 2; x <= 4; x++) {
+        for (var y = 2; y <= 4; y++) {
+            var currentY = y;
+            while (currentY != 1) {
+                // console.log('x'+x, 'y'+currentY);
+                // if(x ==4 )debugger
+                blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
+                currentY--;
+            }
+        }
+    }
+}
 
+function randomAdd(type) {
+    var block, randomArr = [1, 2, 3, 4];
+    if (type == UP) {
+        block = getBlockBy(Math.ceil(Math.random() * 4), 4);
+    }
+    block.classList.remove('dark');
+    block.style.transform = 'scale(0.1)';
+    block.style.transitionProperty = 'all';
+    block.style.transitionDuration = '1s';
+    block.style.transform = 'scale(1.0)';
+    block.innerText = Math.random() > 0.5 ? 4 : 2;
 
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .fadeable {
+            opacity: 0;
+        }
+
+        .fade-in {
+            opacity: 1;
+            transition:             opacity 2s;
+                -moz-transition:    opacity 2s;
+                -ms-transition:     opacity 2s;
+                -o-transition:      opacity 2s;
+                -webkit-transition: opacity 2s;
+        }
+    </style>
+</head>
+<body>
+<div id="fade1" class="fadeable">fade 1 - works</div>
+<div id="fade2">fade 2 - doesn't work</div>
+<div id="fade3">fade 3 - works</div>
+<script>
+//works // it works in jsfiddle but not in chrome
+setTimeout(function(){
+    document.getElementById( 'fade1' ).className += ' fade-in';
+},0)
+
+//doesn't work
+document.getElementById( 'fade2' ).className = 'fadeable';
+document.getElementById( 'fade2' ).className += ' fade-in';
+
+//works
+document.getElementById( 'fade3' ).className = 'fadeable';
+window.setTimeout( function() {
+
+    document.getElementById( 'fade3' ).className += ' fade-in';
+
+}, 50);
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .box {
+          margin: 30px;
+          height: 50px;
+          width: 50px;
+          background-color: blue;
+        }
+        .box.horizTranslate {
+          -webkit-transition: 3s;
+          -moz-transition: 3s;
+          -ms-transition: 3s;
+          -o-transition: 3s;
+          transition: 3s;
+          margin-left: 50% !important;
+        }
+    </style>
+    <script src="jquery.js"></script>
+</head>
+<body>
+
+<h3>Pure Javascript</h3>
+<div class='box'></div>
+<button class='toggleButton' value='play'>Play</button>
+
+<h3>jQuery</h3>
+<div class='box'></div>
+<button class='toggleButton' value='play'>Play</button>
+
+<script>
+var boxOne = document.getElementsByClassName('box')[0],
+    $boxTwo = $('.box:eq(1)');
+
+document.getElementsByClassName('toggleButton')[0].onclick = function() {
+  if(this.innerHTML === 'Play')
+  {
+    this.innerHTML = 'Pause';
+    boxOne.style.cssText = 'transition: 2s; margin-left: 50%';
+    // 向style中填css  添加class名字都是可以的
+    // boxOne.classList.add('horizTranslate');
+  } else {
+    this.innerHTML = 'Play';
+    var computedStyle = window.getComputedStyle(boxOne),
+        marginLeft = computedStyle.getPropertyValue('margin-left');
+    // boxOne.style.marginLeft = marginLeft;
+    // boxOne.classList.remove('horizTranslate');
+    boxOne.style.cssText = 'margin-left:' + marginLeft;
+    // boxOne.style.animationPlayState = "paused";//只能停下animation  transition是不能停的
+  }
+}
+
+$('.toggleButton:eq(1)').on('click', function() {
+  if($(this).html() === 'Play')
+  {
+    $(this).html('Pause');
+    $boxTwo.addClass('horizTranslate');
+  } else {
+    $(this).html('Play');
+    var computedStyle = $boxTwo.css('margin-left');
+    $boxTwo.removeClass('horizTranslate');
+    $boxTwo.css('margin-left', computedStyle);
+  }
+});
+
+</script>
+</body>
+</html>

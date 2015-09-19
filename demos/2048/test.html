@@ -7,40 +7,81 @@
     <title>
     </title>
     <style>
-    .box {
+    #box {
         position: absolute;
         top: 0;
         left: 0;
         width: 100px;
         height: 100px;
         background: #0F0;
-        opacity: 1;
-/*        -webkit-transition: all 1s ease-in-out;
-        -moz-transition: all 1s ease-in-out;
-        transition: all 1s ease-in-out;*/
+        opacity: 0.5;
     }
 
-    div.box.active {
+    #box.trans {
         opacity: 1;
+        transition:         opacity 2s;
+        -moz-transition:    opacity 2s;
+        -ms-transition:     opacity 2s;
+        -o-transition:      opacity 2s;
+        -webkit-transition: opacity 2s;
+    }
+    #box.trans1{
+        left: 50px;
+        top:50px;
+        transition:         all 2s;
+        -moz-transition:    all 2s;
+        -ms-transition:     all 2s;
+        -o-transition:      all 2s;
+        -webkit-transition: all 2s;
+    }
+    /*OR 更细致一点*/
+    #box.trans2{
+        left: 50px;
+        top:50px;
+        transition:         left 2s, top 2s;
+        -moz-transition:    left 2s, top 2s;
+        -ms-transition:     left 2s, top 2s;
+        -o-transition:      left 2s, top 2s;
+        -webkit-transition: left 2s, top 2s;
+    }
+
+    @-webkit-keyframes changeColor {
+        0% {
+            background: #206a11;
+        }
+        50% {
+            background: #012c1a;
+        }
+        100% {
+            background: #206a9e;
+        }
+    }
+
+    .changeColor {
+        -webkit-animation: changeColor 3.4s infinite;
     }
     </style>
 </head>
 
 <body>
-    <div class="box"></div>
+    <div id="box"></div>
     <script>
-    var next = document.querySelector('.box');
 
+    // box.style.cssText('transition: 200ms; margin-left: 50%');//这样不行  非要放在异步函数中//比如setimeout  事件回调函数等
+    // box.classList.add('trans');//也不行
+    // box.classList.add('changeColor');//Ok animation则不受影响
 
     setTimeout(function() {
-        // next.style.transitionProperty = 'left top';
-        // next.style.transitionDuration = '1s';
-        // next.style.left = '50px';
-        // next.style.top = '50px';
-        next.style.cssText = 'transition-duration: 1s; left: 50px; top: 50px;';
+        // box.style.transitionProperty = 'all';
+        // box.style.transitionDuration = '1s';
+        // box.style.left = '50px';
+        // box.style.top = '50px';
+        // 或者更简单些
+        box.style.cssText = 'transition: 500ms; left: 50px;';//ok
+        // box.classList.add('trans2');//ok
     }, 0);
-    next.addEventListener('transitionend', function(){
-        console.log('end');
+    box.addEventListener('transitionend', function() {
+        console.log('end');//如果transition里面有2个属性  那么这个时间会触发两次
     }, false);
     </script>
 </body>
