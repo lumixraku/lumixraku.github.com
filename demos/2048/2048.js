@@ -89,21 +89,18 @@ function setBlock(x, y, value) {
     }
 }
 //对于up  prev就是curr上方的方块
-function blockMerge(prev, curr) {
+function blockMerge(dist, curr) {
     if (curr.innerText) {
-        if (prev.innerText == '') {
-            animate(prev, curr)
-            // .then(function(){
-                prev.innerText = curr.innerText;
-                prev.classList.remove('dark');
-                toDark(curr);
-            // });
-        } else if (prev.innerText == curr.innerText) {
-            animate(prev, curr);
-            prev.innerText = (+prev.innerText) * 2;
+        if (dist.innerText == '') {
+            animate(dist, curr);
+            dist.innerText = curr.innerText;
+            dist.classList.remove('dark');
+            toDark(curr);
+        } else if (dist.innerText == curr.innerText) {
+            animate(dist, curr);
+            dist.innerText = (+dist.innerText) * 2;
             toDark(curr);
         }
-
     }
 }
 
@@ -112,9 +109,9 @@ function toDark(ele) {
     ele.classList.add('dark');
 }
 
-function animate(prev, curr) {
-    var left = parseFloat(prev.style.left).toFixed(1),
-        top = parseFloat(prev.style.top).toFixed(1),
+function animate(dist, curr) {
+    var left = parseFloat(dist.style.left).toFixed(1),
+        top = parseFloat(dist.style.top).toFixed(1),
         currentTop = parseFloat(curr.style.top).toFixed(1),
         currentLeft = parseFloat(curr.style.left).toFixed(1),
         curTop = currentTop,
@@ -128,19 +125,15 @@ function animate(prev, curr) {
     animate.style.height = '6rem';
     animate.style.zIndex = '99';
     wrapper.appendChild(animate);
-    // return new Promise(function(resovle, reject) {
-
-        var timer = setInterval(function() {
-            curTop = curTop - 0.5;
-            animate.style.top = curTop + 'rem';
-            if (curTop < top) {
-                clearInterval(timer);
-                animate.style.top = currentTop + 'rem'; //还原  并不是真正的移动方块
-                animate.remove();
-                // resovle();
-            }
-        }, 16);
-    // });
+    animate.addEventListener('transitionend', function(e) {
+        e.target.remove();
+    }, false);
+    setTimeout(function() {
+        animate.style.transitionProperty = 'all';
+        animate.style.transitionDuration = '100ms';
+        animate.style.top = top + 'rem';
+        animate.style.left = left + 'rem';
+    }, 0);
 }
 
 function getPosition(x, y) {
@@ -157,8 +150,6 @@ function swipeUp() {
         for (var y = 2; y <= 4; y++) { //后三排
             var currentY = y;
             while (currentY != 1) {
-                // console.log('x'+x, 'y'+currentY);
-                // if(x ==4 )debugger
                 blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
                 currentY--;
             }
@@ -168,59 +159,64 @@ function swipeUp() {
 }
 
 function swipeDown() {
-    //对于后面三排方块 每一个都检测能否上移
-    for (var x = 2; x <= 4; x++) {
-        for (var y = 2; y <= 4; y++) {
+    for (var x = 1; x <= 4; x++) {
+        for (var y = 3; y >= 1; y--) {
             var currentY = y;
-            while (currentY != 1) {
-                // console.log('x'+x, 'y'+currentY);
-                // if(x ==4 )debugger
-                blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
-                currentY--;
+            while (currentY != 4) {
+                blockMerge(getBlockBy(x, currentY + 1), getBlockBy(x, currentY));
+                currentY++;
             }
         }
     }
+    randomAdd(DOWN);
 }
 
 function swipeLeft() {
-    for (var x = 2; x <= 4; x++) {
-        for (var y = 2; y <= 4; y++) {
-            var currentY = y;
-            while (currentY != 1) {
-                // console.log('x'+x, 'y'+currentY);
-                // if(x ==4 )debugger
-                blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
-                currentY--;
+    for (var y = 1; y <= 4; y++) {
+        for (var x = 2; x <= 4; x++) {
+            var currentX = x;
+            while (currentX != 1) {
+                blockMerge(getBlockBy(currentX - 1, y), getBlockBy(currentX, y));
+                currentX--;
             }
         }
     }
+    randomAdd(LEFT);
 }
 
 function swipeRight() {
-    //对于后面三排方块 每一个都检测能否上移
-    for (var x = 2; x <= 4; x++) {
-        for (var y = 2; y <= 4; y++) {
-            var currentY = y;
-            while (currentY != 1) {
-                // console.log('x'+x, 'y'+currentY);
-                // if(x ==4 )debugger
-                blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
-                currentY--;
+    for (var y = 1; y <= 4; y++) {
+        for (var x = 3; x >= 1; x--) {
+            var currentX = x;
+            while (currentX != 4) {
+                blockMerge(getBlockBy(currentX + 1, y), getBlockBy(currentX, y));
+                currentX++;
             }
         }
     }
+    randomAdd(RIGHT);
 }
 
 function randomAdd(type) {
     var block, randomArr = [1, 2, 3, 4];
     if (type == UP) {
         block = getBlockBy(Math.ceil(Math.random() * 4), 4);
+    } else if (type == DOWN) {
+        block = getBlockBy(Math.ceil(Math.random() * 4), 1);
+    } else if (type == LEFT) {
+        block = getBlockBy(4, Math.ceil(Math.random() * 4));
+    } else if (type == RIGHT) {
+        block = getBlockBy(1, Math.ceil(Math.random() * 4));
     }
-    block.classList.remove('dark');
     block.style.transform = 'scale(0.1)';
-    block.style.transitionProperty = 'all';
-    block.style.transitionDuration = '1s';
-    block.style.transform = 'scale(1.0)';
     block.innerText = Math.random() > 0.5 ? 4 : 2;
+    block.classList.remove('dark');
+    block.style.opacity = '0.5';
+    setTimeout(function() {
+        block.style.transitionProperty = 'all';
+        block.style.transitionDuration = '1s';
+        block.style.transform = 'scale(1.0)';
+        block.style.opacity = '1';
+    }, 0);
 
 }
