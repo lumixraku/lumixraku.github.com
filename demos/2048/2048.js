@@ -80,8 +80,10 @@ function addBlock(x, y, value) {
     var pos = getPosition(x, y);
     var block = newBlockELe();
     if (value) {
+        block.setAttribute('data',value);
         block.innerText = value + '';
     } else {
+        block.setAttribute('data',0);
         block.classList.add('dark');
     }
     block.style.top = pos.y + 'rem';
@@ -97,35 +99,46 @@ function getBlockBy(x, y) {
 function setBlock(x, y, value) {
     var block = blockList[x - 1][y - 1];
     if (value) {
+        block.setAttribute('data',value);
         block.innerText = value;
         block.classList.remove('dark');
     } else {
+        block.setAttribute('data',0);
         block.innerText = '';
         block.classList.add('dark');
     }
 }
 //对于up  prev就是curr上方的方块
 function blockMerge(dist, curr) {
-    if (curr.innerText) {
-        if (dist.innerText == '') {
-            animate(dist, curr);
-            dist.innerText = curr.innerText;
+    var moved = false;
+    if (curr.getAttribute('data') && curr.getAttribute('data') != '0') {
+        if (dist.getAttribute('data') == '0') {
+            // animate(dist, curr);
+            moved = true;
+            dist.setAttribute('data', curr.getAttribute('data'));
             dist.classList.remove('dark');
+            // dist.innerText = curr.getAttribute('data');
             toDark(curr);
-        } else if (dist.innerText == curr.innerText) {
-            animate(dist, curr);
-            dist.innerText = (+dist.innerText) * 2;
+        } else if (dist.getAttribute('data') == curr.getAttribute('data')) {
+            // animate(dist, curr);
+            moved  = true;
+            dist.setAttribute('data', (+dist.getAttribute('data'))* 2);
+            // dist.innerText = dist.getAttribute('data');
+            curr.setAttribute('data', 0);
             toDark(curr);
         }
     }
+    return moved;
 }
 
+
 function toDark(ele) {
+    ele.setAttribute('data', 0);
     ele.innerText = '';
     ele.classList.add('dark');
 }
 
-function animate(dist, curr) {
+function animate(dist, curr, value) {
     var left = parseFloat(dist.style.left).toFixed(1),
         top = parseFloat(dist.style.top).toFixed(1),
         currentTop = parseFloat(curr.style.top).toFixed(1),
@@ -136,17 +149,30 @@ function animate(dist, curr) {
     animate.classList.add('animate');
     animate.style.top = currentTop + 'rem';
     animate.style.left = currentLeft + 'rem';
-    animate.innerText = curr.innerText;
+    animate.innerText = value;
     animate.style.width = '6rem';
     animate.style.height = '6rem';
     animate.style.zIndex = '99';
+    animate.style.transitionProperty = 'all';
+    animate.style.transitionDuration = '150ms';
     wrapper.appendChild(animate);
-    animate.addEventListener('transitionend', function(e) {
-        e.target.remove();
-    }, false);
+    //animate.addEventListener('transitionend', function(e) {
+        // e.target.remove();
+    setTimeout(function(){
+        animate.parentElement.removeChild(animate);
+        if(dist.getAttribute('data') != '0' ){
+            dist.innerText = dist.getAttribute('data');
+        }else{
+            dist.innerText = '';
+        }
+        if(curr.getAttribute('data') != '0' ){
+            curr.innerText = curr.getAttribute('data');
+        }else{
+            curr.innerText = '';
+        }
+    }, 150);
+    // }, false);
     setTimeout(function() {
-        animate.style.transitionProperty = 'all';
-        animate.style.transitionDuration = '100ms';
         animate.style.top = top + 'rem';
         animate.style.left = left + 'rem';
     }, 0);
@@ -164,10 +190,18 @@ function swipeUp() {
     //对于后面三排方块 每一个都检测能否上移
     for (var x = 1; x <= 4; x++) {
         for (var y = 2; y <= 4; y++) { //后三排
-            var currentY = y;
+            var currentY = y, distY = y,step =0, moved, value;
+            value = getBlockBy(x, y).getAttribute('data');
             while (currentY != 1) {
-                blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
+                moved = blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
                 currentY--;
+                if(moved) {
+                    distY = currentY;
+                    // step++;
+                }
+            }
+            if(distY != y){ //表示该方块移动过 开始动画
+                animate(getBlockBy(x, distY), getBlockBy(x, y), value);
             }
         }
     }
@@ -177,10 +211,17 @@ function swipeUp() {
 function swipeDown() {
     for (var x = 1; x <= 4; x++) {
         for (var y = 3; y >= 1; y--) {
-            var currentY = y;
+            var currentY = y, distY = y,step =0, moved, value;
+            value = getBlockBy(x, y).getAttribute('data');
             while (currentY != 4) {
-                blockMerge(getBlockBy(x, currentY + 1), getBlockBy(x, currentY));
+                moved = blockMerge(getBlockBy(x, currentY + 1), getBlockBy(x, currentY));
                 currentY++;
+                if(moved) {
+                    distY = currentY;
+                }
+            }
+            if(distY != y){ //表示该方块移动过 开始动画
+                animate(getBlockBy(x, distY), getBlockBy(x, y), value);
             }
         }
     }
@@ -190,10 +231,17 @@ function swipeDown() {
 function swipeLeft() {
     for (var y = 1; y <= 4; y++) {
         for (var x = 2; x <= 4; x++) {
-            var currentX = x;
+            var currentX = x, distX = x,step =0, moved, value;
+            value = getBlockBy(x, y).getAttribute('data');
             while (currentX != 1) {
-                blockMerge(getBlockBy(currentX - 1, y), getBlockBy(currentX, y));
+                moved = blockMerge(getBlockBy(currentX - 1, y), getBlockBy(currentX, y));
                 currentX--;
+                if(moved) {
+                    distX = currentX;
+                }
+            }
+            if(distX != x){ //表示该方块移动过 开始动画
+                animate(getBlockBy(distX, y), getBlockBy(x, y), value);
             }
         }
     }
@@ -203,10 +251,17 @@ function swipeLeft() {
 function swipeRight() {
     for (var y = 1; y <= 4; y++) {
         for (var x = 3; x >= 1; x--) {
-            var currentX = x;
+            var currentX = x, distX = x,step =0, moved, value;
+            value = getBlockBy(x, y).getAttribute('data');
             while (currentX != 4) {
-                blockMerge(getBlockBy(currentX + 1, y), getBlockBy(currentX, y));
+                moved = blockMerge(getBlockBy(currentX + 1, y), getBlockBy(currentX, y));
                 currentX++;
+                if(moved) {
+                    distX = currentX;
+                }
+            }
+            if(distX != x){ //表示该方块移动过 开始动画
+                animate(getBlockBy(distX, y), getBlockBy(x, y), value);
             }
         }
     }
