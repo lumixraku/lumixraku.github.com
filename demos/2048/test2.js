@@ -31,7 +31,7 @@ function init() {
     //初始化需要添加两个数字为2的方块
     setBlock(4, 3, 2);
     setBlock(4, 4, 2);
-    setBlock(4, 1, 4);
+    // setBlock(4, 1, 4);
 
 }
 
@@ -80,8 +80,10 @@ function addBlock(x, y, value) {
     var pos = getPosition(x, y);
     var block = newBlockELe();
     if (value) {
+        block.setAttribute('data',value);
         block.innerText = value + '';
     } else {
+        block.setAttribute('data',0);
         block.classList.add('dark');
     }
     block.style.top = pos.y + 'rem';
@@ -97,59 +99,90 @@ function getBlockBy(x, y) {
 function setBlock(x, y, value) {
     var block = blockList[x - 1][y - 1];
     if (value) {
+        block.setAttribute('data',value);
         block.innerText = value;
         block.classList.remove('dark');
     } else {
+        block.setAttribute('data',0);
         block.innerText = '';
         block.classList.add('dark');
     }
 }
 //对于up  prev就是curr上方的方块
 function blockMerge(dist, curr) {
-    if (curr.innerText) {
-        if (dist.innerText == '') {
+    var moved = false;
+    if (curr.getAttribute('data') && curr.getAttribute('data') != '0') {
+        if (dist.getAttribute('data') == '0') {
             animate(dist, curr);
-            dist.innerText = curr.innerText;
-            dist.classList.remove('dark');
-            toDark(curr);
-        } else if (dist.innerText == curr.innerText) {
+            moved = true;
+            dist.setAttribute('data', curr.getAttribute('data'));
+            curr.setAttribute('data', 0);
+            curr.innerText = '';
+        } else if (dist.getAttribute('data') == curr.getAttribute('data')) {
             animate(dist, curr);
-            dist.innerText = (+dist.innerText) * 2;
-            toDark(curr);
+            moved  = true;
+            dist.setAttribute('data', (+dist.getAttribute('data'))* 2) ;
+            curr.setAttribute('data', 0);
+            curr.innerText = '';
+
         }
     }
+    return moved;
 }
 
 function toDark(ele) {
+    ele.setAttribute('data', 0);
     ele.innerText = '';
-    ele.classList.add('dark');
+    // ele.classList.add('dark');
 }
 
-function animate(dist, curr) {
-    var left = parseFloat(dist.style.left).toFixed(1),
-        top = parseFloat(dist.style.top).toFixed(1),
+function animate(dist, curr, value) {
+    var distLeft = parseFloat(dist.style.left).toFixed(1),
+        distTop = parseFloat(dist.style.top).toFixed(1),
         currentTop = parseFloat(curr.style.top).toFixed(1),
-        currentLeft = parseFloat(curr.style.left).toFixed(1),
-        curTop = currentTop,
-        curLeft = currentLeft;
+        currentLeft = parseFloat(curr.style.left).toFixed(1);
     var animate = document.createElement('div');
+    animate.innerText = value;
     animate.classList.add('animate');
     animate.style.top = currentTop + 'rem';
     animate.style.left = currentLeft + 'rem';
-    animate.innerText = curr.innerText;
     animate.style.width = '6rem';
     animate.style.height = '6rem';
     animate.style.zIndex = '99';
+    animate.style.transitionProperty = 'all';
+    animate.style.transitionDuration = '550ms';
     wrapper.appendChild(animate);
-    animate.addEventListener('transitionend', function(e) {
-        e.target.remove();
-    }, false);
     setTimeout(function() {
-        animate.style.transitionProperty = 'all';
-        animate.style.transitionDuration = '100ms';
-        animate.style.top = top + 'rem';
-        animate.style.left = left + 'rem';
+        animate.style.top = distTop + 'rem';
+        animate.style.left = distLeft + 'rem';
     }, 0);
+    // animate.addEventListener('transitionend', function(e) {
+    //     e.target.remove();
+    //     if(dist.getAttribute('data') != '0' ){
+    //         dist.innerText = dist.getAttribute('data');
+    //     }else{
+    //         dist.innerText = '';
+    //     }
+    //     if(curr.getAttribute('data') != '0'){
+    //         curr.innerText = curr.getAttribute('data');
+    //     }else{
+    //         curr.innerText = '';
+    //     }
+
+    // }, false);
+    setTimeout(function(){
+        animate.remove();
+        if(dist.getAttribute('data') != '0' ){
+            dist.innerText = dist.getAttribute('data');
+        }else{
+            dist.innerText = '';
+        }
+        if(curr.getAttribute('data') != '0' ){
+            curr.innerText = curr.getAttribute('data');
+        }else{
+            curr.innerText = '';
+        }
+    },550);
 }
 
 function getPosition(x, y) {
@@ -158,19 +191,42 @@ function getPosition(x, y) {
         y: y * PADDING + (y - 1) * BLOCK_SIZE
     }
 }
-
+function refreshBlocks(){
+    var block;
+    for (var x = 1; x <= 4; x++) {
+        for (var y = 1; y <= 4; y++) {
+            block = getBlockBy(x,y);
+            if(block.getAttribute('data') == '0'){
+                block.classList.add('dark');
+            }else{
+                block.classList.remove('dark');
+            }
+        }
+    }
+}
 
 function swipeUp() {
     //对于后面三排方块 每一个都检测能否上移
     for (var x = 1; x <= 4; x++) {
         for (var y = 2; y <= 4; y++) { //后三排
-            var currentY = y;
+            var currentY = y, distY = y,step =0, moved, value;
+            value = getBlockBy(x, y).getAttribute('data');
+            // if( x==4 ){ debugger;}
             while (currentY != 1) {
-                blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
+                moved = blockMerge(getBlockBy(x, currentY - 1), getBlockBy(x, currentY));
                 currentY--;
+                if(moved) {
+                    distY = currentY;
+                    // step++;
+                }
             }
+            // if(distY != y){ //表示该方块移动过 开始动画
+            //     animate(getBlockBy(x, distY), getBlockBy(x, y), value);
+            // }
+
         }
     }
+    refreshBlocks();
     randomAdd(UP);
 }
 
