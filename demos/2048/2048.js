@@ -111,21 +111,34 @@ function setBlock(x, y, value) {
 //对于up  prev就是curr上方的方块
 function blockMerge(dist, curr) {
     var moved = false;
+    var value = curr.getAttribute('data');
     if (curr.getAttribute('data') && curr.getAttribute('data') != '0') {
         if (dist.getAttribute('data') == '0') {
-            // animate(dist, curr);
-            moved = true;
-            dist.setAttribute('data', curr.getAttribute('data'));
-            dist.classList.remove('dark');
-            // dist.innerText = curr.getAttribute('data');
             toDark(curr);
+            dist.setAttribute('data', value);
+            moved = true;
+            // animate(dist, curr, value).then(function(){
+            //     if(dist.getAttribute('data') != '0'){
+            //         dist.innerText = dist.getAttribute('data');
+            //         dist.classList.remove('dark');
+            //     }else{
+            //         dist.classList.add('dark');
+            //         dist.innerText = '';
+            //     }
+            // });
         } else if (dist.getAttribute('data') == curr.getAttribute('data')) {
-            // animate(dist, curr);
+            toDark(curr);
             moved  = true;
             dist.setAttribute('data', (+dist.getAttribute('data'))* 2);
-            // dist.innerText = dist.getAttribute('data');
-            curr.setAttribute('data', 0);
-            toDark(curr);
+            // animate(dist, curr, value).then(function(){
+            //     if(dist.getAttribute('data') != '0'){
+            //         dist.innerText = dist.getAttribute('data');
+            //         dist.classList.remove('dark');
+            //     }else{
+            //         dist.classList.add('dark');
+            //         dist.innerText = '';
+            //     }
+            // });
         }
     }
     return moved;
@@ -138,7 +151,80 @@ function toDark(ele) {
     ele.classList.add('dark');
 }
 
-function animate(dist, curr, value) {
+function animate(dist, curr, value){
+    var distLeft = +parseFloat(dist.style.left).toFixed(1),
+        distTop = +parseFloat(dist.style.top).toFixed(1),
+        currentTop = +parseFloat(curr.style.top).toFixed(1),
+        currentLeft = +parseFloat(curr.style.left).toFixed(1),
+        curTop = currentTop,
+        curLeft = currentLeft;
+    var animate = document.createElement('div');
+    animate.classList.add('animate');
+    animate.classList.add('animate');
+    animate.style.top = currentTop + 'rem';
+    animate.style.left = currentLeft + 'rem';
+    animate.innerText = value;
+    wrapper.appendChild(animate);
+    return new Promise(function(resolve, reject){
+        function refreshDist(){
+            if(dist.getAttribute('data') != '0'){
+                dist.innerText = dist.getAttribute('data');
+                dist.classList.remove('dark');
+            }else{
+                dist.classList.add('dark');
+                dist.innerText = '';
+            }
+        }
+        var timer = setInterval(function(){
+            if(distTop < currentTop){
+                curTop = curTop -0.5;
+                animate.style.top = curTop +'rem';
+                if(curTop <= distTop){
+                    clearInterval(timer);
+                    animate.style.top = distTop + 'rem';
+                    animate.remove();
+                    refreshDist();
+                    resolve();
+                }
+            }
+            if(distTop > currentTop){
+                curTop = curTop + 0.5;
+                animate.style.top = curTop +'rem';
+                if(curTop >= distTop){
+                    clearInterval(timer);
+                    animate.style.top = distTop + 'rem';
+                    animate.remove();
+                    refreshDist();
+                    resolve();
+                }
+            }
+            if(distLeft < currentLeft ){
+                curLeft = curLeft - 0.5;
+                animate.style.left = curLeft + 'rem';
+                if(curLeft <= distLeft){
+                    clearInterval(timer);
+                    animate.style.left = distLeft + 'rem';
+                    animate.remove();
+                    refreshDist();
+                    resolve();
+                }
+            }
+            if (distLeft > curLeft) {
+                curLeft = curLeft + 0.5;
+                animate.style.left = curLeft + 'rem';
+                if(curLeft >= distLeft){
+                    clearInterval(timer);
+                    animate.style.left = distLeft + 'rem';
+                    animate.remove();
+                    refreshDist();
+                    resolve();
+                }
+            }
+        },20);
+    });
+}
+
+function animateTransition(dist, curr, value) {
     var left = parseFloat(dist.style.left).toFixed(1),
         top = parseFloat(dist.style.top).toFixed(1),
         currentTop = parseFloat(curr.style.top).toFixed(1),
