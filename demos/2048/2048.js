@@ -117,6 +117,7 @@ function addBlock(x, y, value) {
     var block = newBlockELe();
     if (value) {
         block.setAttribute('data', value);
+        block.className = 'block val'+value;
         block.innerText = value + '';
     } else {
         block.setAttribute('data', 0);
@@ -137,7 +138,7 @@ function setBlock(x, y, value) {
     if (value) {
         block.setAttribute('data', value);
         block.innerText = value;
-        block.classList.remove('dark');
+        block.className = 'block val'+value;
     } else {
         block.setAttribute('data', 0);
         block.innerText = '';
@@ -184,7 +185,7 @@ function blockMerge(dist, curr) {
 function toDark(ele) {
     ele.setAttribute('data', 0);
     ele.innerText = '';
-    ele.classList.add('dark');
+    ele.className = 'block dark';
 }
 
 function animate(dist, curr, value) {
@@ -196,18 +197,18 @@ function animate(dist, curr, value) {
         curLeft = currentLeft;
     var animate = document.createElement('div');
     animate.classList.add('animate');
-    animate.classList.add('animate');
     animate.style.top = currentTop + 'rem';
     animate.style.left = currentLeft + 'rem';
     animate.innerText = value;
+    animate.className = 'block val'+value;
     wrapper.appendChild(animate);
     return new Promise(function(resolve, reject) {
         function refreshDist() {
             if (dist.getAttribute('data') != '0') {
                 dist.innerText = dist.getAttribute('data');
-                dist.classList.remove('dark');
+                dist.className = 'block val'+ dist.getAttribute('data');
             } else {
-                dist.classList.add('dark');
+                dist.className = 'block dark';
                 dist.innerText = '';
             }
         }
@@ -428,7 +429,7 @@ function randomAdd(type) {
     animateEle.style.position = 'absolute';
     animateEle.style.top = block.style.top;
     animateEle.style.left = block.style.left;
-    animateEle.classList.add('block');
+    animateEle.className = 'block val'+value;
     animateEle.innerText = block.getAttribute('data');
     var scale = 0.1;
     animateEle.style.transform = 'scale(' + scale + ')';
@@ -437,7 +438,7 @@ function randomAdd(type) {
         scale = scale + 0.03;
         animateEle.style.transform = 'scale(' + scale + ')';
         if (scale >= 1) {
-            block.classList.remove('dark');
+            block.className = 'block val'+value;
             block.innerText = value;
             animateEle.remove();
             return;
