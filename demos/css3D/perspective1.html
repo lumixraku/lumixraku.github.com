@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+    <style>
+    .clear-fix:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    .stage_area {
+        position: relative;
+        border: 1px solid black;
+        /*box-sizing: border-box;*/
+        margin: 50px 0 50px 0;
+    }
+
+    .center {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        position: absolute;
+        border-radius: 50%;
+        background-color: black;
+        width: 20px;
+        height: 20px;
+    }
+
+    .piece {
+        width: 100px;
+        height: 100px;
+        background-color: #cad5eb;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        float: left;
+    }
+
+    #stageFirst {
+        position: relative;
+        perspective: 500px;
+    }
+
+    .eventmove {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        z-index: 500;
+        top:0;
+    }
+
+    #stage2 {
+        width: 400px;
+        height: 300px;
+        perspective: 200px;
+        position: relative;
+    }
+
+    #stage2 .centercontainer {
+        width: 100px;
+        height: 100px;
+        margin: 100px auto;
+        position: relative;
+    }
+
+    #stage2 .centercontainer .piece {
+        position: absolute;
+    }
+
+    #stage3 {
+        width: 600px;
+    }
+
+    #stage3 .piece {
+        perspective: 500px;
+    }
+    </style>
+</head>
+
+<body>
+    <p>将鼠标在第一个stage上移动 感受不同视角的变化</p>
+    <div id="stageFirst" class="stage_area clear-fix">
+        <div class="piece" style="z-index: 10; transform: rotateY(45deg); background-color: rgba(168, 204, 51, 0.74902);"></div>
+        <div class="piece" style="z-index: 10; transform: rotateY(45deg); background-color: rgba(204, 51, 189, 0.74902);"></div>
+        <div class="piece" style="z-index: 10; transform: rotateY(45deg); background-color: rgba(51, 171, 204, 0.74902);"></div>
+        <div class="piece" style="z-index: 10; transform: rotateY(45deg); background-color: rgba(204, 51, 163, 0.74902);"></div>
+        <div class="piece" style="z-index: 10; transform: rotateY(45deg); background-color: rgba(102, 51, 204, 0.74902);"></div>
+        <div class="piece" style="z-index: 10; transform: rotateY(45deg); background-color: rgba(204, 51, 71, 0.74902);"></div>
+        <div class="piece" style="z-index: 10; transform: rotateY(45deg); background-color: rgba(51, 204, 186, 0.74902);"></div>
+        <div class="piece" style="z-index: 10; transform: rotateY(45deg); background-color: rgba(51, 204, 69, 0.74902);"></div>
+        <div class="piece" style="z-index: 10; transform: rotateY(45deg); background-color: rgba(204, 84, 51, 0.74902);"></div>
+        <div class="center"></div>
+        <!--         用eventmove这个浮层来监听鼠标的移动
+        不能直接在stage上监听鼠标移动
+        因为我是想得到鼠标相对于stage元素的offset
+        直接监听stage的话  当鼠标在stage上移动时  若移动到一个piece上面
+        得到的offset是相对于  piece的offset 了 -->
+        <div class="eventmove"></div>
+    </div>
+    <div id="stage2" class="stage_area clear-fix">
+        <div class="centercontainer">
+            <!-- 盒子底部 -->
+            <div class="piece" style="transform: rotateY(0deg) translateZ(-50px); background-color: rgba(168, 204, 51, 0.74902);"></div>
+            <!-- 盒子右边 -->
+            <div class="piece" style="left:50%; transform: rotateY(90deg); background-color: rgba(204, 51, 189, 0.74902);"></div>
+            <!-- 盒子左边 -->
+            <div class="piece" style="left:-50%; transform: rotateY(-90deg); background-color: rgba(51, 171, 204, 0.74902);"></div>
+            <!-- 盒子上边 -->
+            <div class="piece" style="top:-50%; transform: rotateX(90deg); background-color: rgba(204, 51, 71, 0.74902);"></div>
+            <!-- 盒子下边 -->
+            <div class="piece" style="top:50%; transform: rotateX(-90deg); background-color: rgba(102, 51, 204, 0.74902);"></div>
+            <div class="center"></div>
+        </div>
+        <div class="eventmove"></div>
+    </div>
+    </div>
+    <div id="stage3" class="stage_area clear-fix">
+        <div class="piece" style="z-index: 24; transform: rotateY(45deg); background-color: rgba(168, 204, 51, 0.74902);"></div>
+        <div class="piece" style="z-index: 31; transform: rotateY(45deg); background-color: rgba(204, 51, 189, 0.74902);"></div>
+        <div class="piece" style="z-index: 45; transform: rotateY(45deg); background-color: rgba(51, 171, 204, 0.74902);"></div>
+        <div class="piece" style="z-index: 83; transform: rotateY(45deg); background-color: rgba(204, 51, 163, 0.74902);"></div>
+        <div class="piece" style="z-index: 500; transform: rotateY(45deg); background-color: rgba(102, 51, 204, 0.74902);"></div>
+        <div class="piece" style="z-index: 125; transform: rotateY(45deg); background-color: rgba(204, 51, 71, 0.74902);"></div>
+        <div class="piece" style="z-index: 56; transform: rotateY(45deg); background-color: rgba(51, 204, 186, 0.74902);"></div>
+        <div class="piece" style="z-index: 36; transform: rotateY(45deg); background-color: rgba(51, 204, 69, 0.74902);"></div>
+        <div class="piece" style="z-index: 26; transform: rotateY(45deg); background-color: rgba(204, 84, 51, 0.74902);"></div>
+        <div class="center"></div>
+    </div>
+    <script>
+    var stageF = document.querySelector('#stageFirst .eventmove');
+    stageF.w = stageF.clientWidth;
+    stageF.h = stageF.clientHeight;
+    stageF.addEventListener('mousemove', function(e) {
+        console.log('mousemouve', e.offsetX, e.offsetY);
+        var self = this;
+        var pos = {
+            offsetX: e.offsetX,
+            offsetY: e.offsetY,
+            width: stageF.w,
+            height: stageF.h
+        }
+        debounce(function() {
+            var percentX = (pos.offsetX / pos.width * 100).toFixed(2) + '%';
+            var percentY = (pos.offsetY / pos.height * 100).toFixed(2) + '%';
+            console.log(percentX);
+            requestAnimationFrame(function() {
+                self.parentNode.style.cssText = 'perspective: 500px;perspective-origin: ' + percentX + ' ' + percentY + '; ';
+            });
+        }, 50)();
+    }, false);
+
+    function debounce(fn, threshhold, scope) {
+        threshhold || (threshhold = 16);
+        var last,
+            deferTimer;
+        return function() {
+            var context = scope || this;
+            var now = +new Date,
+                args = arguments;
+            if (last && now < last + threshhold) {
+                // hold on to it
+                clearTimeout(deferTimer);
+                deferTimer = setTimeout(function() {
+                    last = now;
+                    fn.apply(context, args);
+                }, threshhold);
+            } else {
+                last = now;
+                fn.apply(context, args);
+            }
+        };
+    }
+    </script>
+    <script>
+    var stageS = document.querySelector('#stage2 .eventmove');
+    stageS.w = stageS.clientWidth;
+    stageS.h = stageS.clientHeight;
+    stageS.addEventListener('mousemove', function(e) {
+        console.log('mousemouve', e.offsetX, e.offsetY);
+        var self = this;
+        var pos = {
+            offsetX: e.offsetX,
+            offsetY: e.offsetY,
+            width: stageF.w,
+            height: stageF.h
+        }
+        debounce(function() {
+            var percentX = (pos.offsetX / pos.width * 100).toFixed(2) + '%';
+            var percentY = (pos.offsetY / pos.height * 100).toFixed(2) + '%';
+            console.log(percentX);
+            requestAnimationFrame(function() {
+                self.parentNode.style.cssText = 'perspective: 200px;perspective-origin: ' + percentX + ' ' + percentY + '; ';
+            });
+        }, 50)();
+    }, false);
+
+    </script>
+</body>
+
+</html>
