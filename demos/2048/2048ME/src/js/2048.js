@@ -1,5 +1,5 @@
 var pxUnit = 'rem';
-var BLOCK_SIZE = 6;
+var BLOCK_SIZE = 3.2;
 var PADDING = BLOCK_SIZE / 5;
 var WRAPPER_SIZE = BLOCK_SIZE * 4 + PADDING * 5;
 var wrapper;
@@ -14,6 +14,7 @@ var UP = 0,
     LEFT = 1,
     RIGHT = 2,
     DOWN = 3;
+var scoreEle = document.querySelector('.score .value');
 
 init();
 bindEvents();
@@ -28,10 +29,8 @@ function init() {
             addBlock(x, y, 0);
         }
     }
-    //初始化需要添加两个数字为2的方块
+    //初始化需要添数字为2的方块
     setBlock(4, 3, 2);
-    setBlock(4, 4, 2);
-    setBlock(4, 1, 4);
 
 }
 
@@ -144,7 +143,8 @@ function blockMerge(dist, curr) {
         } else if (dist.getAttribute('data') == curr.getAttribute('data')) {
             toDark(curr);
             moved = true;
-            dist.setAttribute('data', (+dist.getAttribute('data')) * 2);
+            scoreEle.innerText = +value + (+scoreEle.innerText);
+            dist.setAttribute('data', (+value * 2));
         }
     }
     return moved;
@@ -171,44 +171,50 @@ function animate(dist, curr, value) {
     animate.innerText = value;
     animate.className = 'block val'+value;
     wrapper.appendChild(animate);
-    var timer = setInterval(function() {
+
+
+    function loop(elapsedTime) {
         if (distTop < currentTop) {
-            curTop = curTop - 0.2;
+            curTop = curTop - 0.7;
             animate.style.top = curTop + 'rem';
             if (curTop <= distTop) {
-                clearInterval(timer);
                 animate.remove();
                 refreshDist();
+                return;
             }
         }
         if (distTop > currentTop) {
-            curTop = curTop + 0.2;
+            curTop = curTop + 0.7;
             animate.style.top = curTop + 'rem';
             if (curTop >= distTop) {
-                clearInterval(timer);
                 animate.remove();
                 refreshDist();
+                return;
             }
         }
         if (distLeft < currentLeft) { // 左移
-            curLeft = curLeft - 0.2;
+            curLeft = curLeft - 0.7;
             animate.style.left = curLeft + 'rem';
             if (curLeft <= distLeft) {
-                clearInterval(timer);
                 animate.remove();
                 refreshDist();
+                return;
             }
         }
         if (distLeft > curLeft) { // 右移
-            curLeft = curLeft + 0.2;
+            curLeft = curLeft + 0.7;
             animate.style.left = curLeft + 'rem';
             if (curLeft >= distLeft) {
-                clearInterval(timer);
                 animate.remove();
                 refreshDist();
+                return;
             }
         }
-    }, 1);
+        requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+
     function refreshDist() {
         if (dist.getAttribute('data') != '0') {
             dist.innerText = dist.getAttribute('data');
@@ -358,7 +364,7 @@ function randomAdd(type) {
     animateEle.style.transform = 'scale(' + scale + ')';
     wrapper.appendChild(animateEle);
     function step(){
-        scale = scale + 0.03;
+        scale = scale + 0.04;
         animateEle.style.transform = 'scale(' + scale + ')';
         if (scale >= 1) {
             block.className = 'block val'+value;
