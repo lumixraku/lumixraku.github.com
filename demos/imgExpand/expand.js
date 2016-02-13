@@ -50,6 +50,8 @@ Expand.prototype = {
         $('<img>')
         .attr('src', url)
         .load(function(){
+
+            // 计算点开后的目标位置
             style = (function(){
                 var w = this.width;
                 var h = this.height;
@@ -63,13 +65,21 @@ Expand.prototype = {
                 }
             }.bind(this))();
             setTimeout(function(){
+                // img.css({
+                //     top: style.top,
+                //     left: style.left,
+                //     width: style.width,
+                //     height: style.height,
+                //     transition: "all 1000ms ease"
+                // });
+                var translateX = style.left - self.originStyle.left +'px';
+                var translateY  = style.top - self.originStyle.top +'px';
                 img.css({
-                    top: style.top,
-                    left: style.left,
+                    transform: "translate("+ translateX +" ,"+  translateY +" )",
                     width: style.width,
                     height: style.height,
-                    transition: "all 1000ms ease"
-                });
+                    transition: "all 323ms ease"
+                })
             },0);
         })
     },
@@ -78,19 +88,22 @@ Expand.prototype = {
         var img = self.img;
         var style  = self.originStyle;
         var layer = self.layer;
+
+        //收缩
         layer.on('click', function(){
             img.css({
-                top: style.top,
-                left: style.left,
+                // top: style.top,
+                // left: style.left,
+                transform: "translate(0px, 0px)",
                 width: style.width,
                 height: style.height,
-                transition: 'all 1000ms ease'
+                transition: 'all 323ms ease'
             });
             self.opend = false;
         });
         img.on('transitionend', function(e){
             console.log(e.originalEvent);
-            if(e.originalEvent.propertyName == 'left'){
+            if(e.originalEvent.propertyName == 'width'){
                 if(!self.opend){
                     layer.removeClass('opend');
                 }
