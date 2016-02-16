@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Img Upload</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     <style>
     .wrapper{
-        width: 400px;
+        width: 100%;
+        max-width: 400px;
         height: 400px;
         background-color: wheat;
         position: absolute;
@@ -81,69 +83,8 @@
         <div class="drag-upload">OR DRAG FILES HERE</div>
         <div class="preview-list">
         </div>
+        <div class="percent-msg"></div>
     </div>
-    <script>
-        var inputFile = document.querySelector('#multifile');
-        var dragZone = document.querySelector('.drag-upload');
-        inputFile.addEventListener('change', handleShowImg,false);
-        dragZone.addEventListener('dragover', function(e){
-            e.preventDefault();
-        }, false);
-        dragZone.addEventListener('drop', handleShowImg, false);
-
-        function handleShowImg(e){
-            e.preventDefault();//必须  dragOver 和 drop 都必须阻止默认
-            var files = e.target.files || e.dataTransfer.files;
-            for (var i = 0, len = files.length ; i < len ; i++) {
-                var f = files[i];
-                if(!/image\/*/.test(f.type)){
-                    continue;
-                }
-                var reader = new FileReader();
-                reader.readAsDataURL(f); //对于图片 将读取成base64的形式
-                //通过这样的方式实现向事件中传参
-                reader.addEventListener('load', function(e){
-                    readImg(e, f);
-                }, false);
-            };
-        }
-        function readImg(e, f){
-            var url = e.target.result;
-            var prelist = document.querySelector('.preview-list');
-            var img = createImg(url);
-            prelist.appendChild(img);
-            var formData = new FormData();
-            formData.append('upload', f);
-            uploading(img, formData);
-        }
-        function createImg(url){
-            var imgItem = document.createElement('div');
-            var picArea = document.createElement('div');
-            var percent = document.createElement('div');
-            imgItem.className += ' img-preview';
-            picArea.className += ' pic-area';
-            picArea.style.cssText = 'background: url(' + url + '); background-size:100% 100%';
-            percent.className = 'percent';
-            imgItem.appendChild(picArea);
-            imgItem.appendChild(percent);
-            return imgItem;
-        }
-        function uploading(img, formData){
-            var xhr = new XMLHttpRequest();
-            // 为确保正常执行，必须在调用open()方法之前添加onprogress事件处理程序
-            xhr.upload.onprogress = function(e){
-                if (e.lengthComputable) {
-                    var percent = (e.loaded / e.total * 100 | 0) + "%";
-                    console.log(percent);
-                    img.querySelector('.percent').innerText = percent;
-                }
-            }
-            xhr.open("post", "/upload");
-            xhr.onload = function(e){
-                console.log('completed' + JSON.stringify(e));
-            }
-            xhr.send(formData);
-        }
-    </script>
+    <script src="uploadNode.js"></script>
 </body>
 </html>

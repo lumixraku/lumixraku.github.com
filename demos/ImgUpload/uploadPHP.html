@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Img Upload</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     <style>
     .wrapper{
-        width: 400px;
+        width: 100%;
+        max-width: 400px;
         height: 400px;
         background-color: wheat;
         position: absolute;
@@ -110,23 +112,23 @@
         function readImg(e, f){
             var url = e.target.result;
             var prelist = document.querySelector('.preview-list');
-            var img = createImg(url);
-            prelist.appendChild(img);
+            var imgElem = createImg(url);
+            prelist.appendChild(imgElem);
             var formData = new FormData();
             formData.append('file', f);
-            uploading(img, formData);
+            uploading(imgElem, formData);
         }
         function createImg(url){
-            var imgItem = document.createElement('div');
+            var imgWrapper = document.createElement('div');
             var picArea = document.createElement('div');
             var percent = document.createElement('div');
-            imgItem.className += ' img-preview';
+            imgWrapper.className += ' img-preview';
             picArea.className += ' pic-area';
             picArea.style.cssText = 'background: url(' + url + '); background-size:100% 100%';
             percent.className = 'percent';
-            imgItem.appendChild(picArea);
-            imgItem.appendChild(percent);
-            return imgItem;
+            imgWrapper.appendChild(picArea);
+            imgWrapper.appendChild(percent);
+            return imgWrapper;
         }
         function uploading(img, formData){
             var xhr = new XMLHttpRequest();

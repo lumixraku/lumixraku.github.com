@@ -23,7 +23,9 @@ $uploaddir = 'img/';
 header("Content-Length: ".$_FILES["file"]["size"]);
 $tmp_name = $_FILES["file"]["tmp_name"];
 $name = $_FILES["file"]["name"];
-$name= date("YmdHis",time()).preg_replace("#[^\w\.]#","",$name);
+$name= date_default_timezone_set("Etc/GMT-8").preg_replace("#[^\w\.]#","",$name);
+// date("YmdHis",time()) 获取时间的方法已经不在建议使用
+// $name= date("YmdHis",time()).preg_replace("#[^\w\.]#","",$name);
 $uploadfile = $uploaddir.$name;
 $ret=move_uploaded_file($tmp_name, $uploadfile);
 echo $tmp_name.'    ';
