@@ -13,12 +13,14 @@ function RainAndSnow(canvasId, opt) {
     var canvas = document.getElementById(canvasId);
 
     //为了保证在手机上的清晰度, 乘以dpr
-    canvas.width = (document.body.clientWidth || opt.width) * window.devicePixelRatio;
-    canvas.height = (document.body.clientHeight || opt.height) * window.devicePixelRatio;
+    var dpr = window.devicePixelRatio;
+    if(dpr > 2) dpr = 2;
+    canvas.width = (document.body.clientWidth || opt.width) * dpr;
+    canvas.height = (document.body.clientHeight || opt.height) * dpr;
 
     //开始绘制
     var ctx = canvas.getContext('2d');
-    ctx.lineWidth = (opt.lineWidth || 1) * window.devicePixelRatio;
+    ctx.lineWidth = (opt.lineWidth || 1) * dpr;
 
     //雨滴/雪  的颜色
     var defaultColorStyle = (opt.type == 'rain') ? 'rgba(127,127,127,0.8)' : 'rgba(255,255,255,0.7)'
@@ -113,7 +115,7 @@ function RainAndSnow(canvasId, opt) {
         this.pos.add(this.vel);
     }
     Snow.prototype.draw = function(){
-        var radius = (opt.radius || this.radius) * window.devicePixelRatio;
+        var radius = (opt.radius || this.radius) * dpr;
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, radius, 0, 2 * Math.PI, false);
         ctx.fill();

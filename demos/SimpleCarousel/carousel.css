@@ -1,0 +1,106 @@
+html,
+body {
+  margin: 0;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clear-fix:after {
+  display: table;
+  clear: both;
+  content: ' ';
+}
+
+#page {
+  margin: 20px;
+}
+
+
+#slides {
+  box-sizing: border-box;
+  width: 225px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  /*padding: 30px;*/
+  border: 1px solid black;
+}
+
+#slides ul {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.itemlist{
+  /*transition: transform 200ms ease;*/
+}
+
+.item {
+  width: 225px;
+  height: 350px;
+  background: pink;
+}
+.item span{
+  background: white;
+  opacity: (0.8);
+}
+.item.item1 {
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/1.jpg');
+  background-size: cover;
+}
+
+.item.item2 {
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/2.jpg');
+  background-size: cover;
+}
+
+.item.item3 {
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/3.jpg');
+  background-size: cover;
+}
+
+.item.item4 {
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/216995/4.jpg');
+  background-size: cover;
+}
+
+.indicator{
+  position: absolute;
+  display: table;
+  vertical-align: middle;
+  left:0;
+  right: 0;
+  margin: 0 auto;
+  bottom:10px;
+  height: 25px;
+  width: 100px;
+}
+
+.indicator .icon{
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: white;
+  opacity: 0.5;
+  margin:  0 2px;
+}
+
+.indicator .icon.active{
+  opacity: 1;
+}
+
